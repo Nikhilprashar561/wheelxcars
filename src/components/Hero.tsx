@@ -56,7 +56,7 @@ export function Hero() {
       >
         <Image
           src="/hero.jpg"
-          alt="Premium pre-owned vehicles across Chandigarh and Tricity at WheelxCars"
+          alt="Premium pre-owned vehicles at WheelxCars"
           fill
           priority
           quality={90}
@@ -95,7 +95,7 @@ export function Hero() {
           <motion.div variants={itemVariants} className="mb-6">
             <span className="inline-flex items-center gap-2 text-white/50 text-xs font-semibold tracking-[0.2em] uppercase">
               <span className="w-6 h-px bg-white/30" />
-              Chandigarh · Mohali · Panchkula · Tricity
+              Pre-Owned · Inspected · Trusted
             </span>
           </motion.div>
 
@@ -114,7 +114,7 @@ export function Hero() {
             variants={itemVariants}
             className="text-base sm:text-lg text-white/50 leading-relaxed max-w-md mb-10 font-normal"
           >
-            Explore verified pre-owned cars across Chandigarh, Mohali, Panchkula, Zirakpur, and Kharar. Inspected, documented, and priced under ₹10 Lakh.
+            Handpicked pre-owned vehicles inspected for quality, condition, and value. Complete pricing transparency and verified history.
           </motion.p>
 
           {/* CTAs */}
@@ -126,7 +126,7 @@ export function Hero() {
               href="/cars"
               className="group inline-flex items-center justify-center gap-2.5 bg-white text-black font-semibold text-sm px-7 py-4 rounded-md hover:bg-white/90 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
             >
-              Explore Tricity Cars
+              Explore Cars
               <ArrowRight
                 size={16}
                 className="group-hover:translate-x-1 transition-transform duration-200"
@@ -143,12 +143,12 @@ export function Hero() {
           {/* Stats row */}
           <motion.div
             variants={itemVariants}
-            className="mt-14 pt-8 border-t border-white/10 flex items-center gap-8 sm:gap-10 flex-wrap"
+            className="mt-14 pt-8 border-t border-white/10 flex items-center gap-8 sm:gap-12 flex-wrap"
           >
             {[
-              { number: "500+", label: "Tricity Cars Inspected" },
+              { number: "500+", label: "Cars Evaluated" },
               { number: "100%", label: "Verified History" },
-              { number: "5 Cities", label: "CHD · MOH · PKL · ZIR · KHR" },
+              { number: "Under ₹10L", label: "Fair Pricing" },
             ].map((stat) => (
               <div key={stat.label} className="flex flex-col gap-1">
                 <span className="text-2xl font-bold text-white tracking-tight">{stat.number}</span>

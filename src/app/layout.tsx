@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import "./globals.css";
 
 const geist = Geist({
@@ -69,6 +70,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${geist.variable} ${geistMono.variable} antialiased bg-black text-white selection:bg-white/20 selection:text-white`}>
+        <ScrollToTop />
         {children}
       </body>
     </html>
