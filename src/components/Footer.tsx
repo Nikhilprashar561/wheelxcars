@@ -1,24 +1,24 @@
 import Link from "next/link";
-import { Share2, MessageCircle, Briefcase, Play } from "lucide-react";
+import { Share2, MessageCircle, Briefcase, Play, MapPin } from "lucide-react";
 
 const navColumns = [
   {
-    title: "Navigate",
+    title: "Inventory & Services",
     links: [
-      { label: "Home", href: "/" },
-      { label: "Cars", href: "/cars" },
+      { label: "All Used Cars", href: "/cars" },
+      { label: "Chandigarh Cars", href: "/cars?location=Chandigarh" },
+      { label: "Mohali Cars", href: "/cars?location=Mohali" },
+      { label: "Panchkula Cars", href: "/cars?location=Panchkula" },
       { label: "Sell Your Car", href: "/sell-your-car" },
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
     ],
   },
   {
-    title: "Support",
+    title: "Company",
     links: [
+      { label: "About WheelxCars", href: "/about" },
       { label: "FAQ", href: "/#faq" },
-      { label: "Terms of Service", href: "/terms" },
-      { label: "Privacy Policy", href: "/privacy" },
       { label: "Contact Us", href: "/contact" },
+      { label: "Marketplace Valuation", href: "/sell-your-car" },
     ],
   },
 ];
@@ -37,18 +37,21 @@ export function Footer() {
         {/* Top row */}
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-12 pb-12 border-b border-white/5">
           {/* Brand */}
-          <div className="max-w-xs">
+          <div className="max-w-sm">
             <Link href="/" className="inline-block mb-4">
               <span className="text-xl font-bold tracking-[-0.02em] text-white">
                 Wheel<span className="text-white/50">x</span>Cars
               </span>
             </Link>
-            <p className="text-sm text-white/35 leading-relaxed">
-              A premium pre-owned car marketplace built for the discerning buyer. 
-              Every vehicle selected, inspected, and presented with transparency.
+            <p className="text-sm text-white/40 leading-relaxed mb-4">
+              Chandigarh &amp; Tricity&apos;s premier used-car marketplace. Inspected pre-owned vehicles, transparent pricing, and zero hassle documentation.
             </p>
+            <div className="flex items-center gap-1.5 text-xs text-white/50 mb-6">
+              <MapPin size={13} className="text-white/40" />
+              <span>Chandigarh · Mohali · Panchkula · Zirakpur · Kharar</span>
+            </div>
             {/* Social icons */}
-            <div className="flex items-center gap-3 mt-6">
+            <div className="flex items-center gap-3">
               {socials.map((s) => {
                 const Icon = s.icon;
                 return (
@@ -73,7 +76,7 @@ export function Footer() {
               </p>
               <ul className="space-y-2.5">
                 {col.links.map((link) => (
-                  <li key={link.href}>
+                  <li key={link.label}>
                     <Link
                       href={link.href}
                       className="text-sm text-white/40 hover:text-white transition-colors duration-200"
@@ -89,11 +92,11 @@ export function Footer() {
 
         {/* Bottom row */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8">
-          <p className="text-xs text-white/20">
-            © {new Date().getFullYear()} WheelxCars. All rights reserved.
+          <p className="text-xs text-white/30">
+            © {new Date().getFullYear()} WheelxCars. All rights reserved. Chandigarh Tricity Automotive Marketplace.
           </p>
-          <p className="text-xs text-white/15 tracking-wide italic">
-            Built for better car buying.
+          <p className="text-xs text-white/20 tracking-wide">
+            Marketplace listings verified for accuracy.
           </p>
         </div>
       </div>

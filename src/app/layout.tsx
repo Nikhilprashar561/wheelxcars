@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -14,23 +14,50 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#000000",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
-  title: "WheelxCars — Premium Pre-Owned Cars",
+  title: {
+    default: "WheelxCars — Premium Pre-Owned Cars in Chandigarh & Tricity",
+    template: "%s | WheelxCars Tricity",
+  },
   description:
-    "Discover handpicked, multi-point inspected pre-owned cars. Every vehicle at WheelxCars is selected for quality, condition and value. Browse our premium inventory today.",
-  keywords: ["used cars", "pre-owned cars", "car dealership", "buy used car", "WheelxCars"],
+    "Explore verified used cars in Chandigarh, Mohali, Panchkula, Zirakpur, and Kharar. Inspected vehicles with documented history and transparent pricing under ₹10 Lakh.",
+  keywords: [
+    "used cars chandigarh",
+    "second hand cars mohali",
+    "pre-owned cars panchkula",
+    "used cars zirakpur",
+    "used cars kharar",
+    "buy used car tricity",
+    "sell car chandigarh",
+    "WheelxCars",
+  ],
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: [
+      { url: "/icon.svg" },
+    ],
+  },
   openGraph: {
-    title: "WheelxCars — Premium Pre-Owned Cars",
+    title: "WheelxCars — Premium Pre-Owned Cars in Chandigarh & Tricity",
     description:
-      "Discover handpicked, multi-point inspected pre-owned cars. Premium inventory with transparent pricing.",
+      "Explore verified used cars across Chandigarh, Mohali, Panchkula, Zirakpur and Kharar. Transparent pricing, multi-point inspected.",
     type: "website",
     url: "https://wheelxcars.com",
     siteName: "WheelxCars",
+    locale: "en_IN",
   },
   twitter: {
     card: "summary_large_image",
-    title: "WheelxCars — Premium Pre-Owned Cars",
-    description: "Discover handpicked, inspected pre-owned cars.",
+    title: "WheelxCars — Premium Pre-Owned Cars in Chandigarh & Tricity",
+    description: "Explore verified used cars in Chandigarh, Mohali, Panchkula, Zirakpur & Kharar.",
   },
 };
 
@@ -41,7 +68,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${geist.variable} ${geistMono.variable} antialiased bg-black text-white`}>
+      <body className={`${geist.variable} ${geistMono.variable} antialiased bg-black text-white selection:bg-white/20 selection:text-white`}>
         {children}
       </body>
     </html>

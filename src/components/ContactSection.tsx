@@ -2,32 +2,32 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const contactInfo = [
   {
     icon: Phone,
-    label: "Phone",
+    label: "Phone / WhatsApp",
     value: "+91 98765 43210",
     href: "tel:+919876543210",
   },
   {
     icon: Mail,
-    label: "Email",
+    label: "Email Support",
     value: "hello@wheelxcars.com",
     href: "mailto:hello@wheelxcars.com",
   },
   {
     icon: MapPin,
-    label: "Location",
-    value: "123 Auto Plaza, Connaught Place, New Delhi",
+    label: "Tricity Hub",
+    value: "Industrial Area Phase 2, Chandigarh · Serving Mohali, Panchkula, Zirakpur & Kharar",
     href: "#",
   },
   {
     icon: Clock,
-    label: "Hours",
-    value: "Mon–Sat: 9 AM – 7 PM, Sun: 10 AM – 5 PM",
+    label: "Operating Hours",
+    value: "Mon–Sat: 9:30 AM – 7:30 PM · Sunday: By Appointment",
     href: null,
   },
 ];
@@ -36,20 +36,49 @@ interface FormState {
   name: string;
   email: string;
   phone: string;
+  subject: string;
   message: string;
 }
 
 export function ContactSection() {
-  const [form, setForm] = useState<FormState>({ name: "", email: "", phone: "", message: "" });
+  const [form, setForm] = useState<FormState>({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      setErrorMsg("Please fill in all required fields.");
+      return;
+    }
+    setErrorMsg(null);
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1200));
-    setLoading(false);
-    setSubmitted(true);
+
+    try {
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "general-contact",
+          data: form,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to send message");
+      setSubmitted(true);
+    } catch (err: unknown) {
+      console.error(err);
+      setErrorMsg("Unable to send enquiry. Please contact us directly via phone.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -64,7 +93,7 @@ export function ContactSection() {
             transition={{ duration: 0.7 }}
           >
             <p className="text-[11px] text-white/30 uppercase tracking-[0.18em] font-semibold mb-4">
-              — Get in Touch
+              — Chandigarh · Mohali · Panchkula
             </p>
             <h2
               id="contact-heading"
@@ -72,11 +101,10 @@ export function ContactSection() {
             >
               Let&apos;s Find Your
               <br />
-              Next Car.
+              Next Car in Tricity.
             </h2>
             <p className="text-sm text-white/45 leading-relaxed max-w-sm mb-10">
-              Have a question, looking for a specific vehicle, or want to schedule a visit? 
-              Our team is ready to help.
+              Have a question about a specific car, looking for a verified vehicle in Chandigarh, Mohali or Panchkula, or want to schedule a visit? Our local advisors are ready to assist.
             </p>
 
             {/* Contact info items */}
@@ -122,18 +150,33 @@ export function ContactSection() {
           >
             {submitted ? (
               <div className="flex flex-col items-center justify-center h-full py-12 text-center gap-4">
-                <CheckCircle size={40} className="text-white/50" />
-                <h3 className="text-xl font-bold text-white">Message Sent</h3>
+                <CheckCircle size={40} className="text-white/80" />
+                <h3 className="text-xl font-bold text-white">Message Received</h3>
                 <p className="text-sm text-white/45 max-w-xs">
-                  We&apos;ll get back to you within 24 hours. Thank you for reaching out.
+                  We&apos;ve sent a notification to our team. A Tricity automotive specialist will get back to you shortly.
                 </p>
+                <button
+                  onClick={() => {
+                    setSubmitted(false);
+                    setForm({ name: "", email: "", phone: "", subject: "", message: "" });
+                  }}
+                  className="mt-4 text-xs text-white/40 hover:text-white underline"
+                >
+                  Send another message
+                </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+                {errorMsg && (
+                  <div className="p-3 rounded bg-red-950/40 border border-red-900/50 text-red-300 text-xs flex items-center gap-2">
+                    <AlertCircle size={14} />
+                    {errorMsg}
+                  </div>
+                )}
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="contact-name" className="block text-[10px] text-white/35 uppercase tracking-[0.12em] font-semibold mb-2">
-                      Your Name
+                      Your Name *
                     </label>
                     <input
                       id="contact-name"
@@ -141,13 +184,13 @@ export function ContactSection() {
                       required
                       value={form.name}
                       onChange={(e) => setForm((s) => ({ ...s, name: e.target.value }))}
-                      placeholder="Arjun Mehta"
+                      placeholder="e.g. Gurpreet Singh"
                       className="w-full bg-white/4 border border-white/8 rounded-md px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25 transition-colors"
                     />
                   </div>
                   <div>
                     <label htmlFor="contact-email" className="block text-[10px] text-white/35 uppercase tracking-[0.12em] font-semibold mb-2">
-                      Email Address
+                      Email Address *
                     </label>
                     <input
                       id="contact-email"
@@ -155,27 +198,42 @@ export function ContactSection() {
                       required
                       value={form.email}
                       onChange={(e) => setForm((s) => ({ ...s, email: e.target.value }))}
-                      placeholder="you@email.com"
+                      placeholder="you@domain.com"
+                      className="w-full bg-white/4 border border-white/8 rounded-md px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25 transition-colors"
+                    />
+                  </div>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="contact-phone" className="block text-[10px] text-white/35 uppercase tracking-[0.12em] font-semibold mb-2">
+                      Phone Number
+                    </label>
+                    <input
+                      id="contact-phone"
+                      type="tel"
+                      value={form.phone}
+                      onChange={(e) => setForm((s) => ({ ...s, phone: e.target.value }))}
+                      placeholder="+91 98765 43210"
+                      className="w-full bg-white/4 border border-white/8 rounded-md px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25 transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="contact-subject" className="block text-[10px] text-white/35 uppercase tracking-[0.12em] font-semibold mb-2">
+                      Subject
+                    </label>
+                    <input
+                      id="contact-subject"
+                      type="text"
+                      value={form.subject}
+                      onChange={(e) => setForm((s) => ({ ...s, subject: e.target.value }))}
+                      placeholder="e.g. Test drive in Mohali"
                       className="w-full bg-white/4 border border-white/8 rounded-md px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25 transition-colors"
                     />
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="contact-phone" className="block text-[10px] text-white/35 uppercase tracking-[0.12em] font-semibold mb-2">
-                    Phone Number
-                  </label>
-                  <input
-                    id="contact-phone"
-                    type="tel"
-                    value={form.phone}
-                    onChange={(e) => setForm((s) => ({ ...s, phone: e.target.value }))}
-                    placeholder="+91 98765 43210"
-                    className="w-full bg-white/4 border border-white/8 rounded-md px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25 transition-colors"
-                  />
-                </div>
-                <div>
                   <label htmlFor="contact-message" className="block text-[10px] text-white/35 uppercase tracking-[0.12em] font-semibold mb-2">
-                    Message
+                    Message *
                   </label>
                   <textarea
                     id="contact-message"
@@ -183,7 +241,7 @@ export function ContactSection() {
                     rows={4}
                     value={form.message}
                     onChange={(e) => setForm((s) => ({ ...s, message: e.target.value }))}
-                    placeholder="Tell us what you're looking for..."
+                    placeholder="Tell us what car you're interested in or how we can assist..."
                     className="w-full bg-white/4 border border-white/8 rounded-md px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25 transition-colors resize-none"
                   />
                 </div>

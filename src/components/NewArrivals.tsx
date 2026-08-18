@@ -2,11 +2,11 @@
 
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, MapPin } from "lucide-react";
 import Link from "next/link";
 import { NEW_ARRIVAL_CARS } from "@/lib/data";
 import Image from "next/image";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice } from "@/lib/data";
 
 export function NewArrivals() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -22,7 +22,7 @@ export function NewArrivals() {
             transition={{ duration: 0.6 }}
           >
             <p className="text-[11px] text-white/30 uppercase tracking-[0.18em] font-semibold mb-3">
-              — Fresh Inventory
+              — Fresh Tricity Inventory
             </p>
             <h2
               id="arrivals-heading"
@@ -52,28 +52,32 @@ export function NewArrivals() {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: i * 0.1 }}
             className="flex-shrink-0 w-[280px] sm:w-[320px]"
           >
             <Link href={`/cars/${car.slug}`} className="group block">
               {/* Image */}
               <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-zinc-900 mb-4">
                 <Image
-                  src={car.images[0]}
+                  src={car.images[0] || "/hero.jpg"}
                   alt={`${car.year} ${car.brand} ${car.model}`}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   sizes="320px"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute top-3 left-3 bg-white text-black text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
-                  New
+                  New Arrival
+                </div>
+                <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded flex items-center gap-1">
+                  <MapPin size={10} className="text-white/60" />
+                  {car.city}
                 </div>
               </div>
 
               {/* Info */}
               <div>
-                <h3 className="text-sm font-semibold text-white">
+                <h3 className="text-sm font-semibold text-white group-hover:text-white/90 transition-colors">
                   {car.year} {car.brand} {car.model}
                 </h3>
                 <p className="text-xs text-white/35 mt-0.5">{car.variant}</p>

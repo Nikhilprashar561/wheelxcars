@@ -56,7 +56,7 @@ export function Hero() {
       >
         <Image
           src="/hero.jpg"
-          alt="Premium pre-owned vehicles at WheelxCars"
+          alt="Premium pre-owned vehicles across Chandigarh and Tricity at WheelxCars"
           fill
           priority
           quality={90}
@@ -64,7 +64,7 @@ export function Hero() {
           sizes="100vw"
         />
         {/* Dark overlays */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/75 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40" />
       </motion.div>
 
@@ -93,16 +93,16 @@ export function Hero() {
         >
           {/* Eyebrow */}
           <motion.div variants={itemVariants} className="mb-6">
-            <span className="inline-flex items-center gap-2 text-white/40 text-xs font-semibold tracking-[0.2em] uppercase">
+            <span className="inline-flex items-center gap-2 text-white/50 text-xs font-semibold tracking-[0.2em] uppercase">
               <span className="w-6 h-px bg-white/30" />
-              Pre-Owned · Inspected · Trusted
+              Chandigarh · Mohali · Panchkula · Tricity
             </span>
           </motion.div>
 
           {/* Headline */}
           <motion.h1
             variants={itemVariants}
-            className="text-5xl sm:text-6xl lg:text-[80px] xl:text-[88px] font-bold leading-[0.95] tracking-[-0.03em] text-white mb-6"
+            className="text-5xl sm:text-6xl lg:text-[76px] xl:text-[84px] font-bold leading-[0.95] tracking-[-0.03em] text-white mb-6"
           >
             Find a Car
             <br />
@@ -114,8 +114,7 @@ export function Hero() {
             variants={itemVariants}
             className="text-base sm:text-lg text-white/50 leading-relaxed max-w-md mb-10 font-normal"
           >
-            Every vehicle in our collection is carefully selected, 
-            multi-point inspected, and priced with complete transparency.
+            Explore verified pre-owned cars across Chandigarh, Mohali, Panchkula, Zirakpur, and Kharar. Inspected, documented, and priced under ₹10 Lakh.
           </motion.p>
 
           {/* CTAs */}
@@ -127,7 +126,7 @@ export function Hero() {
               href="/cars"
               className="group inline-flex items-center justify-center gap-2.5 bg-white text-black font-semibold text-sm px-7 py-4 rounded-md hover:bg-white/90 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
             >
-              Explore Cars
+              Explore Tricity Cars
               <ArrowRight
                 size={16}
                 className="group-hover:translate-x-1 transition-transform duration-200"
@@ -144,12 +143,12 @@ export function Hero() {
           {/* Stats row */}
           <motion.div
             variants={itemVariants}
-            className="mt-14 pt-8 border-t border-white/10 flex items-center gap-10"
+            className="mt-14 pt-8 border-t border-white/10 flex items-center gap-8 sm:gap-10 flex-wrap"
           >
             {[
-              { number: "500+", label: "Cars Evaluated" },
-              { number: "100+", label: "Cars Sold" },
-              { number: "98%", label: "Satisfaction" },
+              { number: "500+", label: "Tricity Cars Inspected" },
+              { number: "100%", label: "Verified History" },
+              { number: "5 Cities", label: "CHD · MOH · PKL · ZIR · KHR" },
             ].map((stat) => (
               <div key={stat.label} className="flex flex-col gap-1">
                 <span className="text-2xl font-bold text-white tracking-tight">{stat.number}</span>
