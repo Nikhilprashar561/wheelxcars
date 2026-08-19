@@ -36,7 +36,7 @@ const imageVariants = {
 export function Hero() {
   return (
     <section
-      className="relative min-h-[480px] sm:min-h-[540px] lg:min-h-[600px] flex flex-col justify-center overflow-hidden bg-black"
+      className="relative min-h-[500px] sm:min-h-[540px] lg:min-h-[600px] flex flex-col justify-center overflow-hidden bg-black"
       aria-label="Hero section"
     >
       {/* Seamless integrated background car visual with feathered blend */}
@@ -53,20 +53,20 @@ export function Hero() {
           priority
           loading="eager"
           quality={95}
-          className="object-cover object-[75%_bottom] sm:object-[center_bottom] lg:object-[68%_center]"
+          className="object-cover object-[center_bottom] sm:object-[center_bottom] lg:object-[68%_center]"
           sizes="100vw"
         />
 
-        {/* Desktop Left-to-Right Seamless Gradient (Dark pure black on left for text, emerging cars on right) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent via-40% hidden lg:block" />
+        {/* Desktop Left-to-Right Seamless Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent via-45% hidden lg:block" />
 
-        {/* Mobile & Tablet Top-to-Bottom Seamless Gradient (Dark pure black on top for text, cars visible at bottom) */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/75 to-transparent via-50% lg:hidden" />
+        {/* Mobile & Tablet Soft Gradient: Lightened so cars are brightly visible and not dim */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-transparent via-35% lg:hidden" />
 
-        {/* Seamless Edge Blends: Top and Bottom fades so image seamlessly connects to Navbar and SearchBar */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40" />
-        <div className="absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-black to-transparent" />
-        <div className="absolute inset-y-0 right-0 w-20 sm:w-32 bg-gradient-to-l from-black to-transparent" />
+        {/* Seamless Edge Blends: Top and Bottom fades for smooth transitions */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/30" />
+        <div className="absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-black to-transparent hidden sm:block" />
+        <div className="absolute inset-y-0 right-0 w-20 sm:w-32 bg-gradient-to-l from-black to-transparent hidden sm:block" />
       </motion.div>
 
       {/* Atmospheric ambient glow */}
