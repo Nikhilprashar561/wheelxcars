@@ -200,7 +200,112 @@ export const CARS: Car[] = [
     ],
   },
 
-  // 3. Maruti Suzuki Swift RS (2021)
+  // 3. Tata Safari 2.0 Kryotec XZ Plus 6S Adventure (2022)
+  {
+    id: "tata-safari-xz-plus-adventure-2022",
+    slug: "tata-safari-xz-plus-adventure-2022",
+    brand: "Tata",
+    model: "Safari",
+    variant: "2.0 Kryotec XZ Plus 6S Adventure",
+    year: 2022,
+    price: 16.95,
+    priceText: "₹16.95 Lakh",
+    emi: 33200,
+    fuel: "Diesel",
+    transmission: "Automatic",
+    mileage: "43,000 Km",
+    kmDriven: 43000,
+    owners: "1st Owner",
+    color: "White",
+    location: "Sector 21A, Chandigarh",
+    registration: "CH 01",
+    registrationPlace: "CH (Chandigarh)",
+    makeMonth: "January",
+    insuranceType: "Comprehensive",
+    postingDate: "14-AUG-26",
+    bodyType: "SUV",
+    featured: true,
+    newArrival: true,
+    description: "2022 Tata Safari 2.0 Kryotec XZ Plus 6S Adventure Automatic in White. Car is all original, single hand driven, immaculate and well maintained. Fully insured with complete company authorized service records and under manufacturer warranty. 1st Owner vehicle with both original smart keys. Features panoramic sunroof, 6-seater captain seats, adventure black alloy wheels, premium touch infotainment, reverse camera, and full safety suite. Exchange and finance available.",
+    images: [
+      "/cars/safari/safari1.png",
+      "/cars/safari/safari2.png",
+      "/cars/safari/safari3.png",
+      "/cars/safari/safari4.png",
+      "/cars/safari/safari5.png",
+    ],
+    featuresList: [
+      {
+        category: "Adventure Edition & Exterior",
+        items: [
+          { name: "Panoramic Sunroof", value: true },
+          { name: "Adventure Signature Alloy Wheels", value: true },
+          { name: "Projector Xenon HID Headlamps & LED DRLs", value: true },
+          { name: "Roof Rails & Signature Safari Grille", value: true },
+          { name: "Color", value: "White" },
+        ],
+      },
+      {
+        category: "Performance & Transmission",
+        items: [
+          { name: "2.0L Kryotec Turbocharged Diesel Engine", value: true },
+          { name: "6-Speed Automatic Transmission", value: true },
+          { name: "Multi Drive Modes (Eco, City, Sport)", value: true },
+          { name: "ESP Terrain Response Modes", value: true },
+        ],
+      },
+      {
+        category: "Luxury & Cabin Comfort",
+        items: [
+          { name: "6-Seater Layout with Captain Seats", value: true },
+          { name: "Automatic Climate Control AC with Rear Vents", value: true },
+          { name: "Electronic Power Steering & Tilt/Telescopic", value: true },
+          { name: "All 4 Power Windows", value: true },
+          { name: "Push Button Start / Stop with Both Smart Keys", value: true },
+        ],
+      },
+      {
+        category: "Safety & Security",
+        items: [
+          { name: "6 Airbags Protection", value: true },
+          { name: "Electronic Stability Program (ESP) & ABS", value: true },
+          { name: "Reverse Parking Camera & Sensors", value: true },
+          { name: "Hill Hold & Hill Descent Control", value: true },
+          { name: "Disc Brakes on All 4 Wheels", value: true },
+        ],
+      },
+      {
+        category: "Documentation & Verification",
+        items: [
+          { name: "Ownership", value: "1st Owner" },
+          { name: "Accidental History", value: "No (All Original)" },
+          { name: "Service History", value: "Available (Company Record)" },
+          { name: "Warranty Status", value: "Under Warranty" },
+          { name: "Insurance Type", value: "Comprehensive Active" },
+          { name: "Make Month", value: "January" },
+          { name: "Registration", value: "CH (Chandigarh)" },
+          { name: "Exchange & Finance", value: "Available" },
+        ],
+      },
+    ],
+    detailedFeatures: {
+      abs: true,
+      antiTheftDevice: true,
+      parkingSensors: true,
+      adjustableSteering: true,
+      airConditioning: "Automatic Climate Control",
+      powerSteering: true,
+      powerWindows: "All 4",
+      cruiseControl: true,
+      auxCompatibility: true,
+      bluetooth: true,
+      radio: true,
+      usbCompatibility: true,
+      navigationSystem: true,
+    },
+  },
+
+  // 4. Maruti Suzuki Swift RS (2021)
   {
     id: "maruti-swift-rs-2021",
     slug: "maruti-suzuki-swift-rs-2021",
@@ -272,7 +377,7 @@ export const CARS: Car[] = [
     ],
   },
 
-  // 4. Maruti Suzuki Swift 1.3 VDi DDiS (2015)
+  // 5. Maruti Suzuki Swift 1.3 VDi DDiS (2015)
   {
     id: "maruti-swift-vdi-2015",
     slug: "maruti-suzuki-swift-vdi-2015",
@@ -333,7 +438,7 @@ export const CARS: Car[] = [
     ],
   },
 
-  // 5. Hyundai Creta SX (O) Petrol (2016)
+  // 6. Hyundai Creta SX (O) Petrol (2016)
   {
     id: "hyundai-creta-sx-o-2016",
     slug: "hyundai-creta-sx-o-2016",
@@ -434,7 +539,7 @@ export const CARS: Car[] = [
     },
   },
 
-  // 6. Hyundai Grand i10 Asta 1.2 Kappa VTVT (O) (2019)
+  // 7. Hyundai Grand i10 Asta 1.2 Kappa VTVT (O) (2019)
   {
     id: "hyundai-grand-i10-asta-2019",
     slug: "hyundai-grand-i10-asta-2019",
@@ -520,111 +625,6 @@ export const CARS: Car[] = [
       airConditioning: "With Heater",
       powerSteering: true,
       powerWindows: "Front",
-      cruiseControl: true,
-      auxCompatibility: true,
-      bluetooth: true,
-      radio: true,
-      usbCompatibility: true,
-      navigationSystem: true,
-    },
-  },
-
-  // 7. Tata Safari 2.0 Kryotec XZ Plus 6S Adventure (2022)
-  {
-    id: "tata-safari-xz-plus-adventure-2022",
-    slug: "tata-safari-xz-plus-adventure-2022",
-    brand: "Tata",
-    model: "Safari",
-    variant: "2.0 Kryotec XZ Plus 6S Adventure",
-    year: 2022,
-    price: 16.95,
-    priceText: "₹16.95 Lakh",
-    emi: 33200,
-    fuel: "Diesel",
-    transmission: "Automatic",
-    mileage: "43,000 Km",
-    kmDriven: 43000,
-    owners: "1st Owner",
-    color: "White",
-    location: "Sector 21A, Chandigarh",
-    registration: "CH 01",
-    registrationPlace: "CH (Chandigarh)",
-    makeMonth: "January",
-    insuranceType: "Comprehensive",
-    postingDate: "14-AUG-26",
-    bodyType: "SUV",
-    featured: true,
-    newArrival: true,
-    description: "2022 Tata Safari 2.0 Kryotec XZ Plus 6S Adventure Automatic in White. Car is all original, single hand driven, immaculate and well maintained. Fully insured with complete company authorized service records and under manufacturer warranty. 1st Owner vehicle with both original smart keys. Features panoramic sunroof, 6-seater captain seats, adventure black alloy wheels, premium touch infotainment, reverse camera, and full safety suite. Exchange and finance available.",
-    images: [
-      "/cars/safari/safari1.png",
-      "/cars/safari/safari2.png",
-      "/cars/safari/safari3.png",
-      "/cars/safari/safari4.png",
-      "/cars/safari/safari5.png",
-    ],
-    featuresList: [
-      {
-        category: "Adventure Edition & Exterior",
-        items: [
-          { name: "Panoramic Sunroof", value: true },
-          { name: "Adventure Signature Alloy Wheels", value: true },
-          { name: "Projector Xenon HID Headlamps & LED DRLs", value: true },
-          { name: "Roof Rails & Signature Safari Grille", value: true },
-          { name: "Color", value: "White" },
-        ],
-      },
-      {
-        category: "Performance & Transmission",
-        items: [
-          { name: "2.0L Kryotec Turbocharged Diesel Engine", value: true },
-          { name: "6-Speed Automatic Transmission", value: true },
-          { name: "Multi Drive Modes (Eco, City, Sport)", value: true },
-          { name: "ESP Terrain Response Modes", value: true },
-        ],
-      },
-      {
-        category: "Luxury & Cabin Comfort",
-        items: [
-          { name: "6-Seater Layout with Captain Seats", value: true },
-          { name: "Automatic Climate Control AC with Rear Vents", value: true },
-          { name: "Electronic Power Steering & Tilt/Telescopic", value: true },
-          { name: "All 4 Power Windows", value: true },
-          { name: "Push Button Start / Stop with Both Smart Keys", value: true },
-        ],
-      },
-      {
-        category: "Safety & Security",
-        items: [
-          { name: "6 Airbags Protection", value: true },
-          { name: "Electronic Stability Program (ESP) & ABS", value: true },
-          { name: "Reverse Parking Camera & Sensors", value: true },
-          { name: "Hill Hold & Hill Descent Control", value: true },
-          { name: "Disc Brakes on All 4 Wheels", value: true },
-        ],
-      },
-      {
-        category: "Documentation & Verification",
-        items: [
-          { name: "Ownership", value: "1st Owner" },
-          { name: "Accidental History", value: "No (All Original)" },
-          { name: "Service History", value: "Available (Company Record)" },
-          { name: "Warranty Status", value: "Under Warranty" },
-          { name: "Insurance Type", value: "Comprehensive Active" },
-          { name: "Make Month", value: "January" },
-          { name: "Registration", value: "CH (Chandigarh)" },
-          { name: "Exchange & Finance", value: "Available" },
-        ],
-      },
-    ],
-    detailedFeatures: {
-      abs: true,
-      antiTheftDevice: true,
-      parkingSensors: true,
-      adjustableSteering: true,
-      airConditioning: "Automatic Climate Control",
-      powerSteering: true,
-      powerWindows: "All 4",
       cruiseControl: true,
       auxCompatibility: true,
       bluetooth: true,
