@@ -166,11 +166,13 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
     { label: "Fuel", value: car.fuel, icon: Fuel },
     { label: "Mileage", value: car.mileage, icon: Gauge },
     { label: "Transmission", value: car.transmission, icon: Settings2 },
-    { label: "Ownership", value: car.owners || "1st Owner", icon: Users },
-    { label: "Color", value: car.color || "Green", icon: Palette },
-    { label: "Registration Place", value: car.registrationPlace || car.registration, icon: MapPin },
-    { label: "Make Month", value: car.makeMonth || "September", icon: Calendar },
-    { label: "Insurance", value: car.insuranceType || "Comprehensive", icon: FileText },
+    { label: "Ownership", value: car.owners || "Verified", icon: Users },
+    { label: "Color", value: car.color || "N/A", icon: Palette },
+    { label: "Registration", value: car.registrationPlace || car.registration, icon: MapPin },
+    ...(car.location ? [{ label: "Location", value: car.location, icon: MapPin }] : []),
+    ...(car.makeMonth ? [{ label: "Make Month", value: car.makeMonth, icon: Calendar }] : []),
+    ...(car.postingDate ? [{ label: "Posted On", value: car.postingDate, icon: Calendar }] : []),
+    ...(car.insuranceType ? [{ label: "Insurance", value: car.insuranceType, icon: FileText }] : []),
   ];
 
   return (

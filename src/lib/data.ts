@@ -10,9 +10,9 @@ export interface CarFeatures {
 
   // Comfort & Convenience
   adjustableSteering?: boolean;
-  airConditioning?: string; // "Automatic Climate Control"
+  airConditioning?: string;
   powerSteering?: boolean;
-  powerWindows?: string; // "Front & Rear"
+  powerWindows?: string;
   cruiseControl?: boolean;
 
   // Connectivity & Entertainment
@@ -35,8 +35,9 @@ export interface Car {
   emi?: number;
   fuel: FuelType;
   transmission: TransmissionType;
-  registration: string; // e.g. "JH"
+  registration: string; // e.g. "JH", "HR 96"
   registrationPlace?: string;
+  location?: string;
   mileage: string; // e.g. "71,000 Km"
   kmDriven?: number;
   bodyType: BodyType;
@@ -44,6 +45,7 @@ export interface Car {
   makeMonth?: string;
   insuranceType?: string;
   owners?: number | string;
+  postingDate?: string;
   images: string[];
   featured?: boolean;
   newArrival?: boolean;
@@ -71,9 +73,69 @@ export function formatEMI(emi?: number): string {
 }
 
 // -------------------------------------------------------------
-// SINGLE SOURCE OF TRUTH: FIRST REAL VEHICLE LISTING
+// SINGLE SOURCE OF TRUTH: REAL VEHICLE INVENTORY
 // -------------------------------------------------------------
 export const CARS: Car[] = [
+  {
+    id: "hyundai-i20-2019-sportz",
+    slug: "hyundai-i20-2019-sportz",
+    brand: "Hyundai",
+    model: "i20",
+    variant: "1.2 Sportz",
+    year: 2019,
+    fuel: "Diesel",
+    transmission: "Manual",
+    mileage: "85,000 Km",
+    kmDriven: 85000,
+    owners: "3rd Owner",
+    color: "Grey",
+    location: "Pahlwan, Uchana",
+    registration: "HR 96",
+    registrationPlace: "HR 96 (Haryana)",
+    bodyType: "Hatchback",
+    priceText: "Price on Request",
+    featured: true,
+    newArrival: true,
+    postingDate: "02-AUG-26",
+    description: "Well-maintained Hyundai i20 Sportz from 2019. Diesel fuel type, manual transmission with 85,000 km driven. Third owner vehicle in great condition for its age. Located at Pahlwan, Uchana.",
+    images: [
+      "/cars/hyundai-i20/i20-1.jpg",
+    ],
+    featuresList: [
+      {
+        category: "Vehicle Overview",
+        items: [
+          { name: "Year & Model", value: "2019 Hyundai i20" },
+          { name: "Variant", value: "1.2 Sportz" },
+          { name: "Fuel & Gearbox", value: "Diesel · Manual" },
+          { name: "Mileage Recorded", value: "85,000 Km" },
+          { name: "Ownership", value: "3rd Owner" },
+          { name: "Color", value: "Grey" },
+          { name: "Registration", value: "HR 96" },
+          { name: "Location", value: "Pahlwan, Uchana" },
+          { name: "Posting Date", value: "02-AUG-26" },
+        ],
+      },
+      {
+        category: "Comfort & Convenience",
+        items: [
+          { name: "Air Conditioning", value: "Yes" },
+          { name: "Power Steering", value: true },
+          { name: "Power Windows", value: "Front & Rear" },
+          { name: "Central Locking", value: true },
+        ],
+      },
+      {
+        category: "Safety & Security",
+        items: [
+          { name: "Reverse Parking Sensors", value: true },
+          { name: "Anti-lock Braking (ABS)", value: true },
+          { name: "Dual Front Airbags", value: true },
+          { name: "Rear Defogger", value: true },
+        ],
+      },
+    ],
+  },
   {
     id: "mahindra-bolero-2018-zlx",
     slug: "mahindra-bolero-2018",
@@ -166,7 +228,7 @@ export function getCarBySlug(slug: string): Car | undefined {
 }
 
 export const BRANDS = [...new Set(CARS.map((c) => c.brand))].sort();
-export const LOCATIONS = ["All Listings", "JH"];
+export const LOCATIONS = ["Chandigarh", "Mohali", "Panchkula", "Zirakpur", "Kharar", "Other"];
 export const FUEL_TYPES: FuelType[] = ["Diesel", "Petrol", "Electric", "Hybrid", "CNG"];
 export const TRANSMISSION_TYPES: TransmissionType[] = ["Manual", "Automatic", "AMT", "CVT", "DCT"];
-export const BODY_TYPES: BodyType[] = ["SUV", "Sedan", "Hatchback", "MUV", "Luxury"];
+export const BODY_TYPES: BodyType[] = ["SUV", "Hatchback", "Sedan", "MUV", "Luxury"];
