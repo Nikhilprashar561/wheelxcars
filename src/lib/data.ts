@@ -76,7 +76,7 @@ export function formatEMI(emi?: number): string {
 // SINGLE SOURCE OF TRUTH: REAL VEHICLE INVENTORY
 // -------------------------------------------------------------
 export const CARS: Car[] = [
-  // 1. Mahindra Thar LX 4x4 (New Car 1 with exact FB CDN URLs)
+  // 1. Mahindra Thar LX 4x4 (2022)
   {
     id: "mahindra-thar-lx-4x4-2022",
     slug: "mahindra-thar-lx-4x4-2022",
@@ -137,7 +137,7 @@ export const CARS: Car[] = [
     ],
   },
 
-  // 2. Hyundai Grand i10 Magna/Era CNG (New Car 2 with exact FB CDN URLs)
+  // 2. Hyundai Grand i10 Magna CNG (2018)
   {
     id: "hyundai-grand-i10-cng-2018",
     slug: "hyundai-grand-i10-cng-2018",
@@ -321,154 +321,6 @@ export const CARS: Car[] = [
           { name: "Front Fog Lamps", value: true },
           { name: "Security Alarm & Immobilizer", value: true },
           { name: "Rear Door Child Locks", value: true },
-        ],
-      },
-    ],
-  },
-
-  // 5. Hyundai i20 1.2 Sportz (2019)
-  {
-    id: "hyundai-i20-2019-sportz",
-    slug: "hyundai-i20-2019-sportz",
-    brand: "Hyundai",
-    model: "i20",
-    variant: "1.2 Sportz",
-    year: 2019,
-    fuel: "Diesel",
-    transmission: "Manual",
-    mileage: "85,000 Km",
-    kmDriven: 85000,
-    owners: "3rd Owner",
-    color: "Grey",
-    location: "Pahlwan, Uchana",
-    registration: "HR 96",
-    registrationPlace: "HR 96 (Haryana)",
-    bodyType: "Hatchback",
-    priceText: "Price on Request",
-    featured: true,
-    newArrival: true,
-    postingDate: "02-AUG-26",
-    description: "Well-maintained Hyundai i20 Sportz from 2019. Diesel fuel type, manual transmission with 85,000 km driven. Third owner vehicle in great condition for its age. Located at Pahlwan, Uchana.",
-    images: [
-      "/cars/hyundai-i20/i20-1.jpg",
-      "/cars/hyundai-i20/i20-2.jpg",
-      "/cars/hyundai-i20/i20-3.jpg",
-    ],
-    featuresList: [
-      {
-        category: "Vehicle Overview",
-        items: [
-          { name: "Year & Model", value: "2019 Hyundai i20" },
-          { name: "Variant", value: "1.2 Sportz" },
-          { name: "Fuel & Gearbox", value: "Diesel · Manual" },
-          { name: "Mileage Recorded", value: "85,000 Km" },
-          { name: "Ownership", value: "3rd Owner" },
-          { name: "Color", value: "Grey" },
-          { name: "Registration", value: "HR 96" },
-          { name: "Location", value: "Pahlwan, Uchana" },
-          { name: "Posting Date", value: "02-AUG-26" },
-        ],
-      },
-      {
-        category: "Comfort & Convenience",
-        items: [
-          { name: "Air Conditioning", value: "Yes" },
-          { name: "Power Steering", value: true },
-          { name: "Power Windows", value: "Front & Rear" },
-          { name: "Central Locking", value: true },
-        ],
-      },
-      {
-        category: "Safety & Security",
-        items: [
-          { name: "Reverse Parking Sensors", value: true },
-          { name: "Anti-lock Braking (ABS)", value: true },
-          { name: "Dual Front Airbags", value: true },
-          { name: "Rear Defogger", value: true },
-        ],
-      },
-    ],
-  },
-
-  // 6. Mahindra Bolero 1.5 Power Plus ZLX (2018)
-  {
-    id: "mahindra-bolero-2018-zlx",
-    slug: "mahindra-bolero-2018",
-    brand: "Mahindra",
-    model: "Bolero",
-    variant: "1.5 Power Plus ZLX",
-    year: 2018,
-    fuel: "Diesel",
-    transmission: "Manual",
-    mileage: "71,000 Km",
-    kmDriven: 71000,
-    owners: "1st Owner",
-    color: "Green",
-    makeMonth: "September",
-    insuranceType: "Comprehensive",
-    registration: "JH",
-    registrationPlace: "JH",
-    bodyType: "SUV",
-    priceText: "Price on Request",
-    featured: true,
-    newArrival: true,
-    description: "2018 Mahindra Bolero 1.5 Power Plus ZLX in Green. Single owner (1st Owner), diesel manual transmission with genuine 71,000 Km driven. Features comprehensive insurance, power windows, automatic climate control AC, navigation system, and reverse parking sensors. Verified single-hand driven vehicle.",
-    images: [
-      "/cars/mahindra-bolero/bolero-1.jpg",
-      "/cars/mahindra-bolero/bolero-2.jpg",
-      "/cars/mahindra-bolero/bolero-3.jpg",
-    ],
-    detailedFeatures: {
-      abs: true,
-      antiTheftDevice: true,
-      parkingSensors: true,
-      adjustableSteering: true,
-      airConditioning: "Automatic Climate Control",
-      powerSteering: true,
-      powerWindows: "Front & Rear",
-      cruiseControl: true,
-      auxCompatibility: true,
-      bluetooth: true,
-      radio: true,
-      usbCompatibility: true,
-      navigationSystem: true,
-    },
-    featuresList: [
-      {
-        category: "Safety & Security",
-        items: [
-          { name: "Anti-lock Braking System (ABS)", value: true },
-          { name: "Anti Theft Device", value: true },
-          { name: "Reverse Parking Sensors", value: true },
-        ],
-      },
-      {
-        category: "Comfort & Convenience",
-        items: [
-          { name: "Air Conditioning", value: "Automatic Climate Control" },
-          { name: "Adjustable Steering Column", value: true },
-          { name: "Power Steering", value: true },
-          { name: "Power Windows", value: "Front & Rear" },
-          { name: "Cruise Control", value: true },
-        ],
-      },
-      {
-        category: "Connectivity & Entertainment",
-        items: [
-          { name: "Navigation System", value: true },
-          { name: "Bluetooth Connectivity", value: true },
-          { name: "USB Compatibility", value: true },
-          { name: "Aux Compatibility", value: true },
-          { name: "AM/FM Radio", value: true },
-        ],
-      },
-      {
-        category: "Vehicle Overview",
-        items: [
-          { name: "Color", value: "Green" },
-          { name: "Make Month", value: "September 2018" },
-          { name: "Insurance Type", value: "Comprehensive" },
-          { name: "Registration State / Place", value: "JH" },
         ],
       },
     ],
