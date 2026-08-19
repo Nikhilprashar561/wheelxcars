@@ -36,7 +36,7 @@ const imageVariants = {
 export function Hero() {
   return (
     <section
-      className="relative min-h-[500px] sm:min-h-[500px] lg:min-h-[540px] flex flex-col justify-start overflow-hidden bg-black"
+      className="relative min-h-[560px] sm:min-h-[500px] lg:min-h-[540px] flex flex-col justify-start overflow-hidden bg-black"
       aria-label="Hero section"
     >
       {/* Seamless integrated background car visual with feathered blend */}
@@ -53,7 +53,7 @@ export function Hero() {
           priority
           loading="eager"
           quality={95}
-          className="object-cover object-[center_60%] sm:object-[center_bottom] lg:object-[68%_center]"
+          className="object-cover object-[center_50%] sm:object-[center_bottom] lg:object-[68%_center]"
           sizes="100vw"
         />
 
@@ -61,7 +61,7 @@ export function Hero() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent via-45% hidden lg:block" />
 
         {/* Mobile & Tablet Soft Gradient: Lightened so cars are brightly visible and not dim */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-transparent via-35% lg:hidden" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-transparent via-30% lg:hidden" />
 
         {/* Seamless Edge Blends: Top and Bottom fades for smooth transitions */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/30" />
@@ -106,10 +106,10 @@ export function Hero() {
             Verified pre-owned vehicles with documented inspection and transparent pricing across Tricity.
           </motion.p>
 
-          {/* Linear CTAs - Positioned lower on mobile to leave cars completely unobstructed in the middle */}
+          {/* Linear CTAs - Positioned at the bottom on mobile to leave cars 100% unobstructed */}
           <motion.div
             variants={itemVariants}
-            className="mt-32 sm:mt-0 flex flex-row items-center gap-2.5 sm:gap-3.5 w-full sm:w-auto max-w-md sm:max-w-none"
+            className="mt-48 sm:mt-0 flex flex-row items-center gap-2.5 sm:gap-3.5 w-full sm:w-auto max-w-md sm:max-w-none"
           >
             <Link
               href="/cars"
