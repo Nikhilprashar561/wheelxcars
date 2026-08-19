@@ -36,7 +36,7 @@ const imageVariants = {
 export function Hero() {
   return (
     <section
-      className="relative min-h-[500px] sm:min-h-[540px] lg:min-h-[600px] flex flex-col justify-center overflow-hidden bg-black"
+      className="relative min-h-[460px] sm:min-h-[500px] lg:min-h-[540px] flex flex-col justify-start overflow-hidden bg-black"
       aria-label="Hero section"
     >
       {/* Seamless integrated background car visual with feathered blend */}
@@ -72,8 +72,8 @@ export function Hero() {
       {/* Atmospheric ambient glow */}
       <div className="absolute top-1/4 left-1/3 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-b from-white/5 to-transparent rounded-full blur-3xl pointer-events-none z-[1]" />
 
-      {/* Content Container - Cleanly placed over the seamlessly blended background */}
-      <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 pt-20 sm:pt-24 lg:pt-28 pb-12 sm:pb-16 lg:pb-20 w-full flex flex-col justify-center">
+      {/* Content Container - Compact top spacing so text sits close to the navbar */}
+      <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 pt-14 sm:pt-16 lg:pt-20 pb-8 sm:pb-10 lg:pb-14 w-full flex flex-col justify-start">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -81,7 +81,7 @@ export function Hero() {
           className="max-w-xl lg:max-w-2xl"
         >
           {/* Eyebrow */}
-          <motion.div variants={itemVariants} className="mb-2.5 sm:mb-3.5">
+          <motion.div variants={itemVariants} className="mb-2 sm:mb-3">
             <span className="inline-flex items-center gap-2 text-zinc-300 text-[11px] sm:text-xs font-bold tracking-[0.18em] uppercase drop-shadow-sm">
               <span className="w-4 sm:w-6 h-px bg-white/40" />
               Pre-Owned · Inspected · Trusted

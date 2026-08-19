@@ -54,20 +54,20 @@ export function Navbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           scrolled
-            ? "bg-black/95 backdrop-blur-md border-b border-white/5 py-2.5"
-            : "bg-transparent py-4"
+            ? "bg-black/95 backdrop-blur-md border-b border-white/5 py-1"
+            : "bg-transparent py-1.5 sm:py-2"
         )}
       >
         <div className="max-w-[1360px] mx-auto px-4 sm:px-6 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group" aria-label="WheelxCars Home">
-            <div className="relative h-8 sm:h-10 w-32 sm:w-40">
+          <Link href="/" className="flex items-center gap-2 group py-1" aria-label="WheelxCars Home">
+            <div className="relative h-11 sm:h-14 md:h-16 w-44 sm:w-56 md:w-64">
               <Image
                 src="/logo.png"
                 alt="WheelxCars Logo"
                 fill
                 priority
-                className="object-contain object-left transition-transform duration-200 group-hover:scale-105"
+                className="object-contain object-left scale-125 sm:scale-135 origin-left transition-transform duration-200 group-hover:scale-[1.4]"
               />
             </div>
           </Link>
@@ -129,13 +129,13 @@ export function Navbar() {
             className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex flex-col"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-white/8">
-              <div className="relative h-8 w-32">
+            <div className="flex items-center justify-between px-6 py-3 border-b border-white/8">
+              <div className="relative h-11 w-44">
                 <Image
                   src="/logo.png"
                   alt="WheelxCars Logo"
                   fill
-                  className="object-contain object-left"
+                  className="object-contain object-left scale-125 origin-left"
                 />
               </div>
               <button

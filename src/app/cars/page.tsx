@@ -147,7 +147,7 @@ function CarsPageContent() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-black pt-20 sm:pt-28 pb-24 px-3.5 sm:px-6 w-full max-w-full overflow-x-hidden">
+      <main className="min-h-screen bg-black pt-16 sm:pt-20 pb-24 px-3.5 sm:px-6 w-full max-w-full overflow-x-hidden">
         <div className="max-w-[1360px] mx-auto w-full min-w-0">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
