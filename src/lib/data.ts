@@ -35,10 +35,10 @@ export interface Car {
   emi?: number;
   fuel: FuelType;
   transmission: TransmissionType;
-  registration: string; // e.g. "JH", "HR 96"
+  registration: string; // e.g. "PB 03", "HR 96", "JH"
   registrationPlace?: string;
   location?: string;
-  mileage: string; // e.g. "71,000 Km"
+  mileage: string; // e.g. "38,000 Km"
   kmDriven?: number;
   bodyType: BodyType;
   color?: string;
@@ -76,6 +76,136 @@ export function formatEMI(emi?: number): string {
 // SINGLE SOURCE OF TRUTH: REAL VEHICLE INVENTORY
 // -------------------------------------------------------------
 export const CARS: Car[] = [
+  // 1. Maruti Suzuki Swift RS (Car One)
+  {
+    id: "maruti-swift-rs-2021",
+    slug: "maruti-suzuki-swift-rs-2021",
+    brand: "Maruti Suzuki",
+    model: "Swift",
+    variant: "RS Sport Edition",
+    year: 2021,
+    fuel: "Petrol",
+    transmission: "Manual",
+    mileage: "38,000 Km",
+    kmDriven: 38000,
+    owners: "1st Owner",
+    color: "Metallic Silver",
+    registration: "Verified",
+    registrationPlace: "Tricity / North India",
+    bodyType: "Hatchback",
+    priceText: "Price on Request",
+    featured: true,
+    newArrival: true,
+    description: "Maruti Suzuki Swift RS Sport Edition in Metallic Silver. Features sport aerodynamic body kit, projector headlamps with LED DRLs, front fog lamps, multi-spoke sport alloy wheels, rear roof spoiler, and sports exhaust tip. Well maintained single-hand driven vehicle with complete documentation.",
+    images: [
+      "/cars/maruti-swift-rs/swift-1.jpg",
+      "/cars/maruti-swift-rs/swift-2.jpg",
+      "/cars/maruti-swift-rs/swift-3.jpg",
+      "/cars/maruti-swift-rs/swift-4.jpg",
+    ],
+    featuresList: [
+      {
+        category: "Sport & Exterior",
+        items: [
+          { name: "RS Aerodynamic Body Kit", value: true },
+          { name: "Front Projector Headlamps & DRLs", value: true },
+          { name: "Front Fog Lamps with Chrome Bezels", value: true },
+          { name: "Sport Multi-Spoke Alloy Wheels", value: true },
+          { name: "Rear Roof Spoiler & Sport Tip", value: true },
+        ],
+      },
+      {
+        category: "Comfort & Convenience",
+        items: [
+          { name: "Automatic Climate Control AC", value: true },
+          { name: "Electric Power Steering", value: true },
+          { name: "All 4 Power Windows", value: true },
+          { name: "Electrically Adjustable ORVMs", value: true },
+          { name: "Push Button Start / Keyless Entry", value: true },
+        ],
+      },
+      {
+        category: "Safety & Security",
+        items: [
+          { name: "Dual Front Airbags", value: true },
+          { name: "Anti-lock Braking System (ABS + EBD)", value: true },
+          { name: "Reverse Parking Sensors", value: true },
+          { name: "Engine Immobilizer", value: true },
+        ],
+      },
+      {
+        category: "Vehicle Overview",
+        items: [
+          { name: "Year of Make", value: "2021" },
+          { name: "Fuel & Transmission", value: "Petrol · Manual" },
+          { name: "Mileage Recorded", value: "38,000 Km" },
+          { name: "Ownership", value: "1st Owner" },
+          { name: "Color", value: "Metallic Silver" },
+        ],
+      },
+    ],
+  },
+
+  // 2. Maruti Suzuki Swift VDi DDiS (Car Two)
+  {
+    id: "maruti-swift-vdi-2015",
+    slug: "maruti-suzuki-swift-vdi-2015",
+    brand: "Maruti Suzuki",
+    model: "Swift",
+    variant: "1.3 VDi DDiS",
+    year: 2015,
+    fuel: "Diesel",
+    transmission: "Manual",
+    mileage: "68,000 Km",
+    kmDriven: 68000,
+    owners: "1st Owner",
+    color: "Silky Silver",
+    registration: "PB 03",
+    registrationPlace: "PB 03 (Punjab)",
+    bodyType: "Hatchback",
+    priceText: "Price on Request",
+    featured: true,
+    newArrival: true,
+    description: "Maruti Suzuki Swift VDi Diesel equipped with the legendary 1.3L DDiS turbocharged diesel engine in Silky Silver. Registered in Punjab (PB03AW2189). Features power steering, front & rear power windows, air conditioning, central locking, and fog lamps. Excellent mechanical condition and high fuel economy.",
+    images: [
+      "/cars/maruti-swift-vdi/swift-vdi-1.jpg",
+      "/cars/maruti-swift-vdi/swift-vdi-2.jpg",
+    ],
+    featuresList: [
+      {
+        category: "Vehicle Overview",
+        items: [
+          { name: "Year & Model", value: "2015 Maruti Swift" },
+          { name: "Variant", value: "1.3 VDi DDiS" },
+          { name: "Fuel & Transmission", value: "Diesel · Manual" },
+          { name: "Mileage Recorded", value: "68,000 Km" },
+          { name: "Ownership", value: "1st Owner" },
+          { name: "Color", value: "Silky Silver" },
+          { name: "Registration", value: "PB 03 (Punjab)" },
+        ],
+      },
+      {
+        category: "Comfort & Convenience",
+        items: [
+          { name: "Air Conditioning with Heater", value: "Yes" },
+          { name: "Power Steering", value: true },
+          { name: "Power Windows", value: "Front & Rear" },
+          { name: "Central Locking", value: true },
+          { name: "Internally Adjustable Mirrors", value: true },
+        ],
+      },
+      {
+        category: "Safety & Security",
+        items: [
+          { name: "Front Fog Lamps", value: true },
+          { name: "Security Alarm & Immobilizer", value: true },
+          { name: "Rear Door Child Locks", value: true },
+        ],
+      },
+    ],
+  },
+
+  // 3. Hyundai i20 1.2 Sportz (2019)
   {
     id: "hyundai-i20-2019-sportz",
     slug: "hyundai-i20-2019-sportz",
@@ -138,6 +268,8 @@ export const CARS: Car[] = [
       },
     ],
   },
+
+  // 4. Mahindra Bolero 1.5 Power Plus ZLX (2018)
   {
     id: "mahindra-bolero-2018-zlx",
     slug: "mahindra-bolero-2018",
