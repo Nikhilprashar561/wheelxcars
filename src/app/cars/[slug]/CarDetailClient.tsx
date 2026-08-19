@@ -537,7 +537,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                     className="w-full flex items-center justify-center gap-2.5 bg-[#1c1c1c] hover:bg-[#252525] border border-white/20 text-white font-extrabold text-xs sm:text-sm py-3.5 sm:py-4 rounded-xl hover:border-white/40 transition-all hover:scale-[1.01] active:scale-[0.99] shadow-xl cursor-pointer"
                   >
                     <PhoneCall size={16} className="text-emerald-400" />
-                    Call Now: +91 80545 35453
+                    Call Now
                   </a>
                 </div>
 
@@ -641,7 +641,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                       className="flex items-center justify-center gap-2 bg-[#1c1c1c] hover:bg-[#252525] border border-white/20 text-white text-xs font-bold py-3 rounded-xl transition-all text-center cursor-pointer shadow-md"
                     >
                       <PhoneCall size={15} className="text-emerald-400" />
-                      Call: +91 80545 35453
+                      Call Now
                     </a>
                     <button
                       type="button"
@@ -787,7 +787,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                       className="flex items-center justify-center gap-2 bg-[#1c1c1c] hover:bg-[#252525] border border-white/20 text-white text-xs font-bold py-3 rounded-xl transition-all text-center cursor-pointer shadow-md"
                     >
                       <PhoneCall size={15} className="text-emerald-400" />
-                      Call: +91 80545 35453
+                      Call Now
                     </a>
                     <button
                       type="button"

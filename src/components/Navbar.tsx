@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Menu } from "lucide-react";
+import { X, Menu, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -181,9 +181,10 @@ export function Navbar() {
               </Link>
               <a
                 href="tel:+918054535453"
-                className="block w-full text-center bg-[#181818] border border-white/20 text-white font-bold py-3 rounded-xl text-xs hover:border-white/40 transition-colors"
+                className="flex items-center justify-center gap-2 w-full text-center bg-[#181818] border border-white/20 text-white font-bold py-3.5 rounded-xl text-xs hover:border-white/40 transition-colors cursor-pointer"
               >
-                Call: +91 80545 35453
+                <Phone size={14} className="text-emerald-400" />
+                <span>Call Now</span>
               </a>
             </div>
           </motion.div>
