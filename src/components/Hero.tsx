@@ -36,7 +36,7 @@ const imageVariants = {
 export function Hero() {
   return (
     <section
-      className="relative min-h-[580px] sm:min-h-[500px] lg:min-h-[540px] flex flex-col justify-start overflow-hidden bg-black"
+      className="relative min-h-[580px] sm:min-h-[640px] md:min-h-[680px] lg:min-h-[540px] flex flex-col justify-start overflow-hidden bg-black"
       aria-label="Hero section"
     >
       {/* Seamless integrated background car visual with feathered blend */}
@@ -53,7 +53,7 @@ export function Hero() {
           priority
           loading="eager"
           quality={95}
-          className="object-cover object-[center_38%] sm:object-[center_bottom] lg:object-[68%_center]"
+          className="object-cover object-[center_38%] sm:object-[center_40%] md:object-[center_42%] lg:object-[68%_center]"
           sizes="100vw"
         />
 
@@ -72,13 +72,13 @@ export function Hero() {
       {/* Atmospheric ambient glow */}
       <div className="absolute top-1/4 left-1/3 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-b from-white/5 to-transparent rounded-full blur-3xl pointer-events-none z-[1]" />
 
-      {/* Content Container - Compact top spacing so text sits close to the navbar */}
-      <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 pt-14 sm:pt-16 lg:pt-20 pb-8 sm:pb-10 lg:pb-14 w-full flex flex-col justify-start">
+      {/* Content Container - 7px margin from header */}
+      <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 pt-16 sm:pt-18 lg:pt-20 pb-8 sm:pb-10 lg:pb-14 w-full flex flex-col justify-start">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="max-w-xl lg:max-w-2xl flex flex-col"
+          className="max-w-xl lg:max-w-2xl flex flex-col mt-[7px]"
         >
           {/* Eyebrow */}
           <motion.div variants={itemVariants} className="mb-2 sm:mb-3">
@@ -106,10 +106,10 @@ export function Hero() {
             Verified pre-owned vehicles with documented inspection and transparent pricing across Tricity.
           </motion.p>
 
-          {/* Linear CTAs - Positioned cleanly below the car wheels on mobile */}
+          {/* Linear CTAs - Positioned cleanly at bottom on BOTH mobile AND mid-screens (tablets/small laptops up to lg:) */}
           <motion.div
             variants={itemVariants}
-            className="mt-64 sm:mt-0 flex flex-row items-center gap-2.5 sm:gap-3.5 w-full sm:w-auto max-w-md sm:max-w-none"
+            className="mt-60 sm:mt-64 md:mt-72 lg:mt-0 flex flex-row items-center gap-2.5 sm:gap-3.5 w-full sm:w-auto max-w-md sm:max-w-none"
           >
             <Link
               href="/cars"

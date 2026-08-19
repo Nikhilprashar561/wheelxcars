@@ -61,13 +61,13 @@ export function Navbar() {
         <div className="max-w-[1360px] mx-auto px-4 sm:px-6 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group py-1" aria-label="WheelxCars Home">
-            <div className="relative h-11 sm:h-14 md:h-16 w-44 sm:w-56 md:w-64">
+            <div className="relative h-13 sm:h-14 md:h-16 w-52 sm:w-56 md:w-64">
               <Image
                 src="/logo.png"
                 alt="WheelxCars Logo"
                 fill
                 priority
-                className="object-contain object-left scale-125 sm:scale-135 origin-left transition-transform duration-200 group-hover:scale-[1.4]"
+                className="object-contain object-left scale-145 sm:scale-135 md:scale-135 origin-left transition-transform duration-200 group-hover:scale-[1.5]"
               />
             </div>
           </Link>
@@ -130,12 +130,12 @@ export function Navbar() {
           >
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-3 border-b border-white/8">
-              <div className="relative h-11 w-44">
+              <div className="relative h-13 w-52">
                 <Image
                   src="/logo.png"
                   alt="WheelxCars Logo"
                   fill
-                  className="object-contain object-left scale-125 origin-left"
+                  className="object-contain object-left scale-145 origin-left"
                 />
               </div>
               <button
