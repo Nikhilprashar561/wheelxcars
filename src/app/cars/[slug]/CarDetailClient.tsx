@@ -514,7 +514,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                     className="w-full flex items-center justify-center gap-2.5 bg-white text-black font-extrabold text-xs sm:text-sm py-3.5 sm:py-4 rounded-xl hover:bg-zinc-100 transition-all hover:scale-[1.01] active:scale-[0.99] shadow-xl cursor-pointer"
                   >
                     <MessageSquare size={16} />
-                    Enquire About This Vehicle
+                    Enquire Now
                   </button>
                   <button
                     onClick={() => openWhatsAppTestDrive()}
@@ -525,10 +525,10 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                   </button>
                   <a
                     href="tel:+918054535453"
-                    className="w-full flex items-center justify-center gap-2.5 bg-[#1c1c1c] hover:bg-[#252525] border border-white/20 text-white font-bold text-xs sm:text-sm py-3.5 rounded-xl hover:border-white/40 transition-all hover:scale-[1.01] active:scale-[0.99]"
+                    className="w-full flex items-center justify-center gap-2.5 bg-[#1c1c1c] hover:bg-[#252525] border border-white/20 text-white font-extrabold text-xs sm:text-sm py-3.5 sm:py-4 rounded-xl hover:border-white/40 transition-all hover:scale-[1.01] active:scale-[0.99] shadow-xl cursor-pointer"
                   >
-                    <PhoneCall size={15} className="text-emerald-400" />
-                    Call Directly: +91 80545 35453
+                    <PhoneCall size={16} className="text-emerald-400" />
+                    Call Now: +91 80545 35453
                   </a>
                 </div>
 
@@ -557,32 +557,24 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
         </div>
       </main>
 
-      {/* MOBILE STICKY BOTTOM BAR - Redesigned 3 Action Buttons */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0e0e0e]/95 backdrop-blur-xl border-t border-white/12 px-3 py-2.5 shadow-2xl">
-        <div className="max-w-md mx-auto flex items-center gap-2">
+      {/* MOBILE STICKY BOTTOM BAR - Call Now & Enquire Now */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0e0e0e]/95 backdrop-blur-xl border-t border-white/12 px-4 py-3 shadow-2xl safe-area-bottom">
+        <div className="max-w-md mx-auto flex items-center gap-3">
           <a
             href="tel:+918054535453"
-            className="flex-1 bg-[#1c1c1c] hover:bg-[#252525] border border-white/15 text-white font-bold text-xs py-3 rounded-xl flex items-center justify-center gap-1.5 active:scale-95 transition-all text-center shadow-md"
-            aria-label="Call Directly"
+            className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs sm:text-sm py-3.5 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all text-center shadow-lg cursor-pointer"
+            aria-label="Call Now"
           >
-            <PhoneCall size={14} className="text-emerald-400 shrink-0" />
-            <span>Call</span>
+            <PhoneCall size={16} className="text-white shrink-0" />
+            <span>Call Now</span>
           </a>
           <button
-            onClick={() => openWhatsAppTestDrive()}
-            className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-3 rounded-xl flex items-center justify-center gap-1.5 active:scale-95 transition-all shadow-md cursor-pointer"
-            aria-label="Book a Test Drive on WhatsApp"
-          >
-            <MessageCircle size={15} className="shrink-0" />
-            <span>Test Drive</span>
-          </button>
-          <button
             onClick={() => setEnquiryModalOpen(true)}
-            className="flex-1 bg-white hover:bg-zinc-100 text-black font-bold text-xs py-3 rounded-xl text-center active:scale-95 transition-all shadow-md cursor-pointer flex items-center justify-center gap-1.5"
-            aria-label="Enquire on WhatsApp"
+            className="flex-1 bg-white hover:bg-zinc-100 text-black font-extrabold text-xs sm:text-sm py-3.5 rounded-xl text-center active:scale-95 transition-all shadow-lg cursor-pointer flex items-center justify-center gap-2"
+            aria-label="Enquire Now"
           >
-            <MessageSquare size={14} className="shrink-0" />
-            <span>Enquire</span>
+            <MessageSquare size={16} className="shrink-0" />
+            <span>Enquire Now</span>
           </button>
         </div>
       </div>
@@ -595,11 +587,11 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-lg bg-[#121212] border border-white/12 rounded-2xl p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto"
+              className="relative w-full max-w-lg bg-[#141414] border border-white/15 rounded-2xl p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto"
             >
               <button
                 onClick={() => setEnquiryModalOpen(false)}
-                className="absolute top-4 right-4 text-white/40 hover:text-white p-1"
+                className="absolute top-4 right-4 text-zinc-400 hover:text-white p-1 cursor-pointer"
                 aria-label="Close"
               >
                 <X size={20} />
@@ -609,7 +601,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                 <div className="py-8 text-center space-y-4">
                   <CheckCircle size={48} className="text-emerald-400 mx-auto" />
                   <h3 className="text-xl font-bold text-white">Enquiry Sent to WhatsApp</h3>
-                  <p className="text-xs text-white/50 max-w-xs mx-auto">
+                  <p className="text-xs text-zinc-400 max-w-xs mx-auto">
                     We have received your enquiry for the {car.year} {car.brand} {car.model} and opened WhatsApp to connect you directly.
                   </p>
                   <button
@@ -617,7 +609,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                       setEnquirySuccess(false);
                       setEnquiryModalOpen(false);
                     }}
-                    className="mt-4 bg-white text-black text-xs font-bold px-6 py-2.5 rounded-lg hover:bg-white/90"
+                    className="mt-4 bg-white text-black text-xs font-bold px-6 py-2.5 rounded-lg hover:bg-white/90 cursor-pointer"
                   >
                     Done
                   </button>
@@ -625,32 +617,41 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
               ) : (
                 <>
                   <div className="mb-5">
-                    <p className="text-[10px] text-white/40 uppercase tracking-widest font-semibold">
+                    <p className="text-[11px] text-zinc-400 uppercase tracking-widest font-bold">
                       Vehicle Enquiry
                     </p>
-                    <h2 className="text-xl font-bold text-white mt-1">
+                    <h2 className="text-xl sm:text-2xl font-extrabold text-white mt-1">
                       {car.year} {car.brand} {car.model}
                     </h2>
-                    <p className="text-xs text-white/50">{car.variant} • {car.mileage} • {car.color}</p>
+                    <p className="text-xs sm:text-sm text-zinc-300 font-medium mt-0.5">{car.variant} • {car.mileage} • {car.color}</p>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => openWhatsAppEnquiry()}
-                    className="w-full mb-4 flex items-center justify-center gap-2 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 text-xs font-bold py-3 rounded-xl transition-all"
-                  >
-                    <MessageCircle size={16} />
-                    Instant Query on WhatsApp: +91 80545 35453
-                  </button>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-4">
+                    <a
+                      href="tel:+918054535453"
+                      className="flex items-center justify-center gap-2 bg-[#1c1c1c] hover:bg-[#252525] border border-white/20 text-white text-xs font-bold py-3 rounded-xl transition-all text-center cursor-pointer shadow-md"
+                    >
+                      <PhoneCall size={15} className="text-emerald-400" />
+                      Call: +91 80545 35453
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => openWhatsAppEnquiry()}
+                      className="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold py-3 rounded-xl transition-all cursor-pointer shadow-md"
+                    >
+                      <MessageCircle size={15} />
+                      WhatsApp Query
+                    </button>
+                  </div>
 
                   <div className="relative flex items-center justify-center mb-4">
                     <span className="h-px bg-white/10 w-full" />
-                    <span className="px-3 text-[10px] text-white/30 uppercase bg-[#121212] shrink-0">or fill details</span>
+                    <span className="px-3 text-[10px] text-zinc-400 uppercase font-bold bg-[#141414] shrink-0">or submit form</span>
                     <span className="h-px bg-white/10 w-full" />
                   </div>
 
                   {enquiryError && (
-                    <div className="mb-4 p-3 bg-red-950/40 border border-red-900 text-red-300 text-xs rounded flex items-center gap-2">
+                    <div className="mb-4 p-3 bg-red-950/40 border border-red-900 text-red-300 text-xs rounded-xl flex items-center gap-2">
                       <AlertCircle size={14} />
                       {enquiryError}
                     </div>
@@ -658,7 +659,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
 
                   <form onSubmit={handleEnquirySubmit} className="space-y-4">
                     <div>
-                      <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1">
+                      <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                         Your Name *
                       </label>
                       <input
@@ -667,12 +668,12 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                         value={enquiryForm.name}
                         onChange={(e) => setEnquiryForm((s) => ({ ...s, name: e.target.value }))}
                         placeholder="Full Name"
-                        className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
+                        className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40 shadow-inner"
                       />
                     </div>
                     <div className="grid sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Phone Number (WhatsApp) *
                         </label>
                         <input
@@ -681,11 +682,11 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                           value={enquiryForm.phone}
                           onChange={(e) => setEnquiryForm((s) => ({ ...s, phone: e.target.value }))}
                           placeholder="+91 80545 35453"
-                          className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
+                          className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40 shadow-inner"
                         />
                       </div>
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Email Address
                         </label>
                         <input
@@ -693,27 +694,27 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                           value={enquiryForm.email}
                           onChange={(e) => setEnquiryForm((s) => ({ ...s, email: e.target.value }))}
                           placeholder="you@domain.com"
-                          className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
+                          className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40 shadow-inner"
                         />
                       </div>
                     </div>
                     <div>
-                      <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1">
+                      <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                         Message / Request
                       </label>
                       <textarea
                         rows={3}
                         value={enquiryForm.message}
                         onChange={(e) => setEnquiryForm((s) => ({ ...s, message: e.target.value }))}
-                        className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-xs text-white placeholder:text-white/20 focus:outline-none focus:border-white/30 resize-none"
+                        className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-xs text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40 resize-none shadow-inner"
                       />
                     </div>
                     <button
                       type="submit"
                       disabled={enquiryLoading}
-                      className="w-full bg-white text-black font-bold text-xs py-3.5 rounded-xl hover:bg-white/90 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                      className="w-full bg-white text-black font-extrabold text-xs sm:text-sm py-3.5 rounded-xl hover:bg-zinc-100 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg"
                     >
-                      <MessageCircle size={15} />
+                      <MessageCircle size={16} />
                       {enquiryLoading ? "Submitting..." : "Send Vehicle Enquiry via WhatsApp"}
                     </button>
                   </form>
@@ -732,11 +733,11 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-lg bg-[#121212] border border-white/12 rounded-2xl p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto"
+              className="relative w-full max-w-lg bg-[#141414] border border-white/15 rounded-2xl p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto"
             >
               <button
                 onClick={() => setTestDriveModalOpen(false)}
-                className="absolute top-4 right-4 text-white/40 hover:text-white p-1"
+                className="absolute top-4 right-4 text-zinc-400 hover:text-white p-1 cursor-pointer"
                 aria-label="Close"
               >
                 <X size={20} />
@@ -746,7 +747,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                 <div className="py-8 text-center space-y-4">
                   <CheckCircle size={48} className="text-emerald-400 mx-auto" />
                   <h3 className="text-xl font-bold text-white">Test Drive Requested</h3>
-                  <p className="text-xs text-white/50 max-w-xs mx-auto">
+                  <p className="text-xs text-zinc-400 max-w-xs mx-auto">
                     Your test drive appointment for the {car.year} {car.brand} {car.model} has been sent to WhatsApp. Our advisor will confirm your slot.
                   </p>
                   <button
@@ -754,7 +755,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                       setTestDriveSuccess(false);
                       setTestDriveModalOpen(false);
                     }}
-                    className="mt-4 bg-white text-black text-xs font-bold px-6 py-2.5 rounded-lg hover:bg-white/90"
+                    className="mt-4 bg-white text-black text-xs font-bold px-6 py-2.5 rounded-lg hover:bg-white/90 cursor-pointer"
                   >
                     Done
                   </button>
@@ -762,32 +763,41 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
               ) : (
                 <>
                   <div className="mb-5">
-                    <p className="text-[10px] text-white/40 uppercase tracking-widest font-semibold">
+                    <p className="text-[11px] text-zinc-400 uppercase tracking-widest font-bold">
                       Schedule Appointment
                     </p>
-                    <h2 className="text-xl font-bold text-white mt-1">
+                    <h2 className="text-xl sm:text-2xl font-extrabold text-white mt-1">
                       {car.year} {car.brand} {car.model}
                     </h2>
-                    <p className="text-xs text-white/50">{car.variant} • Reg: {car.registration}</p>
+                    <p className="text-xs sm:text-sm text-zinc-300 font-medium mt-0.5">{car.variant} • Reg: {car.registration}</p>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => openWhatsAppTestDrive()}
-                    className="w-full mb-4 flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold py-3 rounded-xl transition-all shadow-lg"
-                  >
-                    <MessageCircle size={16} />
-                    Quick WhatsApp Booking: +91 80545 35453
-                  </button>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-4">
+                    <a
+                      href="tel:+918054535453"
+                      className="flex items-center justify-center gap-2 bg-[#1c1c1c] hover:bg-[#252525] border border-white/20 text-white text-xs font-bold py-3 rounded-xl transition-all text-center cursor-pointer shadow-md"
+                    >
+                      <PhoneCall size={15} className="text-emerald-400" />
+                      Call: +91 80545 35453
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => openWhatsAppTestDrive()}
+                      className="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold py-3 rounded-xl transition-all cursor-pointer shadow-md"
+                    >
+                      <MessageCircle size={15} />
+                      WhatsApp Booking
+                    </button>
+                  </div>
 
                   <div className="relative flex items-center justify-center mb-4">
                     <span className="h-px bg-white/10 w-full" />
-                    <span className="px-3 text-[10px] text-white/30 uppercase bg-[#121212] shrink-0">or select slot details</span>
+                    <span className="px-3 text-[10px] text-zinc-400 uppercase font-bold bg-[#141414] shrink-0">or select slot details</span>
                     <span className="h-px bg-white/10 w-full" />
                   </div>
 
                   {testDriveError && (
-                    <div className="mb-4 p-3 bg-red-950/40 border border-red-900 text-red-300 text-xs rounded flex items-center gap-2">
+                    <div className="mb-4 p-3 bg-red-950/40 border border-red-900 text-red-300 text-xs rounded-xl flex items-center gap-2">
                       <AlertCircle size={14} />
                       {testDriveError}
                     </div>
@@ -795,7 +805,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
 
                   <form onSubmit={handleTestDriveSubmit} className="space-y-4">
                     <div>
-                      <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1">
+                      <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                         Your Full Name *
                       </label>
                       <input
@@ -804,13 +814,13 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                         value={testDriveForm.name}
                         onChange={(e) => setTestDriveForm((s) => ({ ...s, name: e.target.value }))}
                         placeholder="Full Name"
-                        className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
+                        className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40 shadow-inner"
                       />
                     </div>
                     <div className="grid sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1">
-                          Phone Number *
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
+                          Phone Number (WhatsApp) *
                         </label>
                         <input
                           type="tel"
@@ -818,11 +828,11 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                           value={testDriveForm.phone}
                           onChange={(e) => setTestDriveForm((s) => ({ ...s, phone: e.target.value }))}
                           placeholder="+91 80545 35453"
-                          className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
+                          className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40 shadow-inner"
                         />
                       </div>
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Email Address
                         </label>
                         <input
@@ -830,13 +840,13 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                           value={testDriveForm.email}
                           onChange={(e) => setTestDriveForm((s) => ({ ...s, email: e.target.value }))}
                           placeholder="you@domain.com"
-                          className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
+                          className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40 shadow-inner"
                         />
                       </div>
                     </div>
                     <div className="grid sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Preferred Date *
                         </label>
                         <input
@@ -844,26 +854,26 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                           required
                           value={testDriveForm.preferredDate}
                           onChange={(e) => setTestDriveForm((s) => ({ ...s, preferredDate: e.target.value }))}
-                          className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-white/30"
+                          className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-xs text-white font-medium focus:outline-none focus:border-white/40 shadow-inner"
                         />
                       </div>
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Time Slot *
                         </label>
                         <select
                           value={testDriveForm.preferredTime}
                           onChange={(e) => setTestDriveForm((s) => ({ ...s, preferredTime: e.target.value }))}
-                          className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-white/30"
+                          className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-xs text-white font-medium focus:outline-none focus:border-white/40 shadow-inner"
                         >
-                          <option value="10:00 AM - 12:00 PM" className="bg-zinc-900">10:00 AM - 12:00 PM (Morning)</option>
-                          <option value="12:00 PM - 03:00 PM" className="bg-zinc-900">12:00 PM - 03:00 PM (Afternoon)</option>
-                          <option value="03:00 PM - 06:30 PM" className="bg-zinc-900">03:00 PM - 06:30 PM (Evening)</option>
+                          <option value="10:00 AM - 12:00 PM" className="bg-[#181818] text-white">10:00 AM - 12:00 PM (Morning)</option>
+                          <option value="12:00 PM - 03:00 PM" className="bg-[#181818] text-white">12:00 PM - 03:00 PM (Afternoon)</option>
+                          <option value="03:00 PM - 06:30 PM" className="bg-[#181818] text-white">03:00 PM - 06:30 PM (Evening)</option>
                         </select>
                       </div>
                     </div>
                     <div>
-                      <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1">
+                      <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                         Location / Notes
                       </label>
                       <textarea
@@ -871,15 +881,15 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                         value={testDriveForm.message}
                         onChange={(e) => setTestDriveForm((s) => ({ ...s, message: e.target.value }))}
                         placeholder="Any special requests or location preference..."
-                        className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-xs text-white placeholder:text-white/20 focus:outline-none focus:border-white/30 resize-none"
+                        className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-xs text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40 resize-none shadow-inner"
                       />
                     </div>
                     <button
                       type="submit"
                       disabled={testDriveLoading}
-                      className="w-full bg-white text-black font-bold text-xs py-3.5 rounded-xl hover:bg-white/90 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                      className="w-full bg-white text-black font-extrabold text-xs sm:text-sm py-3.5 rounded-xl hover:bg-zinc-100 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg"
                     >
-                      <MessageCircle size={15} />
+                      <MessageCircle size={16} />
                       {testDriveLoading ? "Scheduling..." : "Confirm Test Drive on WhatsApp"}
                     </button>
                   </form>
