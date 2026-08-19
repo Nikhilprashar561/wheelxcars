@@ -36,7 +36,7 @@ const imageVariants = {
 export function Hero() {
   return (
     <section
-      className="relative min-h-[560px] sm:min-h-[500px] lg:min-h-[540px] flex flex-col justify-start overflow-hidden bg-black"
+      className="relative min-h-[580px] sm:min-h-[500px] lg:min-h-[540px] flex flex-col justify-start overflow-hidden bg-black"
       aria-label="Hero section"
     >
       {/* Seamless integrated background car visual with feathered blend */}
@@ -53,7 +53,7 @@ export function Hero() {
           priority
           loading="eager"
           quality={95}
-          className="object-cover object-[center_50%] sm:object-[center_bottom] lg:object-[68%_center]"
+          className="object-cover object-[center_38%] sm:object-[center_bottom] lg:object-[68%_center]"
           sizes="100vw"
         />
 
@@ -106,10 +106,10 @@ export function Hero() {
             Verified pre-owned vehicles with documented inspection and transparent pricing across Tricity.
           </motion.p>
 
-          {/* Linear CTAs - Positioned at the bottom on mobile to leave cars 100% unobstructed */}
+          {/* Linear CTAs - Positioned cleanly below the car wheels on mobile */}
           <motion.div
             variants={itemVariants}
-            className="mt-48 sm:mt-0 flex flex-row items-center gap-2.5 sm:gap-3.5 w-full sm:w-auto max-w-md sm:max-w-none"
+            className="mt-64 sm:mt-0 flex flex-row items-center gap-2.5 sm:gap-3.5 w-full sm:w-auto max-w-md sm:max-w-none"
           >
             <Link
               href="/cars"
