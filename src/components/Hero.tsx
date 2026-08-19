@@ -36,7 +36,7 @@ const imageVariants = {
 export function Hero() {
   return (
     <section
-      className="relative min-h-[460px] sm:min-h-[500px] lg:min-h-[540px] flex flex-col justify-start overflow-hidden bg-black"
+      className="relative min-h-[500px] sm:min-h-[500px] lg:min-h-[540px] flex flex-col justify-start overflow-hidden bg-black"
       aria-label="Hero section"
     >
       {/* Seamless integrated background car visual with feathered blend */}
@@ -53,7 +53,7 @@ export function Hero() {
           priority
           loading="eager"
           quality={95}
-          className="object-cover object-[center_bottom] sm:object-[center_bottom] lg:object-[68%_center]"
+          className="object-cover object-[center_60%] sm:object-[center_bottom] lg:object-[68%_center]"
           sizes="100vw"
         />
 
@@ -61,7 +61,7 @@ export function Hero() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent via-45% hidden lg:block" />
 
         {/* Mobile & Tablet Soft Gradient: Lightened so cars are brightly visible and not dim */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-transparent via-35% lg:hidden" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-transparent via-35% lg:hidden" />
 
         {/* Seamless Edge Blends: Top and Bottom fades for smooth transitions */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/30" />
@@ -78,7 +78,7 @@ export function Hero() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="max-w-xl lg:max-w-2xl"
+          className="max-w-xl lg:max-w-2xl flex flex-col"
         >
           {/* Eyebrow */}
           <motion.div variants={itemVariants} className="mb-2 sm:mb-3">
@@ -101,15 +101,15 @@ export function Hero() {
           {/* Subtitle */}
           <motion.p
             variants={itemVariants}
-            className="text-xs sm:text-sm md:text-base text-zinc-200 leading-relaxed max-w-md mb-5 sm:mb-7 font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
+            className="text-xs sm:text-sm md:text-base text-zinc-200 leading-relaxed max-w-md mb-2 sm:mb-7 font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
           >
             Verified pre-owned vehicles with documented inspection and transparent pricing across Tricity.
           </motion.p>
 
-          {/* Linear CTAs */}
+          {/* Linear CTAs - Positioned lower on mobile to leave cars completely unobstructed in the middle */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-row items-center gap-2.5 sm:gap-3.5 w-full sm:w-auto max-w-md sm:max-w-none"
+            className="mt-32 sm:mt-0 flex flex-row items-center gap-2.5 sm:gap-3.5 w-full sm:w-auto max-w-md sm:max-w-none"
           >
             <Link
               href="/cars"
@@ -120,7 +120,7 @@ export function Hero() {
             </Link>
             <Link
               href="/sell-your-car"
-              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 border border-white/25 bg-black/40 backdrop-blur-md text-white font-bold text-xs sm:text-sm px-6 sm:px-8 py-3.5 rounded-xl hover:border-white/60 hover:bg-white/10 transition-all duration-200 shadow-md text-center cursor-pointer"
+              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 border border-white/25 bg-black/60 backdrop-blur-md text-white font-bold text-xs sm:text-sm px-6 sm:px-8 py-3.5 rounded-xl hover:border-white/60 hover:bg-white/10 transition-all duration-200 shadow-md text-center cursor-pointer"
             >
               <span>Sell Your Car</span>
             </Link>
