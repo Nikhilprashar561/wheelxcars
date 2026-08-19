@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { CARS } from "@/lib/data";
+import { CARS, formatPrice } from "@/lib/data";
 import { CarDetailClient } from "./CarDetailClient";
 import type { Metadata } from "next";
 
@@ -16,11 +16,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const car = CARS.find((c) => c.slug === slug);
   if (!car) return {};
   return {
-    title: `${car.year} ${car.brand} ${car.model} in ${car.city} (₹${car.price} Lakh)`,
-    description: `${car.year} ${car.brand} ${car.model} (${car.variant}) located in ${car.city}, ${car.locality}. Multi-point inspected with ${car.mileage || "verified mileage"}. Price: ₹${car.price} Lakh.`,
+    title: `${car.year} ${car.brand} ${car.model} ${car.variant} (${car.mileage}) | WheelxCars`,
+    description: `${car.year} ${car.brand} ${car.model} (${car.variant}) in ${car.color}. 1st Owner, ${car.mileage}, Diesel Manual. Verified pre-owned listing at WheelxCars.`,
     openGraph: {
-      title: `${car.year} ${car.brand} ${car.model} | WheelxCars Tricity`,
-      description: `${car.variant} · ${car.city} · ${car.fuel} · ₹${car.price} Lakh`,
+      title: `${car.year} ${car.brand} ${car.model} | WheelxCars`,
+      description: `${car.variant} • ${car.mileage} • ${car.fuel} • ${car.color}`,
       images: car.images.slice(0, 1),
     },
   };
@@ -35,7 +35,7 @@ export default async function CarDetailPage({ params }: Props) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Car",
-    name: `${car.year} ${car.brand} ${car.model}`,
+    name: `${car.year} ${car.brand} ${car.model} ${car.variant}`,
     brand: {
       "@type": "Brand",
       name: car.brand,
@@ -44,21 +44,18 @@ export default async function CarDetailPage({ params }: Props) {
     modelDate: car.year.toString(),
     vehicleTransmission: car.transmission,
     fuelType: car.fuel,
+    color: car.color,
     itemCondition: "https://schema.org/UsedCondition",
     mileageFromOdometer: {
       "@type": "QuantitativeValue",
-      value: car.kmDriven || 50000,
+      value: car.kmDriven || 71000,
       unitCode: "KMT",
     },
     offers: {
       "@type": "Offer",
-      price: (car.price * 100000).toString(),
+      price: car.price ? (car.price * 100000).toString() : "0",
       priceCurrency: "INR",
       availability: "https://schema.org/InStock",
-      areaServed: {
-        "@type": "AdministrativeArea",
-        name: `${car.city}, Punjab/Haryana/Chandigarh`,
-      },
     },
   };
 

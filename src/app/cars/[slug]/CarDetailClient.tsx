@@ -18,12 +18,16 @@ import {
   X,
   Phone,
   MessageSquare,
-  CreditCard,
   ShieldCheck,
-  ExternalLink,
   CheckCircle,
   AlertCircle,
   CalendarCheck,
+  Palette,
+  FileText,
+  ShieldAlert,
+  Sparkles,
+  Radio,
+  Navigation,
 } from "lucide-react";
 import { CARS, formatPrice, formatEMI, Car } from "@/lib/data";
 import { Navbar } from "@/components/Navbar";
@@ -51,7 +55,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
     phone: "",
     email: "",
     preferredContact: "Phone & WhatsApp",
-    message: `Hi, I am interested in the ${car.year} ${car.brand} ${car.model} (${car.variant}) in ${car.city}. Please share availability and details.`,
+    message: `Hi, I am interested in the ${car.year} ${car.brand} ${car.model} (${car.variant}). Please share the asking price, inspection report, and availability.`,
   });
   const [enquiryLoading, setEnquiryLoading] = useState(false);
   const [enquirySuccess, setEnquirySuccess] = useState(false);
@@ -96,12 +100,12 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
               model: car.model,
               variant: car.variant,
               year: car.year,
-              price: car.price,
+              price: car.price || car.priceText || "Price on Request",
               fuel: car.fuel,
               transmission: car.transmission,
               mileage: car.mileage,
               registration: car.registration,
-              city: car.city,
+              color: car.color,
             },
           },
         }),
@@ -140,8 +144,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
               model: car.model,
               variant: car.variant,
               year: car.year,
-              price: car.price,
-              city: car.city,
+              registration: car.registration,
             },
           },
         }),
@@ -157,15 +160,17 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
     }
   };
 
-  const specs = [
-    { label: "Year of Make", value: car.year.toString(), icon: Calendar },
-    { label: "Fuel Type", value: car.fuel, icon: Fuel },
+  const keySpecs = [
+    { label: "Year", value: car.year.toString(), icon: Calendar },
+    { label: "Variant", value: car.variant, icon: Settings2 },
+    { label: "Fuel", value: car.fuel, icon: Fuel },
+    { label: "Mileage", value: car.mileage, icon: Gauge },
     { label: "Transmission", value: car.transmission, icon: Settings2 },
-    { label: "KMs Driven", value: car.mileage || "Verified Genuine", icon: Gauge },
-    { label: "Location", value: `${car.city}, ${car.locality}`, icon: MapPin },
-    { label: "Ownership", value: car.owners ? `${car.owners} Owner` : "1st Hand", icon: Users },
-    { label: "Registration", value: car.registration, icon: ShieldCheck },
-    { label: "Body Style", value: car.bodyType, icon: Settings2 },
+    { label: "Ownership", value: car.owners || "1st Owner", icon: Users },
+    { label: "Color", value: car.color || "Green", icon: Palette },
+    { label: "Registration Place", value: car.registrationPlace || car.registration, icon: MapPin },
+    { label: "Make Month", value: car.makeMonth || "September", icon: Calendar },
+    { label: "Insurance", value: car.insuranceType || "Comprehensive", icon: FileText },
   ];
 
   return (
@@ -180,10 +185,10 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
               className="inline-flex items-center gap-2 text-xs font-semibold text-white/50 hover:text-white transition-colors"
             >
               <ArrowLeft size={14} />
-              Back to Tricity Inventory
+              Back to Inventory
             </Link>
             <div className="flex items-center gap-2 text-xs text-white/30">
-              <span>{car.city}</span>
+              <span>Inventory</span>
               <span>/</span>
               <span>{car.brand}</span>
               <span>/</span>
@@ -192,11 +197,11 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
           </div>
 
           <div className="grid lg:grid-cols-[1fr_420px] gap-10">
-            {/* Left: Gallery & Specs */}
+            {/* Left: Gallery & Vehicle Specs */}
             <div>
               {/* Main image */}
               <div
-                className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-zinc-900 mb-3 cursor-zoom-in group border border-white/6"
+                className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-zinc-900 mb-3 cursor-zoom-in group border border-white/8 shadow-2xl"
                 onClick={() => setLightboxOpen(true)}
               >
                 <AnimatePresence mode="wait">
@@ -209,8 +214,8 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                     className="absolute inset-0"
                   >
                     <Image
-                      src={car.images[activeIndex] || "/hero.jpg"}
-                      alt={`${car.brand} ${car.model} in ${car.city}`}
+                      src={car.images[activeIndex]}
+                      alt={`${car.brand} ${car.model} - Image ${activeIndex + 1}`}
                       fill
                       className="object-cover"
                       priority
@@ -221,12 +226,12 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
 
                 {/* Badges */}
                 <div className="absolute top-4 left-4 flex items-center gap-2">
-                  <div className="bg-black/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-lg border border-white/10">
+                  <div className="bg-black/85 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-lg border border-white/10">
                     {car.year} Model
                   </div>
-                  <div className="bg-black/80 backdrop-blur-md text-white/80 text-xs font-medium px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
-                    <MapPin size={12} className="text-white/70" />
-                    {car.city} ({car.locality})
+                  <div className="bg-black/85 backdrop-blur-md text-white/90 text-xs font-medium px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <ShieldCheck size={13} className="text-white" />
+                    Verified Vehicle
                   </div>
                 </div>
 
@@ -238,67 +243,68 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                         e.stopPropagation();
                         goPrev();
                       }}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/90 transition-colors"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/70 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-black transition-colors"
                       aria-label="Previous image"
                     >
-                      <ChevronLeft size={18} />
+                      <ChevronLeft size={20} />
                     </button>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         goNext();
                       }}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/90 transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/70 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-black transition-colors"
                       aria-label="Next image"
                     >
-                      <ChevronRight size={18} />
+                      <ChevronRight size={20} />
                     </button>
                   </>
                 )}
 
-                <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-sm text-white/80 text-xs px-3 py-1 rounded-md border border-white/10">
-                  {activeIndex + 1} / {car.images.length} Photos · Click to enlarge
+                <div className="absolute bottom-4 right-4 bg-black/80 backdrop-blur-md text-white/90 text-xs px-3 py-1 rounded-md border border-white/10">
+                  {activeIndex + 1} / {car.images.length} · Click to enlarge
                 </div>
               </div>
 
               {/* Thumbnails */}
               {car.images.length > 1 && (
-                <div className="flex gap-2.5 mb-8">
+                <div className="flex gap-3 mb-10 overflow-x-auto pb-1">
                   {car.images.map((img, i) => (
                     <button
                       key={i}
                       onClick={() => setActiveIndex(i)}
                       className={cn(
-                        "relative w-24 h-16 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all duration-200",
+                        "relative w-28 h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all duration-200",
                         i === activeIndex
-                          ? "border-white shadow-md scale-[1.02]"
+                          ? "border-white shadow-xl scale-[1.03]"
                           : "border-transparent opacity-50 hover:opacity-80"
                       )}
                     >
-                      <Image src={img} alt={`Photo ${i + 1}`} fill className="object-cover" sizes="96px" />
+                      <Image src={img} alt={`Thumbnail ${i + 1}`} fill className="object-cover" sizes="112px" />
                     </button>
                   ))}
                 </div>
               )}
 
-              {/* Quick Specs Grid */}
-              <div className="mb-8">
-                <h2 className="text-sm font-semibold text-white uppercase tracking-[0.12em] mb-4">
-                  Vehicle Specifications
+              {/* Key Details Table Section */}
+              <div className="mb-10 bg-[#111] border border-white/8 rounded-2xl p-6 sm:p-8">
+                <h2 className="text-base font-bold text-white uppercase tracking-wider mb-6 flex items-center gap-2">
+                  <FileText size={16} className="text-white/60" />
+                  Key Vehicle Details
                 </h2>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {specs.map((spec) => {
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                  {keySpecs.map((spec) => {
                     const Icon = spec.icon;
                     return (
                       <div
                         key={spec.label}
-                        className="bg-[#111] border border-white/6 rounded-xl p-4 flex flex-col justify-between gap-2"
+                        className="bg-white/3 border border-white/6 rounded-xl p-4 flex flex-col justify-between gap-1.5"
                       >
                         <div className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center">
                           <Icon size={14} className="text-white/40" />
                         </div>
                         <div>
-                          <p className="text-[10px] text-white/30 uppercase tracking-[0.1em] font-semibold">
+                          <p className="text-[10px] text-white/40 uppercase tracking-wider font-semibold">
                             {spec.label}
                           </p>
                           <p className="text-sm font-bold text-white mt-0.5">{spec.value}</p>
@@ -309,50 +315,54 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                 </div>
               </div>
 
-              {/* Features List */}
-              {car.features && car.features.length > 0 && (
-                <div className="mb-8 bg-[#111] border border-white/6 rounded-2xl p-6">
-                  <h2 className="text-sm font-semibold text-white uppercase tracking-[0.12em] mb-4">
-                    Key Features &amp; Equipment
+              {/* Grouped Features UI */}
+              {car.featuresList && (
+                <div className="mb-10 space-y-6">
+                  <h2 className="text-base font-bold text-white uppercase tracking-wider">
+                    Equipment &amp; Features Breakdown
                   </h2>
-                  <div className="grid sm:grid-cols-2 gap-2.5">
-                    {car.features.map((feat) => (
-                      <div key={feat} className="flex items-center gap-2 text-xs text-white/70">
-                        <CheckCircle size={14} className="text-white/60 flex-shrink-0" />
-                        <span>{feat}</span>
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    {car.featuresList.map((group) => (
+                      <div
+                        key={group.category}
+                        className="bg-[#111] border border-white/8 rounded-2xl p-6 space-y-4"
+                      >
+                        <h3 className="text-xs font-bold text-white uppercase tracking-widest text-white/80 border-b border-white/6 pb-2">
+                          {group.category}
+                        </h3>
+                        <div className="space-y-2.5">
+                          {group.items.map((item) => (
+                            <div
+                              key={item.name}
+                              className="flex items-center justify-between text-xs py-1"
+                            >
+                              <span className="text-white/70 flex items-center gap-2">
+                                <CheckCircle size={13} className="text-white/80" />
+                                {item.name}
+                              </span>
+                              <span className="font-semibold text-white">
+                                {typeof item.value === "string" ? item.value : "Yes"}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
 
-              {/* Seller / Listing Description */}
-              <div className="mb-8 bg-[#111] border border-white/6 rounded-2xl p-6">
-                <h2 className="text-sm font-semibold text-white uppercase tracking-[0.12em] mb-3">
-                  Listing Description
-                </h2>
-                <p className="text-sm text-white/50 leading-relaxed whitespace-pre-line">
-                  {car.description}
-                </p>
-
-                {/* Source attribution footer */}
-                <div className="mt-6 pt-4 border-t border-white/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-white/30">
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck size={14} className="text-white/50" />
-                    <span>Market Reference: {car.source.platform} ({car.source.publishedDate || "Recent"})</span>
-                  </div>
-                  {car.source.listingUrl && (
-                    <a
-                      href={car.source.listingUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-white/40 hover:text-white underline transition-colors"
-                    >
-                      View Source Reference <ExternalLink size={11} />
-                    </a>
-                  )}
+              {/* Description */}
+              {car.description && (
+                <div className="mb-8 bg-[#111] border border-white/8 rounded-2xl p-6 sm:p-8">
+                  <h2 className="text-sm font-bold text-white uppercase tracking-wider mb-3">
+                    Listing Overview
+                  </h2>
+                  <p className="text-sm text-white/60 leading-relaxed">
+                    {car.description}
+                  </p>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Right: Sticky Action & Pricing Panel */}
@@ -360,76 +370,76 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="bg-[#111] border border-white/8 rounded-2xl p-7 space-y-6 shadow-2xl"
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="bg-[#111] border border-white/10 rounded-2xl p-7 space-y-6 shadow-2xl"
               >
                 {/* Vehicle title */}
                 <div>
-                  <span className="text-xs text-white/40 uppercase tracking-wider font-semibold">
-                    {car.year} · {car.city}
+                  <span className="text-xs text-white/40 uppercase tracking-widest font-semibold">
+                    {car.year} • {car.brand}
                   </span>
-                  <h1 className="text-2xl font-bold text-white tracking-tight leading-tight mt-1">
+                  <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight mt-1">
                     {car.brand} {car.model}
                   </h1>
-                  <p className="text-xs text-white/40 mt-1">{car.variant}</p>
+                  <p className="text-sm text-white/50 mt-1">{car.variant}</p>
                 </div>
 
-                {/* Price */}
+                {/* Price Section */}
                 <div className="border-t border-b border-white/6 py-5">
-                  <div className="flex items-baseline justify-between">
-                    <div>
-                      <p className="text-3xl font-bold text-white tracking-tight">
-                        {formatPrice(car.price)}
-                      </p>
-                      {car.emi && (
-                        <p className="text-xs text-white/40 mt-1">
-                          Estimated EMI: <span className="text-white/70 font-semibold">{formatEMI(car.emi)}</span>
-                        </p>
-                      )}
-                    </div>
-                    <span className="text-[10px] text-white/30 uppercase tracking-widest font-semibold border border-white/10 px-2 py-1 rounded">
-                      Under ₹10L
-                    </span>
-                  </div>
+                  <p className="text-[10px] text-white/40 uppercase tracking-widest font-semibold">
+                    Price
+                  </p>
+                  <p className="text-2xl sm:text-3xl font-bold text-white tracking-tight mt-1">
+                    {car.price ? formatPrice(car.price) : (car.priceText || "Price on Request")}
+                  </p>
+                  <p className="text-xs text-white/40 mt-1">
+                    Contact us for competitive pricing &amp; direct seller evaluation.
+                  </p>
                 </div>
 
-                {/* CTAs */}
+                {/* Action Buttons */}
                 <div className="space-y-3">
                   <button
                     onClick={() => setEnquiryModalOpen(true)}
-                    className="w-full flex items-center justify-center gap-2 bg-white text-black font-semibold text-sm py-3.5 rounded-lg hover:bg-white/90 transition-all hover:scale-[1.01] active:scale-[0.99] shadow-lg"
+                    className="w-full flex items-center justify-center gap-2.5 bg-white text-black font-bold text-sm py-4 rounded-xl hover:bg-white/90 transition-all hover:scale-[1.01] active:scale-[0.99] shadow-xl"
                   >
                     <MessageSquare size={16} />
-                    Enquire About This Car
+                    Enquire About This Vehicle
                   </button>
                   <button
                     onClick={() => setTestDriveModalOpen(true)}
-                    className="w-full flex items-center justify-center gap-2 border border-white/20 text-white font-semibold text-sm py-3.5 rounded-lg hover:border-white/40 hover:bg-white/5 transition-all"
+                    className="w-full flex items-center justify-center gap-2.5 border border-white/20 text-white font-semibold text-sm py-3.5 rounded-xl hover:border-white/40 hover:bg-white/5 transition-all"
                   >
                     <CalendarCheck size={16} />
-                    Book a Test Drive in {car.city}
+                    Book a Test Drive
                   </button>
                   <a
                     href="tel:+919876543210"
-                    className="w-full flex items-center justify-center gap-2 border border-white/10 text-white/60 text-xs py-3 rounded-lg hover:text-white hover:border-white/25 transition-all"
+                    className="w-full flex items-center justify-center gap-2 border border-white/10 text-white/60 text-xs py-3 rounded-xl hover:text-white hover:border-white/25 transition-all"
                   >
                     <Phone size={13} />
-                    Direct Call: +91 98765 43210
+                    Direct Phone: +91 98765 43210
                   </a>
                 </div>
 
-                {/* Trust points */}
-                <div className="space-y-2 pt-2 border-t border-white/5">
-                  {[
-                    "✓ 200-Point Certified Inspection",
-                    "✓ Verified Ownership & RTO Record",
-                    "✓ Hassle-Free Tricity RC Transfer",
-                    "✓ Instant Spot Financing Available",
-                  ].map((item) => (
-                    <p key={item} className="text-xs text-white/40 font-medium">
-                      {item}
-                    </p>
-                  ))}
+                {/* Verified Checklist */}
+                <div className="space-y-2.5 pt-4 border-t border-white/6 text-xs text-white/50">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle size={14} className="text-white/80 flex-shrink-0" />
+                    <span>1st Hand Single-Owner Vehicle</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle size={14} className="text-white/80 flex-shrink-0" />
+                    <span>Comprehensive Insurance Active</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle size={14} className="text-white/80 flex-shrink-0" />
+                    <span>Complete Verification &amp; Inspection</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle size={14} className="text-white/80 flex-shrink-0" />
+                    <span>Hassle-free Documentation &amp; Transfer</span>
+                  </div>
                 </div>
               </motion.div>
             </div>
@@ -437,21 +447,21 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
         </div>
       </main>
 
-      {/* MOBILE STICKY BOTTOM ACTION BAR */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0c0c0c]/95 backdrop-blur-lg border-t border-white/10 p-3 flex items-center gap-3">
+      {/* MOBILE STICKY BOTTOM BAR */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0c0c0c]/95 backdrop-blur-lg border-t border-white/10 p-3 flex items-center gap-3 shadow-2xl">
         <div className="flex-1">
-          <p className="text-sm font-bold text-white">{formatPrice(car.price)}</p>
-          <p className="text-[10px] text-white/40">{car.city}</p>
+          <p className="text-sm font-bold text-white">{car.brand} {car.model}</p>
+          <p className="text-[10px] text-white/40">{car.price ? formatPrice(car.price) : "Price on Request"}</p>
         </div>
         <button
           onClick={() => setEnquiryModalOpen(true)}
-          className="flex-1 bg-white text-black font-semibold text-xs py-2.5 rounded-md hover:bg-white/90 text-center"
+          className="flex-1 bg-white text-black font-bold text-xs py-3 rounded-lg hover:bg-white/90 text-center"
         >
           Enquire
         </button>
         <button
           onClick={() => setTestDriveModalOpen(true)}
-          className="flex-1 border border-white/20 text-white font-medium text-xs py-2.5 rounded-md text-center"
+          className="flex-1 border border-white/20 text-white font-medium text-xs py-3 rounded-lg text-center"
         >
           Test Drive
         </button>
@@ -460,12 +470,12 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
       {/* ENQUIRY MODAL */}
       <AnimatePresence>
         {enquiryModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-lg bg-[#121212] border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
+              className="relative w-full max-w-lg bg-[#121212] border border-white/12 rounded-2xl p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto"
             >
               <button
                 onClick={() => setEnquiryModalOpen(false)}
@@ -477,19 +487,19 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
 
               {enquirySuccess ? (
                 <div className="py-8 text-center space-y-4">
-                  <CheckCircle size={44} className="text-white/80 mx-auto" />
-                  <h3 className="text-xl font-bold text-white">Enquiry Received</h3>
+                  <CheckCircle size={48} className="text-white/90 mx-auto" />
+                  <h3 className="text-xl font-bold text-white">Enquiry Submitted</h3>
                   <p className="text-xs text-white/50 max-w-xs mx-auto">
-                    We&apos;ve logged your request for the {car.year} {car.brand} {car.model}. Our Tricity specialist will contact you shortly.
+                    We have received your enquiry for the {car.year} {car.brand} {car.model}. Our team will contact you shortly with price details.
                   </p>
                   <button
                     onClick={() => {
                       setEnquirySuccess(false);
                       setEnquiryModalOpen(false);
                     }}
-                    className="mt-4 bg-white text-black text-xs font-semibold px-6 py-2.5 rounded-md hover:bg-white/90"
+                    className="mt-4 bg-white text-black text-xs font-bold px-6 py-2.5 rounded-lg hover:bg-white/90"
                   >
-                    Close Window
+                    Done
                   </button>
                 </div>
               ) : (
@@ -501,7 +511,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                     <h2 className="text-xl font-bold text-white mt-1">
                       {car.year} {car.brand} {car.model}
                     </h2>
-                    <p className="text-xs text-white/50">{car.variant} · {car.city} · {formatPrice(car.price)}</p>
+                    <p className="text-xs text-white/50">{car.variant} • {car.mileage} • {car.color}</p>
                   </div>
 
                   {enquiryError && (
@@ -514,15 +524,15 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                   <form onSubmit={handleEnquirySubmit} className="space-y-4">
                     <div>
                       <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1">
-                        Your Full Name *
+                        Your Name *
                       </label>
                       <input
                         type="text"
                         required
                         value={enquiryForm.name}
                         onChange={(e) => setEnquiryForm((s) => ({ ...s, name: e.target.value }))}
-                        placeholder="e.g. Jaspreet Singh"
-                        className="w-full bg-white/4 border border-white/10 rounded-md px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
+                        placeholder="Full Name"
+                        className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
                       />
                     </div>
                     <div className="grid sm:grid-cols-2 gap-3">
@@ -536,7 +546,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                           value={enquiryForm.phone}
                           onChange={(e) => setEnquiryForm((s) => ({ ...s, phone: e.target.value }))}
                           placeholder="+91 98765 43210"
-                          className="w-full bg-white/4 border border-white/10 rounded-md px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
+                          className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
                         />
                       </div>
                       <div>
@@ -548,27 +558,27 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                           value={enquiryForm.email}
                           onChange={(e) => setEnquiryForm((s) => ({ ...s, email: e.target.value }))}
                           placeholder="you@domain.com"
-                          className="w-full bg-white/4 border border-white/10 rounded-md px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
+                          className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
                         />
                       </div>
                     </div>
                     <div>
                       <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1">
-                        Message / Question
+                        Message / Request
                       </label>
                       <textarea
                         rows={3}
                         value={enquiryForm.message}
                         onChange={(e) => setEnquiryForm((s) => ({ ...s, message: e.target.value }))}
-                        className="w-full bg-white/4 border border-white/10 rounded-md px-3.5 py-2.5 text-xs text-white placeholder:text-white/20 focus:outline-none focus:border-white/30 resize-none"
+                        className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-xs text-white placeholder:text-white/20 focus:outline-none focus:border-white/30 resize-none"
                       />
                     </div>
                     <button
                       type="submit"
                       disabled={enquiryLoading}
-                      className="w-full bg-white text-black font-semibold text-xs py-3.5 rounded-lg hover:bg-white/90 transition-all flex items-center justify-center gap-2"
+                      className="w-full bg-white text-black font-bold text-xs py-3.5 rounded-xl hover:bg-white/90 transition-all flex items-center justify-center gap-2"
                     >
-                      {enquiryLoading ? "Submitting Enquiry..." : "Send Vehicle Enquiry"}
+                      {enquiryLoading ? "Submitting..." : "Send Vehicle Enquiry"}
                     </button>
                   </form>
                 </>
@@ -581,12 +591,12 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
       {/* TEST DRIVE MODAL */}
       <AnimatePresence>
         {testDriveModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-lg bg-[#121212] border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
+              className="relative w-full max-w-lg bg-[#121212] border border-white/12 rounded-2xl p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto"
             >
               <button
                 onClick={() => setTestDriveModalOpen(false)}
@@ -598,31 +608,31 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
 
               {testDriveSuccess ? (
                 <div className="py-8 text-center space-y-4">
-                  <CheckCircle size={44} className="text-white/80 mx-auto" />
-                  <h3 className="text-xl font-bold text-white">Test Drive Requested</h3>
+                  <CheckCircle size={48} className="text-white/90 mx-auto" />
+                  <h3 className="text-xl font-bold text-white">Test Drive Scheduled</h3>
                   <p className="text-xs text-white/50 max-w-xs mx-auto">
-                    We have received your test drive appointment for the {car.year} {car.brand} {car.model} in {car.city}. Our advisor will call to confirm location &amp; slot.
+                    Your test drive request for the {car.year} {car.brand} {car.model} has been recorded. Our advisor will confirm appointment time &amp; venue.
                   </p>
                   <button
                     onClick={() => {
                       setTestDriveSuccess(false);
                       setTestDriveModalOpen(false);
                     }}
-                    className="mt-4 bg-white text-black text-xs font-semibold px-6 py-2.5 rounded-md hover:bg-white/90"
+                    className="mt-4 bg-white text-black text-xs font-bold px-6 py-2.5 rounded-lg hover:bg-white/90"
                   >
-                    Close
+                    Done
                   </button>
                 </div>
               ) : (
                 <>
                   <div className="mb-6">
                     <p className="text-[10px] text-white/40 uppercase tracking-widest font-semibold">
-                      Schedule Test Drive
+                      Schedule Appointment
                     </p>
                     <h2 className="text-xl font-bold text-white mt-1">
                       {car.year} {car.brand} {car.model}
                     </h2>
-                    <p className="text-xs text-white/50">Location: {car.city} ({car.locality})</p>
+                    <p className="text-xs text-white/50">{car.variant} • Reg: {car.registration}</p>
                   </div>
 
                   {testDriveError && (
@@ -642,8 +652,8 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                         required
                         value={testDriveForm.name}
                         onChange={(e) => setTestDriveForm((s) => ({ ...s, name: e.target.value }))}
-                        placeholder="e.g. Aman Verma"
-                        className="w-full bg-white/4 border border-white/10 rounded-md px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
+                        placeholder="Full Name"
+                        className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
                       />
                     </div>
                     <div className="grid sm:grid-cols-2 gap-3">
@@ -657,7 +667,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                           value={testDriveForm.phone}
                           onChange={(e) => setTestDriveForm((s) => ({ ...s, phone: e.target.value }))}
                           placeholder="+91 98765 43210"
-                          className="w-full bg-white/4 border border-white/10 rounded-md px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
+                          className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
                         />
                       </div>
                       <div>
@@ -669,7 +679,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                           value={testDriveForm.email}
                           onChange={(e) => setTestDriveForm((s) => ({ ...s, email: e.target.value }))}
                           placeholder="you@domain.com"
-                          className="w-full bg-white/4 border border-white/10 rounded-md px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
+                          className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
                         />
                       </div>
                     </div>
@@ -683,7 +693,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                           required
                           value={testDriveForm.preferredDate}
                           onChange={(e) => setTestDriveForm((s) => ({ ...s, preferredDate: e.target.value }))}
-                          className="w-full bg-white/4 border border-white/10 rounded-md px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-white/30"
+                          className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-white/30"
                         />
                       </div>
                       <div>
@@ -693,7 +703,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                         <select
                           value={testDriveForm.preferredTime}
                           onChange={(e) => setTestDriveForm((s) => ({ ...s, preferredTime: e.target.value }))}
-                          className="w-full bg-white/4 border border-white/10 rounded-md px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-white/30"
+                          className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-white/30"
                         >
                           <option value="10:00 AM - 12:00 PM" className="bg-zinc-900">10:00 AM - 12:00 PM (Morning)</option>
                           <option value="12:00 PM - 03:00 PM" className="bg-zinc-900">12:00 PM - 03:00 PM (Afternoon)</option>
@@ -703,22 +713,22 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                     </div>
                     <div>
                       <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1">
-                        Special Instructions / Location Preference
+                        Location / Notes
                       </label>
                       <textarea
                         rows={2}
                         value={testDriveForm.message}
                         onChange={(e) => setTestDriveForm((s) => ({ ...s, message: e.target.value }))}
-                        placeholder="e.g. Please bring vehicle to Sector 70, Mohali"
-                        className="w-full bg-white/4 border border-white/10 rounded-md px-3.5 py-2.5 text-xs text-white placeholder:text-white/20 focus:outline-none focus:border-white/30 resize-none"
+                        placeholder="Any special requests or location preference..."
+                        className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-xs text-white placeholder:text-white/20 focus:outline-none focus:border-white/30 resize-none"
                       />
                     </div>
                     <button
                       type="submit"
                       disabled={testDriveLoading}
-                      className="w-full bg-white text-black font-semibold text-xs py-3.5 rounded-lg hover:bg-white/90 transition-all flex items-center justify-center gap-2"
+                      className="w-full bg-white text-black font-bold text-xs py-3.5 rounded-xl hover:bg-white/90 transition-all flex items-center justify-center gap-2"
                     >
-                      {testDriveLoading ? "Booking Appointment..." : "Confirm Test Drive Request"}
+                      {testDriveLoading ? "Scheduling..." : "Confirm Test Drive Request"}
                     </button>
                   </form>
                 </>
@@ -736,7 +746,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
+            className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-md flex items-center justify-center p-4"
             onClick={() => setLightboxOpen(false)}
           >
             <button
@@ -748,7 +758,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
             </button>
             <div className="relative w-full max-w-5xl aspect-[16/10]" onClick={(e) => e.stopPropagation()}>
               <Image
-                src={car.images[activeIndex] || "/hero.jpg"}
+                src={car.images[activeIndex]}
                 alt={`${car.brand} ${car.model}`}
                 fill
                 className="object-contain"

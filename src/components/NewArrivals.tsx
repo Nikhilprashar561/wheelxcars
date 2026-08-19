@@ -22,7 +22,7 @@ export function NewArrivals() {
             transition={{ duration: 0.6 }}
           >
             <p className="text-[11px] text-white/30 uppercase tracking-[0.18em] font-semibold mb-3">
-              — Fresh Tricity Inventory
+              — Fresh Inventory
             </p>
             <h2
               id="arrivals-heading"
@@ -57,9 +57,9 @@ export function NewArrivals() {
           >
             <Link href={`/cars/${car.slug}`} className="group block">
               {/* Image */}
-              <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-zinc-900 mb-4">
+              <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-zinc-900 mb-4 border border-white/8">
                 <Image
-                  src={car.images[0] || "/hero.jpg"}
+                  src={car.images[0]}
                   alt={`${car.year} ${car.brand} ${car.model}`}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -69,9 +69,9 @@ export function NewArrivals() {
                 <div className="absolute top-3 left-3 bg-white text-black text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
                   New Arrival
                 </div>
-                <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded flex items-center gap-1">
+                <div className="absolute bottom-3 left-3 bg-black/85 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded flex items-center gap-1 border border-white/10">
                   <MapPin size={10} className="text-white/60" />
-                  {car.city}
+                  Reg: {car.registration}
                 </div>
               </div>
 
@@ -80,9 +80,9 @@ export function NewArrivals() {
                 <h3 className="text-sm font-semibold text-white group-hover:text-white/90 transition-colors">
                   {car.year} {car.brand} {car.model}
                 </h3>
-                <p className="text-xs text-white/35 mt-0.5">{car.variant}</p>
-                <p className="text-base font-bold text-white mt-2 tracking-tight">
-                  {formatPrice(car.price)}
+                <p className="text-xs text-white/40 mt-0.5">{car.variant}</p>
+                <p className="text-sm font-bold text-white mt-2 tracking-tight">
+                  {car.price ? formatPrice(car.price) : (car.priceText || "Price on Request")}
                 </p>
               </div>
             </Link>

@@ -1,7 +1,27 @@
 export type FuelType = "Petrol" | "Diesel" | "Electric" | "Hybrid" | "CNG";
 export type TransmissionType = "Manual" | "Automatic" | "AMT" | "CVT" | "DCT";
 export type BodyType = "Sedan" | "SUV" | "Hatchback" | "MUV" | "Coupe" | "Luxury";
-export type TricityLocation = "Chandigarh" | "Mohali" | "Panchkula" | "Zirakpur" | "Kharar";
+
+export interface CarFeatures {
+  // Safety & Security
+  abs?: boolean;
+  antiTheftDevice?: boolean;
+  parkingSensors?: boolean;
+
+  // Comfort & Convenience
+  adjustableSteering?: boolean;
+  airConditioning?: string; // "Automatic Climate Control"
+  powerSteering?: boolean;
+  powerWindows?: string; // "Front & Rear"
+  cruiseControl?: boolean;
+
+  // Connectivity & Entertainment
+  auxCompatibility?: boolean;
+  bluetooth?: boolean;
+  radio?: boolean;
+  usbCompatibility?: boolean;
+  navigationSystem?: boolean;
+}
 
 export interface Car {
   id: string;
@@ -10,797 +30,131 @@ export interface Car {
   model: string;
   variant: string;
   year: number;
-  price: number; // in Lakhs (all strictly < 10 Lakh)
-  emi?: number; // per month in INR
+  price?: number; // Only if price is provided; undefined = Price on Request
+  priceText?: string;
+  emi?: number;
   fuel: FuelType;
   transmission: TransmissionType;
-  registration: string; // e.g. "CH01", "PB65", "HR70", "PB01"
-  mileage?: string; // e.g. "42,000 km"
+  registration: string; // e.g. "JH"
+  registrationPlace?: string;
+  mileage: string; // e.g. "71,000 Km"
   kmDriven?: number;
   bodyType: BodyType;
-  city: TricityLocation;
-  locality: string;
-  owners?: number;
   color?: string;
-  engineCC?: number;
+  makeMonth?: string;
+  insuranceType?: string;
+  owners?: number | string;
   images: string[];
   featured?: boolean;
   newArrival?: boolean;
-  description: string;
-  features?: string[];
-  source: {
-    platform: "OLX Verified Reference" | "WheelxCars Direct";
-    listingUrl?: string;
-    publishedDate?: string;
-    verified: boolean;
-  };
+  description?: string;
+  featuresList?: {
+    category: string;
+    items: { name: string; value?: string | boolean }[];
+  }[];
+  detailedFeatures?: CarFeatures;
 }
 
-export function formatPrice(priceInLakhs: number): string {
+export function formatPrice(priceInLakhs?: number): string {
+  if (priceInLakhs === undefined || priceInLakhs === null || isNaN(priceInLakhs) || priceInLakhs <= 0) {
+    return "Price on Request";
+  }
   if (priceInLakhs >= 100) {
     return `₹${(priceInLakhs / 100).toFixed(2)} Cr`;
   }
   return `₹${priceInLakhs.toFixed(2)} Lakh`;
 }
 
-export function formatEMI(emi: number): string {
+export function formatEMI(emi?: number): string {
+  if (!emi) return "";
   return `₹${emi.toLocaleString("en-IN")}/mo`;
 }
 
+// -------------------------------------------------------------
+// SINGLE SOURCE OF TRUTH: FIRST REAL VEHICLE LISTING
+// -------------------------------------------------------------
 export const CARS: Car[] = [
-  // -------------------------------------------------------------
-  // CHANDIGARH LISTINGS
-  // -------------------------------------------------------------
   {
-    id: "chd-001",
-    slug: "2018-toyota-innova-crysta-gx-at",
-    brand: "Toyota",
-    model: "Innova Crysta",
-    variant: "2.8 GX AT 7-Seater",
-    year: 2018,
-    price: 9.85,
-    emi: 17400,
-    fuel: "Diesel",
-    transmission: "Automatic",
-    registration: "CH01 (Chandigarh)",
-    mileage: "69,000 km",
-    kmDriven: 69000,
-    bodyType: "MUV",
-    city: "Chandigarh",
-    locality: "Sector 18B",
-    owners: 1,
-    color: "Silver Metallic",
-    engineCC: 2755,
-    images: [
-      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=1200&q=80",
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1200&q=80",
-    ],
-    featured: true,
-    newArrival: true,
-    description: "Toyota Innova Crysta 2.8 GX Diesel Automatic, 7-seater captain seats, 1st owner, total dealer service records, clean interiors, pristine drive and mechanical health.",
-    features: ["Captain Seats", "Automatic Climate Control", "Alloy Wheels", "Dual Airbags", "Rear AC Vents"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/chandigarh_g4058929/cars_c84",
-      publishedDate: "Recent (3 weeks ago)",
-      verified: true,
-    },
-  },
-  {
-    id: "chd-002",
-    slug: "2015-mercedes-benz-c-class-c220d",
-    brand: "Mercedes-Benz",
-    model: "C-Class",
-    variant: "C 220d Avantgarde",
-    year: 2015,
-    price: 6.75,
-    emi: 11950,
-    fuel: "Diesel",
-    transmission: "Automatic",
-    registration: "CH01 (Chandigarh)",
-    mileage: "55,000 km",
-    kmDriven: 55000,
-    bodyType: "Luxury",
-    city: "Chandigarh",
-    locality: "Sector 8",
-    owners: 2,
-    color: "Polar White",
-    engineCC: 2143,
-    images: [
-      "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=1200&q=80",
-      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=1200&q=80",
-    ],
-    featured: true,
-    newArrival: false,
-    description: "Mercedes-Benz C 220d Avantgarde with panoramic sunroof, LED Intelligent Light System, ambient lighting, immaculate leather upholstery, new tyres and valid comprehensive insurance.",
-    features: ["Panoramic Sunroof", "LED Intelligent Lights", "Memory Seats", "Paddle Shifters", "Navigation"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/chandigarh_g4058929/cars_c84",
-      publishedDate: "Recent (2 weeks ago)",
-      verified: true,
-    },
-  },
-  {
-    id: "chd-003",
-    slug: "2020-hyundai-santro-sportz",
-    brand: "Hyundai",
-    model: "Santro",
-    variant: "Sportz 1.1",
-    year: 2020,
-    price: 3.50,
-    emi: 6190,
-    fuel: "Petrol",
-    transmission: "Manual",
-    registration: "CH01 (Chandigarh)",
-    mileage: "42,000 km",
-    kmDriven: 42000,
-    bodyType: "Hatchback",
-    city: "Chandigarh",
-    locality: "Sector 40D",
-    owners: 1,
-    color: "Star Dust",
-    engineCC: 1086,
-    images: [
-      "https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&q=80",
-      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=1200&q=80",
-    ],
-    featured: false,
-    newArrival: true,
-    description: "Hyundai Santro Sportz 2020 petrol manual, single owner, touch screen system with Apple CarPlay & Android Auto, rear AC vents, non-accidental, power windows.",
-    features: ["Touchscreen Display", "Rear AC Vents", "Power Windows", "Central Locking"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/chandigarh_g4058929/cars_c84",
-      publishedDate: "Recent (1 week ago)",
-      verified: true,
-    },
-  },
-  {
-    id: "chd-004",
-    slug: "2017-toyota-fortuner-4x2-at",
-    brand: "Toyota",
-    model: "Fortuner",
-    variant: "4X2 AT 2.8 Diesel",
-    year: 2017,
-    price: 9.45,
-    emi: 16700,
-    fuel: "Diesel",
-    transmission: "Automatic",
-    registration: "CH01 (Chandigarh)",
-    mileage: "69,000 km",
-    kmDriven: 69000,
-    bodyType: "SUV",
-    city: "Chandigarh",
-    locality: "Industrial Area Phase 1",
-    owners: 1,
-    color: "Pearl White",
-    engineCC: 2755,
-    images: [
-      "https://images.unsplash.com/photo-1593950315186-76a92975b60c?w=1200&q=80",
-      "https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=1200&q=80",
-    ],
-    featured: true,
-    newArrival: false,
-    description: "Toyota Fortuner 2.8 4x2 Automatic in Pearl White. Single hand doctor driven, spotless condition, zero debt insurance, complete service history available at authorized Toyota dealership.",
-    features: ["Touchscreen Display", "Leather Seats", "Cruise Control", "Power Seats", "Reverse Camera"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/chandigarh_g4058929/cars_c84",
-      publishedDate: "Recent (4 weeks ago)",
-      verified: true,
-    },
-  },
-  {
-    id: "chd-005",
-    slug: "2011-honda-city-1-5-v",
-    brand: "Honda",
-    model: "City",
-    variant: "1.5 V i-VTEC",
-    year: 2011,
-    price: 2.50,
-    emi: 4420,
-    fuel: "Petrol",
-    transmission: "Manual",
-    registration: "CH01 (Chandigarh)",
-    mileage: "57,790 km",
-    kmDriven: 57790,
-    bodyType: "Sedan",
-    city: "Chandigarh",
-    locality: "Sector 32",
-    owners: 1,
-    color: "Alabaster Silver",
-    engineCC: 1497,
-    images: [
-      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=1200&q=80",
-      "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=1200&q=80",
-    ],
-    featured: false,
-    newArrival: false,
-    description: "Honda City 1.5 V Petrol manual in flawless mechanical shape. Single owner, low genuine mileage 57.7k kms, smooth i-VTEC engine, cold AC, all original panels.",
-    features: ["Alloy Wheels", "Integrated Audio", "Dual Airbags", "Power Steering", "ABS"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/chandigarh_g4058929/cars_c84",
-      publishedDate: "Recent (2 weeks ago)",
-      verified: true,
-    },
-  },
-
-  // -------------------------------------------------------------
-  // MOHALI LISTINGS
-  // -------------------------------------------------------------
-  {
-    id: "moh-001",
-    slug: "2020-hyundai-creta-1-4-sx-turbo-dct",
-    brand: "Hyundai",
-    model: "Creta",
-    variant: "1.4 SX (O) Turbo DCT",
-    year: 2020,
-    price: 9.30,
-    emi: 16450,
-    fuel: "Petrol",
-    transmission: "Automatic",
-    registration: "PB65 (Mohali)",
-    mileage: "48,000 km",
-    kmDriven: 48000,
-    bodyType: "SUV",
-    city: "Mohali",
-    locality: "Airport Road",
-    owners: 1,
-    color: "Polar White Dual Tone",
-    engineCC: 1353,
-    images: [
-      "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=1200&q=80",
-      "https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=1200&q=80",
-    ],
-    featured: true,
-    newArrival: true,
-    description: "Hyundai Creta 1.4 Turbo SX Opt Dual Tone DCT Automatic. Panoramic sunroof, ventilated front seats, Bose premium audio, paddle shifters, complete service history.",
-    features: ["Panoramic Sunroof", "Bose Sound System", "Ventilated Seats", "Paddle Shifters", "Air Purifier"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/mohali_g4113913/cars_c84",
-      publishedDate: "Recent (1 week ago)",
-      verified: true,
-    },
-  },
-  {
-    id: "moh-002",
-    slug: "2018-hyundai-creta-1-6-sx-diesel-at",
-    brand: "Hyundai",
-    model: "Creta",
-    variant: "1.6 SX CRDi AT",
-    year: 2018,
-    price: 8.00,
-    emi: 14150,
-    fuel: "Diesel",
-    transmission: "Automatic",
-    registration: "PB65 (Mohali)",
-    mileage: "85,000 km",
-    kmDriven: 85000,
-    bodyType: "SUV",
-    city: "Mohali",
-    locality: "Sector 70",
-    owners: 1,
-    color: "Sleek Silver",
-    engineCC: 1582,
-    images: [
-      "https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=1200&q=80",
-      "https://images.unsplash.com/photo-1614026480418-bd11fdb9fa06?w=1200&q=80",
-    ],
-    featured: false,
-    newArrival: false,
-    description: "Hyundai Creta 1.6 SX Diesel Automatic in silver. First owner, company maintained, clean leatherette interior, 17-inch diamond cut alloys, projector headlamps.",
-    features: ["Diamond Cut Alloys", "Projector Headlamps", "Push Button Start", "Touchscreen", "Rear Camera"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/mohali_g4113913/cars_c84",
-      publishedDate: "Recent (3 weeks ago)",
-      verified: true,
-    },
-  },
-  {
-    id: "moh-003",
-    slug: "2021-honda-amaze-v-cvt-petrol",
-    brand: "Honda",
-    model: "Amaze",
-    variant: "V 1.2 Petrol CVT",
-    year: 2021,
-    price: 5.85,
-    emi: 10340,
-    fuel: "Petrol",
-    transmission: "Automatic",
-    registration: "PB65 (Mohali)",
-    mileage: "39,000 km",
-    kmDriven: 39000,
-    bodyType: "Sedan",
-    city: "Mohali",
-    locality: "Sector 68",
-    owners: 1,
-    color: "Platinum White Pearl",
-    engineCC: 1199,
-    images: [
-      "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1200&q=80",
-      "https://images.unsplash.com/photo-1617531653332-bd46c16f7d3f?w=1200&q=80",
-    ],
-    featured: false,
-    newArrival: true,
-    description: "Honda Amaze V Petrol CVT automatic. 1st owner, super smooth gearbox, non-accidental, touch screen, cruise control, push button start, complete service record.",
-    features: ["CVT Gearbox", "Cruise Control", "Push Button Start", "Rear Camera", "Alloy Wheels"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/mohali_g4113913/cars_c84",
-      publishedDate: "Recent (2 weeks ago)",
-      verified: true,
-    },
-  },
-  {
-    id: "moh-004",
-    slug: "2020-maruti-suzuki-baleno-delta",
-    brand: "Maruti Suzuki",
-    model: "Baleno",
-    variant: "1.2 Delta DualJet",
-    year: 2020,
-    price: 5.75,
-    emi: 10160,
-    fuel: "Petrol",
-    transmission: "Manual",
-    registration: "PB65 (Mohali)",
-    mileage: "29,800 km",
-    kmDriven: 29800,
-    bodyType: "Hatchback",
-    city: "Mohali",
-    locality: "Sector 71",
-    owners: 1,
-    color: "Nexa Blue",
-    engineCC: 1197,
-    images: [
-      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=1200&q=80",
-      "https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&q=80",
-    ],
-    featured: true,
-    newArrival: false,
-    description: "Maruti Baleno Delta 1st owner, only 29.8k kms driven, totally scratchless, steering mounted audio controls, Bluetooth infotainment, new tyres, insurance valid.",
-    features: ["Steering Audio Controls", "Automatic Climate Control", "Dual Airbags", "Rear Parking Sensors"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/mohali_g4113913/cars_c84",
-      publishedDate: "Recent (1 week ago)",
-      verified: true,
-    },
-  },
-  {
-    id: "moh-005",
-    slug: "2022-mahindra-thar-lx-diesel-4wd",
+    id: "mahindra-bolero-2018-zlx",
+    slug: "mahindra-bolero-2018",
     brand: "Mahindra",
-    model: "Thar",
-    variant: "LX Diesel AT 4WD Hard Top",
-    year: 2022,
-    price: 9.60,
-    emi: 16950,
-    fuel: "Diesel",
-    transmission: "Automatic",
-    registration: "PB65 (Mohali)",
-    mileage: "35,000 km",
-    kmDriven: 35000,
-    bodyType: "SUV",
-    city: "Mohali",
-    locality: "Sector 82",
-    owners: 1,
-    color: "Napoli Black",
-    engineCC: 2184,
-    images: [
-      "https://images.unsplash.com/photo-1593950315186-76a92975b60c?w=1200&q=80",
-      "https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=1200&q=80",
-    ],
-    featured: true,
-    newArrival: true,
-    description: "Mahindra Thar LX 4x4 Diesel Automatic with factory hard top. Single owner, alloy wheels, touch screen navigation, rollover mitigation, certified non-accidental.",
-    features: ["4x4 Shift-on-Fly", "Touchscreen Display", "Hard Top", "Cruise Control", "TPMS"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/mohali_g4113913/cars_c84",
-      publishedDate: "Recent (3 days ago)",
-      verified: true,
-    },
-  },
-
-  // -------------------------------------------------------------
-  // PANCHKULA LISTINGS
-  // -------------------------------------------------------------
-  {
-    id: "pan-001",
-    slug: "2020-mahindra-thar-lx-hard-top-rwd",
-    brand: "Mahindra",
-    model: "Thar",
-    variant: "LX Hard Top Diesel",
-    year: 2020,
-    price: 8.95,
-    emi: 15800,
-    fuel: "Diesel",
-    transmission: "Manual",
-    registration: "HR70 (Panchkula)",
-    mileage: "39,000 km",
-    kmDriven: 39000,
-    bodyType: "SUV",
-    city: "Panchkula",
-    locality: "Industrial Area Phase 2",
-    owners: 1,
-    color: "Napoli Black",
-    engineCC: 2184,
-    images: [
-      "https://images.unsplash.com/photo-1593950315186-76a92975b60c?w=1200&q=80",
-      "https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=1200&q=80",
-    ],
-    featured: false,
-    newArrival: true,
-    description: "Mahindra Thar Diesel Hard Top in pristine black. Low running 39k km, untouched interior, alloy wheels, single hand driven, fully serviced at authorized dealer.",
-    features: ["Factory Hard Top", "Touchscreen Infotainment", "Alloy Wheels", "ESP"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/panchkula_g4114097/cars_c84",
-      publishedDate: "Recent (2 weeks ago)",
-      verified: true,
-    },
-  },
-  {
-    id: "pan-002",
-    slug: "2017-skoda-rapid-1-6-tdi-ambition",
-    brand: "Skoda",
-    model: "Rapid",
-    variant: "1.6 TDI Ambition",
-    year: 2017,
-    price: 4.50,
-    emi: 7950,
-    fuel: "Diesel",
-    transmission: "Manual",
-    registration: "HR70 (Panchkula)",
-    mileage: "82,000 km",
-    kmDriven: 82000,
-    bodyType: "Sedan",
-    city: "Panchkula",
-    locality: "Sector 20",
-    owners: 1,
-    color: "Candy White",
-    engineCC: 1598,
-    images: [
-      "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1200&q=80",
-      "https://images.unsplash.com/photo-1617531653332-bd46c16f7d3f?w=1200&q=80",
-    ],
-    featured: false,
-    newArrival: false,
-    description: "Skoda Rapid 1.6 TDI diesel, great highway mileage and solid German build. Clean dual-tone beige interior, original paint, comprehensive insurance valid.",
-    features: ["Dual Tone Interior", "Projector Headlamps", "Rear AC Vents", "ABS with EBD"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/panchkula_g4114097/cars_c84",
-      publishedDate: "Recent (3 weeks ago)",
-      verified: true,
-    },
-  },
-  {
-    id: "pan-003",
-    slug: "2023-maruti-suzuki-alto-k10-vxi",
-    brand: "Maruti Suzuki",
-    model: "Alto K10",
-    variant: "1.0 VXI",
-    year: 2023,
-    price: 4.00,
-    emi: 7070,
-    fuel: "Petrol",
-    transmission: "Manual",
-    registration: "HR70 (Panchkula)",
-    mileage: "17,000 km",
-    kmDriven: 17000,
-    bodyType: "Hatchback",
-    city: "Panchkula",
-    locality: "Sector 11",
-    owners: 1,
-    color: "Silky Silver",
-    engineCC: 998,
-    images: [
-      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=1200&q=80",
-      "https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&q=80",
-    ],
-    featured: false,
-    newArrival: true,
-    description: "Maruti Suzuki Alto K10 VXI next-gen model, just 17000 kms run, company serviced, brand new tires, zero depreciation insurance, highly fuel efficient.",
-    features: ["SmartPlay Studio", "Front Power Windows", "Dual Airbags", "Remote Keyless Entry"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/panchkula_g4114097/cars_c84",
-      publishedDate: "Recent (1 week ago)",
-      verified: true,
-    },
-  },
-  {
-    id: "pan-004",
-    slug: "2015-renault-kwid-rxt-climber",
-    brand: "Renault",
-    model: "KWID",
-    variant: "RXT Climber 1.0",
-    year: 2015,
-    price: 3.00,
-    emi: 5300,
-    fuel: "Petrol",
-    transmission: "Manual",
-    registration: "HR70 (Panchkula)",
-    mileage: "26,630 km",
-    kmDriven: 26630,
-    bodyType: "Hatchback",
-    city: "Panchkula",
-    locality: "MDC Sector 6",
-    owners: 1,
-    color: "Outback Bronze",
-    engineCC: 999,
-    images: [
-      "https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&q=80",
-      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=1200&q=80",
-    ],
-    featured: false,
-    newArrival: false,
-    description: "Renault Kwid Climber edition with 26k genuine km. Touch screen infotainment with navigation, power windows, roof rails, well maintained family run car.",
-    features: ["Touchscreen Navigation", "Roof Rails", "Digital Instrument Cluster", "Front Power Windows"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/panchkula_g4114097/cars_c84",
-      publishedDate: "Recent (4 weeks ago)",
-      verified: true,
-    },
-  },
-  {
-    id: "pan-005",
-    slug: "2013-toyota-etios-1-4-gd",
-    brand: "Toyota",
-    model: "Etios",
-    variant: "1.4 GD Diesel",
-    year: 2013,
-    price: 2.35,
-    emi: 4150,
-    fuel: "Diesel",
-    transmission: "Manual",
-    registration: "HR70 (Panchkula)",
-    mileage: "110,000 km",
-    kmDriven: 110000,
-    bodyType: "Sedan",
-    city: "Panchkula",
-    locality: "Sector 7",
-    owners: 2,
-    color: "Classic Grey",
-    engineCC: 1364,
-    images: [
-      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=1200&q=80",
-      "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=1200&q=80",
-    ],
-    featured: false,
-    newArrival: false,
-    description: "Toyota Etios GD Diesel, legendary D-4D engine longevity, smooth suspension, all electricals working, spacious cabin and 592L boot space.",
-    features: ["Power Windows", "Power Steering", "Central Locking", "Cooled Glovebox"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/panchkula_g4114097/cars_c84",
-      publishedDate: "Recent (3 weeks ago)",
-      verified: true,
-    },
-  },
-
-  // -------------------------------------------------------------
-  // ZIRAKPUR LISTINGS
-  // -------------------------------------------------------------
-  {
-    id: "zir-001",
-    slug: "2023-mg-hector-2-0-sharp-diesel",
-    brand: "MG",
-    model: "Hector",
-    variant: "2.0 Sharp Diesel",
-    year: 2023,
-    price: 9.70,
-    emi: 17140,
-    fuel: "Diesel",
-    transmission: "Manual",
-    registration: "PB65 (Zirakpur)",
-    mileage: "20,000 km",
-    kmDriven: 20000,
-    bodyType: "SUV",
-    city: "Zirakpur",
-    locality: "VIP Road",
-    owners: 1,
-    color: "Aurora Silver",
-    engineCC: 1956,
-    images: [
-      "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=1200&q=80",
-      "https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=1200&q=80",
-    ],
-    featured: true,
-    newArrival: true,
-    description: "MG Hector Diesel Sharp, updated front fascia, only 20,000 km run. Infinity sound system, panoramic sunroof, 360-degree camera, heated mirrors, non-accidental.",
-    features: ["Panoramic Sunroof", "360 Degree Camera", "Infinity Sound System", "14-inch HD Infotainment"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/chandigarh_g4058929/cars_c84",
-      publishedDate: "Recent (5 days ago)",
-      verified: true,
-    },
-  },
-  {
-    id: "zir-002",
-    slug: "2024-kia-seltos-1-5-htk-plus",
-    brand: "Kia",
-    model: "Seltos",
-    variant: "1.5 HTK Plus",
-    year: 2024,
-    price: 9.50,
-    emi: 16790,
-    fuel: "Petrol",
-    transmission: "Manual",
-    registration: "PB65 (Zirakpur)",
-    mileage: "23,000 km",
-    kmDriven: 23000,
-    bodyType: "SUV",
-    city: "Zirakpur",
-    locality: "Chandigarh-Ambala Highway",
-    owners: 1,
-    color: "Gravity Grey",
-    engineCC: 1497,
-    images: [
-      "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=1200&q=80",
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1200&q=80",
-    ],
-    featured: true,
-    newArrival: true,
-    description: "Kia Seltos HTK+ new model, crown jewel LED headlamps, panoramic display console, push button start, ambient mood lighting, first owner.",
-    features: ["LED Headlamps", "Push Button Start", "Cruise Control", "Rear AC Vents", "Apple CarPlay"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/chandigarh_g4058929/cars_c84",
-      publishedDate: "Recent (1 week ago)",
-      verified: true,
-    },
-  },
-  {
-    id: "zir-003",
-    slug: "2015-volkswagen-jetta-2-0-tdi-highline",
-    brand: "Volkswagen",
-    model: "Jetta",
-    variant: "2.0 TDI Highline",
-    year: 2015,
-    price: 6.95,
-    emi: 12280,
-    fuel: "Diesel",
-    transmission: "Manual",
-    registration: "CH01 (Zirakpur Area)",
-    mileage: "90,000 km",
-    kmDriven: 90000,
-    bodyType: "Sedan",
-    city: "Zirakpur",
-    locality: "Peermuchalla",
-    owners: 2,
-    color: "Reflex Silver",
-    engineCC: 1968,
-    images: [
-      "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1200&q=80",
-      "https://images.unsplash.com/photo-1617531653332-bd46c16f7d3f?w=1200&q=80",
-    ],
-    featured: false,
-    newArrival: false,
-    description: "Volkswagen Jetta 2.0 TDI Highline diesel sedan. Bi-xenon headlamps, pure leather seats, 8-airbag safety, dual-zone climatronic AC, outstanding highway cruiser.",
-    features: ["Bi-Xenon Headlights", "Dual Zone Climatronic", "8 Airbags", "Leather Upholstery", "Alloy Wheels"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/chandigarh_g4058929/cars_c84",
-      publishedDate: "Recent (2 weeks ago)",
-      verified: true,
-    },
-  },
-  {
-    id: "zir-004",
-    slug: "2018-maruti-suzuki-dzire-zxi-amt",
-    brand: "Maruti Suzuki",
-    model: "Dzire",
-    variant: "1.2 ZXI AMT AGS",
+    model: "Bolero",
+    variant: "1.5 Power Plus ZLX",
     year: 2018,
-    price: 6.50,
-    emi: 11490,
-    fuel: "Petrol",
-    transmission: "AMT",
-    registration: "PB65 (Zirakpur)",
-    mileage: "75,000 km",
-    kmDriven: 75000,
-    bodyType: "Sedan",
-    city: "Zirakpur",
-    locality: "Baltana",
-    owners: 2,
-    color: "Oxford Blue",
-    engineCC: 1197,
-    images: [
-      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=1200&q=80",
-      "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=1200&q=80",
-    ],
-    featured: false,
-    newArrival: false,
-    description: "Maruti Suzuki Dzire ZXI Automatic AGS. Keyless entry, push button start, wooden finish dash, alloy wheels, automatic AC, steering controls, excellent condition.",
-    features: ["Push Button Start", "Alloy Wheels", "Automatic Climate Control", "Smartplay Infotainment"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/chandigarh_g4058929/cars_c84",
-      publishedDate: "Recent (3 weeks ago)",
-      verified: true,
-    },
-  },
-
-  // -------------------------------------------------------------
-  // KHARAR LISTINGS
-  // -------------------------------------------------------------
-  {
-    id: "kha-001",
-    slug: "2023-tata-tiago-xza-amt",
-    brand: "Tata",
-    model: "Tiago",
-    variant: "XZA AMT 1.2 Revotron",
-    year: 2023,
-    price: 5.10,
-    emi: 9010,
-    fuel: "Petrol",
-    transmission: "AMT",
-    registration: "PB65 (Kharar)",
-    mileage: "20,500 km",
-    kmDriven: 20500,
-    bodyType: "Hatchback",
-    city: "Kharar",
-    locality: "Sunny Enclave",
-    owners: 1,
-    color: "Daytona Grey",
-    engineCC: 1199,
-    images: [
-      "https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&q=80",
-      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=1200&q=80",
-    ],
-    featured: true,
-    newArrival: true,
-    description: "Tata Tiago XZA top automatic model. 4-star GNCAP safety rating, Harman 8-speaker surround audio, reverse camera with guidelines, digital cluster, single owner.",
-    features: ["Harman Sound System", "Digital Cluster", "Rear Camera", "Automatic AMT Gearbox"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/mohali_g4113913/cars_c84",
-      publishedDate: "Recent (4 days ago)",
-      verified: true,
-    },
-  },
-  {
-    id: "kha-002",
-    slug: "2018-maruti-suzuki-s-cross-zeta",
-    brand: "Maruti Suzuki",
-    model: "S-Cross",
-    variant: "1.3 DDiS Zeta Smart Hybrid",
-    year: 2018,
-    price: 3.95,
-    emi: 6980,
     fuel: "Diesel",
     transmission: "Manual",
-    registration: "PB65 (Kharar)",
-    mileage: "87,000 km",
-    kmDriven: 87000,
+    mileage: "71,000 Km",
+    kmDriven: 71000,
+    owners: "1st Owner",
+    color: "Green",
+    makeMonth: "September",
+    insuranceType: "Comprehensive",
+    registration: "JH",
+    registrationPlace: "JH",
     bodyType: "SUV",
-    city: "Kharar",
-    locality: "Mundi Kharar",
-    owners: 2,
-    color: "Caffeine Brown",
-    engineCC: 1248,
+    priceText: "Price on Request",
+    featured: true,
+    newArrival: true,
+    description: "2018 Mahindra Bolero 1.5 Power Plus ZLX in Green. Single owner (1st Owner), diesel manual transmission with genuine 71,000 Km driven. Features comprehensive insurance, power windows, automatic climate control AC, navigation system, and reverse parking sensors. Verified single-hand driven vehicle.",
     images: [
-      "https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=1200&q=80",
-      "https://images.unsplash.com/photo-1614026480418-bd11fdb9fa06?w=1200&q=80",
+      "/cars/mahindra-bolero/bolero-1.jpg",
+      "/cars/mahindra-bolero/bolero-2.jpg",
+      "/cars/mahindra-bolero/bolero-3.jpg",
     ],
-    featured: false,
-    newArrival: false,
-    description: "Maruti Suzuki S-Cross Diesel Smart Hybrid Zeta. Push start button, SmartPlay touch screen with Apple CarPlay, cruise control, disc brakes on all 4 wheels, spacious boot.",
-    features: ["Smart Hybrid DDiS", "Push Button Start", "Cruise Control", "All-Wheel Disc Brakes"],
-    source: {
-      platform: "OLX Verified Reference",
-      listingUrl: "https://www.olx.in/mohali_g4113913/cars_c84",
-      publishedDate: "Recent (3 weeks ago)",
-      verified: true,
+    detailedFeatures: {
+      abs: true,
+      antiTheftDevice: true,
+      parkingSensors: true,
+      adjustableSteering: true,
+      airConditioning: "Automatic Climate Control",
+      powerSteering: true,
+      powerWindows: "Front & Rear",
+      cruiseControl: true,
+      auxCompatibility: true,
+      bluetooth: true,
+      radio: true,
+      usbCompatibility: true,
+      navigationSystem: true,
     },
+    featuresList: [
+      {
+        category: "Safety & Security",
+        items: [
+          { name: "Anti-lock Braking System (ABS)", value: true },
+          { name: "Anti Theft Device", value: true },
+          { name: "Reverse Parking Sensors", value: true },
+        ],
+      },
+      {
+        category: "Comfort & Convenience",
+        items: [
+          { name: "Air Conditioning", value: "Automatic Climate Control" },
+          { name: "Adjustable Steering Column", value: true },
+          { name: "Power Steering", value: true },
+          { name: "Power Windows", value: "Front & Rear" },
+          { name: "Cruise Control", value: true },
+        ],
+      },
+      {
+        category: "Connectivity & Entertainment",
+        items: [
+          { name: "Navigation System", value: true },
+          { name: "Bluetooth Connectivity", value: true },
+          { name: "USB Compatibility", value: true },
+          { name: "Aux Compatibility", value: true },
+          { name: "AM/FM Radio", value: true },
+        ],
+      },
+      {
+        category: "Vehicle Overview",
+        items: [
+          { name: "Color", value: "Green" },
+          { name: "Make Month", value: "September 2018" },
+          { name: "Insurance Type", value: "Comprehensive" },
+          { name: "Registration State / Place", value: "JH" },
+        ],
+      },
+    ],
   },
 ];
 
@@ -812,7 +166,7 @@ export function getCarBySlug(slug: string): Car | undefined {
 }
 
 export const BRANDS = [...new Set(CARS.map((c) => c.brand))].sort();
-export const LOCATIONS: TricityLocation[] = ["Chandigarh", "Mohali", "Panchkula", "Zirakpur", "Kharar"];
-export const FUEL_TYPES: FuelType[] = ["Petrol", "Diesel", "Electric", "Hybrid", "CNG"];
+export const LOCATIONS = ["All Listings", "JH"];
+export const FUEL_TYPES: FuelType[] = ["Diesel", "Petrol", "Electric", "Hybrid", "CNG"];
 export const TRANSMISSION_TYPES: TransmissionType[] = ["Manual", "Automatic", "AMT", "CVT", "DCT"];
-export const BODY_TYPES: BodyType[] = ["Sedan", "SUV", "Hatchback", "MUV", "Coupe", "Luxury"];
+export const BODY_TYPES: BodyType[] = ["SUV", "Sedan", "Hatchback", "MUV", "Luxury"];
