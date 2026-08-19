@@ -349,15 +349,15 @@ export const CARS: Car[] = [
     mileage: "75,000 Km",
     kmDriven: 75000,
     owners: "Verified",
-    color: "Polar White",
+    color: "Phantom Black",
     location: "SAS Nagar Mohali, Mohali",
-    registration: "PB 65",
-    registrationPlace: "SAS Nagar Mohali (PB 65)",
+    registration: "HR 26",
+    registrationPlace: "HR 26C (Haryana)",
     postingDate: "19-AUG-26",
     bodyType: "SUV",
     featured: true,
     newArrival: true,
-    description: "2016 Hyundai Creta SX(O) Petrol in immaculate condition with push button start, fully loaded top model car. Features diamond-cut alloy wheels, projector headlamps with LED position lamps, touchscreen infotainment system with GPS navigation, automatic climate control, reverse parking camera, electrically folding ORVMs, and smart key with keyless entry. Exchange and finance available.",
+    description: "2016 Hyundai Creta SX(O) Petrol in Phantom Black finish with push button start, fully loaded top model car. Registered HR 26C (HR26CT2879). Features diamond-cut alloy wheels, projector headlamps with LED position lamps, touchscreen infotainment system with GPS navigation, automatic climate control, reverse parking camera, electrically folding ORVMs, and smart key with keyless entry. Exchange and finance available.",
     images: [
       "/cars/creta/creta1.png",
       "/cars/creta/creta2.png",
@@ -408,6 +408,8 @@ export const CARS: Car[] = [
       {
         category: "Additional Details",
         items: [
+          { name: "Exterior Color", value: "Phantom Black" },
+          { name: "Registration", value: "HR 26C (Haryana)" },
           { name: "Exchange Facility", value: "Yes" },
           { name: "Finance Facility", value: "Yes" },
           { name: "Location", value: "SAS Nagar Mohali, Mohali" },
