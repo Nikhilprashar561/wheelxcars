@@ -35,10 +35,10 @@ export interface Car {
   emi?: number;
   fuel: FuelType;
   transmission: TransmissionType;
-  registration: string; // e.g. "PB 03", "HR 96", "JH"
+  registration: string; // e.g. "PB 01", "PB 03", "HR 96", "JH"
   registrationPlace?: string;
   location?: string;
-  mileage: string; // e.g. "38,000 Km"
+  mileage: string; // e.g. "26,000 Km"
   kmDriven?: number;
   bodyType: BodyType;
   color?: string;
@@ -76,7 +76,128 @@ export function formatEMI(emi?: number): string {
 // SINGLE SOURCE OF TRUTH: REAL VEHICLE INVENTORY
 // -------------------------------------------------------------
 export const CARS: Car[] = [
-  // 1. Maruti Suzuki Swift RS (Car One)
+  // 1. Mahindra Thar LX 4x4 (New Car 1 with exact FB CDN URLs)
+  {
+    id: "mahindra-thar-lx-4x4-2022",
+    slug: "mahindra-thar-lx-4x4-2022",
+    brand: "Mahindra",
+    model: "Thar",
+    variant: "LX 4x4 Hard Top",
+    year: 2022,
+    fuel: "Diesel",
+    transmission: "Manual",
+    mileage: "26,000 Km",
+    kmDriven: 26000,
+    owners: "1st Owner",
+    color: "Aquamarine",
+    registration: "Verified",
+    registrationPlace: "Tricity / North India",
+    bodyType: "SUV",
+    priceText: "Price on Request",
+    featured: true,
+    newArrival: true,
+    description: "2022 Mahindra Thar LX 4x4 Hard Top in stunning Aquamarine. Powered by mHawk 130 Turbo Diesel with 6-speed manual 4x4 transfer case. Features custom deep-dish multi-spoke Fuel sport alloy wheels, wide all-terrain off-road tires, hard-top roof, touchscreen infotainment, and electronic roll cage stability. Single hand driven, immaculate condition.",
+    images: [
+      "https://scontent.fixc3-1.fna.fbcdn.net/v/t39.30808-6/775261313_4453132388307698_6747876319747383786_n.jpg?stp=dst-jpg_tt6&cstp=mx1240x2772&ctp=s1240x2772&_nc_cat=109&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=xkj7Qd18IZ4Q7kNvwEtriya&_nc_oc=Ado8Rf79VSAuNky4U5EYoz0rJBBFFlT3r701QkGvgZDqycD7wbtfIkEM-c7blk5uKq8&_nc_zt=23&_nc_ht=scontent.fixc3-1.fna&_nc_gid=VPNIi9Xouqi5FbIorFG-HA&_nc_ss=7b2a8&oh=00_AQHVFDd9tR-mubNQaTYGachxNDOQYtpMpMKIYRHdDTEB2Q&oe=6A8B211D",
+      "https://scontent.fixc3-1.fna.fbcdn.net/v/t39.30808-6/775156571_4453132261641044_4959840427745693285_n.jpg?stp=dst-jpg_tt6&cstp=mx1240x2772&ctp=s1240x2772&_nc_cat=101&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=NP2mjcbmpE4Q7kNvwHbn73r&_nc_oc=AdqqaI3k14CQP3TgA0Zp1nhfBfdMFb4OYMZIs0oRbZvfFgY6SaYaLw6Ard9bySBiE7c&_nc_zt=23&_nc_ht=scontent.fixc3-1.fna&_nc_gid=f5MDehHcknpAfsz-bSoHvg&_nc_ss=7b2a8&oh=00_AQEXpvUr3Mjly36i2zTWUy1269YVyiWrIOVhuOQFoydRjw&oe=6A8B0B4C",
+      "https://scontent.fixc3-1.fna.fbcdn.net/v/t39.30808-6/775442161_4453131584974445_2858911896660845988_n.jpg?stp=dst-jpg_tt6&cstp=mx1240x2772&ctp=s1240x2772&_nc_cat=105&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=Tiyvd0Qlo8AQ7kNvwHpzUMa&_nc_oc=Adpa-OaSt08Mv36f3D7ASz5nkPuGB61MgRbSspf5_rTGIb1JpikOkz7Ds-V8gxu5-l0&_nc_zt=23&_nc_ht=scontent.fixc3-1.fna&_nc_gid=Z0SFr9peAuVQfgxUWBrt6w&_nc_ss=7b2a8&oh=00_AQGyKouIUnxlw1zjuqI_8DFaE6xBF3HR-k5wHXlF0IYFyQ&oe=6A8B2FE7",
+      "https://scontent.fixc3-1.fna.fbcdn.net/v/t39.30808-6/777570588_4453132308307706_2487763890460519246_n.jpg?stp=dst-jpg_tt6&cstp=mx1240x2772&ctp=s1240x2772&_nc_cat=107&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=TP3M7Vp8UaAQ7kNvwGkn3u0&_nc_oc=AdrbxyDO_5B5F51eNVaHgx6tRXWcsBnTGKbDL_DlR7wtVgWSVSyUZGlsR6zBodRqSQg&_nc_zt=23&_nc_ht=scontent.fixc3-1.fna&_nc_gid=kGlkj2FWGi_zzf2W0lciQg&_nc_ss=7b2a8&oh=00_AQGg_M6Ry8Q7Cd-Pe2K38oJ7PIhGM9RWTh6_AFULe9KmOA&oe=6A8B0FDE",
+    ],
+    featuresList: [
+      {
+        category: "Off-Road & Performance",
+        items: [
+          { name: "Shift-on-Fly 4x4 System with Low Range", value: true },
+          { name: "Custom Deep-Dish Fuel Alloy Wheels", value: true },
+          { name: "Wide All-Terrain Radial Tires", value: true },
+          { name: "Factory Molded Hard Top Roof", value: true },
+          { name: "Rear Tailgate Mounted Spare Wheel", value: true },
+        ],
+      },
+      {
+        category: "Comfort & Cabin",
+        items: [
+          { name: "Air Conditioning with Heater", value: "Yes" },
+          { name: "Power Steering", value: true },
+          { name: "Power Windows", value: "Front" },
+          { name: "Keyless Central Locking", value: true },
+          { name: "Touchscreen Infotainment System", value: true },
+        ],
+      },
+      {
+        category: "Safety & Off-Road Protection",
+        items: [
+          { name: "Electronic Stability Program (ESP)", value: true },
+          { name: "Built-in Roll Cage Protection", value: true },
+          { name: "Dual Front Airbags", value: true },
+          { name: "Anti-lock Braking System (ABS)", value: true },
+          { name: "Reverse Parking Sensors", value: true },
+        ],
+      },
+    ],
+  },
+
+  // 2. Hyundai Grand i10 Magna/Era CNG (New Car 2 with exact FB CDN URLs)
+  {
+    id: "hyundai-grand-i10-cng-2018",
+    slug: "hyundai-grand-i10-cng-2018",
+    brand: "Hyundai",
+    model: "Grand i10",
+    variant: "1.2 Magna (CNG)",
+    year: 2018,
+    fuel: "CNG",
+    transmission: "Manual",
+    mileage: "54,000 Km",
+    kmDriven: 54000,
+    owners: "1st Owner",
+    color: "Pure White",
+    location: "Mona Greens, Zirakpur",
+    registration: "PB 01",
+    registrationPlace: "PB 01 (Chandigarh / Punjab)",
+    bodyType: "Hatchback",
+    priceText: "Price on Request",
+    featured: true,
+    newArrival: true,
+    description: "Hyundai Grand i10 in Pure White with approved dual-fuel CNG & Petrol setup. Features high fuel efficiency, front power windows, power steering, central locking, body-colored ORVMs, and cascading front grille. Verified registration PB 01C 0764, inspected and in ready-to-drive condition.",
+    images: [
+      "https://scontent.fixc3-1.fna.fbcdn.net/v/t39.30808-6/778061216_2855635558126352_4009559534661350761_n.jpg?stp=dst-jpg_tt6&cstp=mx1536x2048&ctp=s1536x2048&_nc_cat=105&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=ClfUjHduM0MQ7kNvwFXAt7k&_nc_oc=AdpChYcTqlCQkqgTVWc9FtQSZ3kvBUk2dtQIDcd5yFcSi5P0h7rjefG2UQ7GBHZPkm0&_nc_zt=23&_nc_ht=scontent.fixc3-1.fna&_nc_gid=bwEGXMYl-t0XyIrGZgoVkA&_nc_ss=7b2a8&oh=00_AQEqoKpJjOAiQ1fuWTMsjXolwQkHh8F2i7EC9lp3u2fg3A&oe=6A8B1646",
+      "https://scontent.fixc3-1.fna.fbcdn.net/v/t39.30808-6/775377429_2855635568126351_3183882611473441044_n.jpg?stp=dst-jpg_tt6&cstp=mx1536x2048&ctp=s1536x2048&_nc_cat=104&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=DbpX35ZsCaMQ7kNvwGASdYz&_nc_oc=Adpzm6AKiYgdxLrtWuF_jUmjgclF2KZm8G7c1-4Tdf0D27-OxXjTm_4Sn9gxjc-PlpI&_nc_zt=23&_nc_ht=scontent.fixc3-1.fna&_nc_gid=2hu0gBbppdSou1y3fCoCUQ&_nc_ss=7b2a8&oh=00_AQGE8EYFCHfg9eI_g7FFW62Wv-uED92AAcCgVl6qxPeyzg&oe=6A8B0B55",
+      "https://scontent.fixc3-1.fna.fbcdn.net/v/t39.30808-6/779082801_2855635571459684_5287055672755050324_n.jpg?stp=dst-jpg_tt6&cstp=mx1536x2048&ctp=s1536x2048&_nc_cat=108&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=D9czAtfZoxUQ7kNvwG2uou3&_nc_oc=AdrjzkypV8vEUoF3K8U2xl6fpqKL8RO3EU3EMgBpbzNi8CGIY-iO83EjdASUzFD3OHg&_nc_zt=23&_nc_ht=scontent.fixc3-1.fna&_nc_gid=B60yy3WGSWhgQpETMNS7rA&_nc_ss=7b2a8&oh=00_AQE0Nf4Ge1KklZz1bkhD3Ju2YxxdYhhdS0rzO2yl4ZnZGQ&oe=6A8B0E00",
+      "https://scontent.fixc3-1.fna.fbcdn.net/v/t39.30808-6/779323306_2855635564793018_5176726280551809649_n.jpg?stp=dst-jpg_tt6&cstp=mx1536x2048&ctp=s1536x2048&_nc_cat=105&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=PoCjx1r9GZ0Q7kNvwEYuTWX&_nc_oc=Adrj61ht6rAPtLDERfB_NHl9HH9Te6Sf0DfK5cfLMaJbB_IyRH8v29GFjgV3cnzkk1M&_nc_zt=23&_nc_ht=scontent.fixc3-1.fna&_nc_gid=9dtJJXanvdJp2aCer5e9Eg&_nc_ss=7b2a8&oh=00_AQHe__iJB5oKxz04mJQrw8E5PHUa2FOsE9in7sqYYjeGFj0&oe=6A8B24F6",
+      "https://scontent.fixc3-1.fna.fbcdn.net/v/t39.30808-6/778427574_2855635554793019_8771024168661550314_n.jpg?stp=dst-jpg_tt6&cstp=mx1536x2048&ctp=s1536x2048&_nc_cat=107&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=cWwRvXCFeBQQ7kNvwEAud2h&_nc_oc=AdqkcER5_LDES1a_n2x1lmDfPPBdtNJfA_KLo1ULhvOtny-HdHOQpU4k-3fbXtIAyDI&_nc_zt=23&_nc_ht=scontent.fixc3-1.fna&_nc_gid=X0snCk8IdZK5IWZxaxU99Q&_nc_ss=7b2a8&oh=00_AQEkK3t82PfD46pX6VMj7E6g7iGbF3Tp8eAKcEe8ZG5Ugw&oe=6A8B1BD8",
+      "https://scontent.fixc3-1.fna.fbcdn.net/v/t39.30808-6/775261040_2855635561459685_8032583673498875324_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1536&ctp=s2048x1536&_nc_cat=104&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=AQ9xgIvKyxYQ7kNvwGk-T-l&_nc_oc=AdqSJesF9xBhxciwRlqozBgACLXfrrpZq91ZLmr9tsCPi0OqkhvHciTosF6eDT53IAs&_nc_zt=23&_nc_ht=scontent.fixc3-1.fna&_nc_gid=kKmsIeZK5AgJpD6voJgQqQ&_nc_ss=7b2a8&oh=00_AQFsUCkFblbIbJpXxIlJGmLqWuQkt_cWK5sCwNTuVwh0nA&oe=6A8B0227",
+    ],
+    featuresList: [
+      {
+        category: "Economy & Fuel",
+        items: [
+          { name: "Dual-Fuel CNG + Petrol Kit", value: true },
+          { name: "Ultra-High Mileage Running Cost", value: true },
+          { name: "Manual 5-Speed Transmission", value: true },
+        ],
+      },
+      {
+        category: "Comfort & Convenience",
+        items: [
+          { name: "Air Conditioning with Climate Blower", value: "Yes" },
+          { name: "Electric Power Steering", value: true },
+          { name: "Front Power Windows", value: true },
+          { name: "Central Locking System", value: true },
+          { name: "Internally Adjustable Mirrors", value: true },
+        ],
+      },
+      {
+        category: "Safety & Exterior",
+        items: [
+          { name: "Cascading Hexagonal Front Grille", value: true },
+          { name: "High-Mounted Stop Lamp", value: true },
+          { name: "Immobilizer Security System", value: true },
+        ],
+      },
+    ],
+  },
+
+  // 3. Maruti Suzuki Swift RS (2021)
   {
     id: "maruti-swift-rs-2021",
     slug: "maruti-suzuki-swift-rs-2021",
@@ -146,7 +267,7 @@ export const CARS: Car[] = [
     ],
   },
 
-  // 2. Maruti Suzuki Swift VDi DDiS (Car Two)
+  // 4. Maruti Suzuki Swift 1.3 VDi DDiS (2015)
   {
     id: "maruti-swift-vdi-2015",
     slug: "maruti-suzuki-swift-vdi-2015",
@@ -205,7 +326,7 @@ export const CARS: Car[] = [
     ],
   },
 
-  // 3. Hyundai i20 1.2 Sportz (2019)
+  // 5. Hyundai i20 1.2 Sportz (2019)
   {
     id: "hyundai-i20-2019-sportz",
     slug: "hyundai-i20-2019-sportz",
@@ -269,7 +390,7 @@ export const CARS: Car[] = [
     ],
   },
 
-  // 4. Mahindra Bolero 1.5 Power Plus ZLX (2018)
+  // 6. Mahindra Bolero 1.5 Power Plus ZLX (2018)
   {
     id: "mahindra-bolero-2018-zlx",
     slug: "mahindra-bolero-2018",
@@ -363,6 +484,6 @@ export function getCarBySlug(slug: string): Car | undefined {
 
 export const BRANDS = [...new Set(CARS.map((c) => c.brand))].sort();
 export const LOCATIONS = ["Chandigarh", "Mohali", "Panchkula", "Zirakpur", "Kharar", "Other"];
-export const FUEL_TYPES: FuelType[] = ["Diesel", "Petrol", "Electric", "Hybrid", "CNG"];
+export const FUEL_TYPES: FuelType[] = ["Diesel", "Petrol", "CNG", "Electric", "Hybrid"];
 export const TRANSMISSION_TYPES: TransmissionType[] = ["Manual", "Automatic", "AMT", "CVT", "DCT"];
 export const BODY_TYPES: BodyType[] = ["SUV", "Hatchback", "Sedan", "MUV", "Luxury"];
