@@ -298,8 +298,9 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                       alt={`${car.brand} ${car.model} - Image ${activeIndex + 1}`}
                       fill
                       className="object-cover object-center pointer-events-none"
-                      priority
-                      quality={95}
+                      priority={activeIndex === 0}
+                      loading={activeIndex === 0 ? "eager" : "lazy"}
+                      quality={90}
                       sizes="(max-width: 1024px) 100vw, 70vw"
                     />
                   </motion.div>
@@ -380,7 +381,15 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                       )}
                       aria-label={`View photo ${i + 1}`}
                     >
-                      <Image src={img} alt={`Thumbnail ${i + 1}`} fill className="object-cover" sizes="(max-width: 640px) 80px, 112px" />
+                      <Image
+                        src={img}
+                        alt={`Thumbnail ${i + 1}`}
+                        fill
+                        loading="lazy"
+                        quality={75}
+                        className="object-cover"
+                        sizes="(max-width: 640px) 80px, 112px"
+                      />
                     </button>
                   ))}
                 </div>
@@ -923,6 +932,8 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                 src={car.images[activeIndex]}
                 alt={`${car.brand} ${car.model}`}
                 fill
+                quality={90}
+                priority
                 className="object-contain"
                 sizes="100vw"
               />

@@ -32,10 +32,11 @@ export function CarCard({ car, index = 0, className }: CarCardProps) {
             src={car.images[0]}
             alt={`${car.year} ${car.brand} ${car.model}`}
             fill
-            quality={95}
+            quality={85}
+            priority={index < 2}
+            loading={index < 2 ? "eager" : "lazy"}
             className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            priority={index === 0}
           />
           {/* Gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/20 opacity-50 group-hover:opacity-75 transition-opacity duration-300" />

@@ -62,9 +62,10 @@ export function NewArrivals() {
                   src={car.images[0]}
                   alt={`${car.year} ${car.brand} ${car.model}`}
                   fill
-                  quality={95}
+                  quality={85}
+                  loading="lazy"
                   className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                  sizes="320px"
+                  sizes="(max-width: 640px) 280px, 320px"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute top-3 left-3 bg-white text-black text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">

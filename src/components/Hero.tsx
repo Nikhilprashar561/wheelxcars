@@ -59,6 +59,7 @@ export function Hero() {
           alt="Premium pre-owned vehicles at WheelxCars"
           fill
           priority
+          loading="eager"
           quality={90}
           className="object-cover object-center"
           sizes="100vw"

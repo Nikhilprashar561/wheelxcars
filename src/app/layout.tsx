@@ -69,7 +69,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" data-scroll-behavior="smooth">
       <body className={`${geist.variable} ${geistMono.variable} antialiased bg-black text-white selection:bg-white/20 selection:text-white`}>
         <ScrollToTop />
         {children}
