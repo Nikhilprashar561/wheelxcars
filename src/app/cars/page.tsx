@@ -156,36 +156,36 @@ function CarsPageContent() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="flex items-center gap-2 text-[11px] text-white/40 uppercase tracking-[0.18em] font-semibold mb-2">
-                <ShieldCheck size={12} className="text-white/60" />
+              <div className="flex items-center gap-2 text-[11px] text-zinc-400 uppercase tracking-[0.18em] font-bold mb-2">
+                <ShieldCheck size={13} className="text-emerald-400" />
                 <span>Verified Pre-Owned Collection</span>
               </div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.025em] text-white mb-2">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-[-0.025em] text-white mb-2">
                 Available Inventory.
               </h1>
-              <p className="text-sm text-white/40">
-                Browse handpicked, inspected pre-owned vehicles.
+              <p className="text-sm text-zinc-400 font-medium">
+                Browse handpicked, inspected pre-owned vehicles across Tricity with transparent pricing.
               </p>
             </motion.div>
           </div>
 
           {/* Search bar & Controls row */}
-          <div className="bg-[#111] border border-white/8 rounded-xl p-4 mb-6 space-y-4 shadow-xl">
+          <div className="bg-[#141414] border border-white/12 rounded-2xl p-4 mb-6 space-y-4 shadow-xl">
             <div className="flex flex-col md:flex-row items-center gap-3">
               {/* Keyword Search */}
               <div className="relative flex-1 w-full">
-                <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30" />
+                <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400" />
                 <input
                   type="text"
                   value={filters.q}
                   onChange={(e) => setFilterKey("q", e.target.value)}
-                  placeholder="Search model, variant, or color (e.g. Bolero, ZLX, Green)..."
-                  className="w-full bg-white/4 border border-white/8 rounded-lg pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25 transition-colors"
+                  placeholder="Search model, variant, or color (e.g. Creta, Thar, i10)..."
+                  className="w-full bg-[#181818] border border-white/15 rounded-lg pl-10 pr-4 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40 transition-colors shadow-inner"
                 />
                 {filters.q && (
                   <button
                     onClick={() => setFilterKey("q", "")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white cursor-pointer"
                   >
                     <X size={14} />
                   </button>
@@ -197,10 +197,10 @@ function CarsPageContent() {
                 <button
                   onClick={() => setShowFilters(!showFilters)}
                   className={cn(
-                    "inline-flex items-center gap-2 text-xs font-semibold px-4 py-2.5 rounded-lg border transition-all",
+                    "inline-flex items-center gap-2 text-xs font-bold px-4 py-2.5 rounded-lg border transition-all cursor-pointer shadow-sm",
                     showFilters
                       ? "bg-white text-black border-white"
-                      : "border-white/10 text-white/70 hover:border-white/25 hover:text-white"
+                      : "border-white/15 bg-[#181818] text-white hover:border-white/30"
                   )}
                 >
                   <SlidersHorizontal size={14} />
@@ -219,23 +219,23 @@ function CarsPageContent() {
                       setSort(e.target.value);
                       setPage(1);
                     }}
-                    className="appearance-none bg-white/4 border border-white/10 text-white/70 hover:text-white text-xs rounded-lg px-4 py-2.5 pr-8 focus:outline-none focus:border-white/25 transition-colors cursor-pointer"
+                    className="appearance-none bg-[#181818] border border-white/15 text-white font-semibold text-xs rounded-lg px-4 py-2.5 pr-8 focus:outline-none focus:border-white/40 transition-colors cursor-pointer shadow-sm"
                   >
                     {SORT_OPTIONS.map((o) => (
-                      <option key={o.value} value={o.value} className="bg-zinc-900">
+                      <option key={o.value} value={o.value} className="bg-zinc-900 text-white">
                         {o.label}
                       </option>
                     ))}
                   </select>
-                  <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
+                  <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none" />
                 </div>
               </div>
             </div>
 
             {/* Active filter chips */}
             {activeFilterCount > 0 && (
-              <div className="flex items-center gap-2 flex-wrap pt-2 border-t border-white/5">
-                <span className="text-[11px] text-white/30 uppercase tracking-wider font-semibold">Active:</span>
+              <div className="flex items-center gap-2 flex-wrap pt-2 border-t border-white/10">
+                <span className="text-[11px] text-zinc-400 uppercase tracking-wider font-bold">Active:</span>
                 {filters.brand && (
                   <button
                     onClick={() => setFilterKey("brand", "")}

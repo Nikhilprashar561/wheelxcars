@@ -141,9 +141,10 @@ export function Navbar() {
                 >
                   <Link
                     href={link.href}
+                    onClick={() => setMenuOpen(false)}
                     className={cn(
-                      "block py-4 text-3xl font-semibold tracking-tight transition-colors border-b border-white/5",
-                      pathname === link.href ? "text-white" : "text-white/40 hover:text-white"
+                      "block py-3.5 text-2xl font-bold tracking-tight transition-colors border-b border-white/10",
+                      pathname === link.href ? "text-white" : "text-zinc-300 hover:text-white"
                     )}
                   >
                     {link.label}
@@ -153,13 +154,20 @@ export function Navbar() {
             </nav>
 
             {/* Bottom CTA */}
-            <div className="px-6 pb-10 pt-6 border-t border-white/5">
+            <div className="px-6 pb-10 pt-4 border-t border-white/10 space-y-3">
               <Link
                 href="/cars"
-                className="block w-full text-center bg-white text-black font-semibold py-4 rounded-md text-base hover:bg-white/90 transition-colors"
+                onClick={() => setMenuOpen(false)}
+                className="block w-full text-center bg-white text-black font-extrabold py-3.5 rounded-xl text-sm hover:bg-zinc-100 transition-colors shadow-lg"
               >
                 Explore Cars →
               </Link>
+              <a
+                href="tel:+918054535453"
+                className="block w-full text-center bg-[#181818] border border-white/20 text-white font-bold py-3 rounded-xl text-xs hover:border-white/40 transition-colors"
+              >
+                Call: +91 80545 35453
+              </a>
             </div>
           </motion.div>
         )}

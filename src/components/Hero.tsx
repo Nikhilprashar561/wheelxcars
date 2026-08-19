@@ -112,9 +112,9 @@ export function Hero() {
           {/* Supporting text */}
           <motion.p
             variants={itemVariants}
-            className="text-base sm:text-lg text-white/50 leading-relaxed max-w-md mb-10 font-normal"
+            className="text-base sm:text-lg text-zinc-300 leading-relaxed max-w-md mb-8 sm:mb-10 font-normal"
           >
-            Handpicked pre-owned vehicles inspected for quality, condition, and value. Complete pricing transparency and verified history.
+            Handpicked pre-owned vehicles inspected for quality, condition, and value across Tricity. Complete pricing transparency and verified history.
           </motion.p>
 
           {/* CTAs */}
@@ -124,7 +124,7 @@ export function Hero() {
           >
             <Link
               href="/cars"
-              className="group inline-flex items-center justify-center gap-2.5 bg-white text-black font-semibold text-sm px-7 py-4 rounded-md hover:bg-white/90 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+              className="group inline-flex items-center justify-center gap-2.5 bg-white text-black font-extrabold text-sm px-7 py-4 rounded-xl hover:bg-zinc-100 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-xl"
             >
               Explore Cars
               <ArrowRight
@@ -134,44 +134,44 @@ export function Hero() {
             </Link>
             <Link
               href="/sell-your-car"
-              className="group inline-flex items-center justify-center gap-2.5 border border-white/20 text-white font-semibold text-sm px-7 py-4 rounded-md hover:border-white/50 hover:bg-white/5 transition-all duration-200"
+              className="group inline-flex items-center justify-center gap-2.5 border border-white/20 bg-white/5 text-white font-bold text-sm px-7 py-4 rounded-xl hover:border-white/50 hover:bg-white/10 transition-all duration-200"
             >
               Sell Your Car
             </Link>
           </motion.div>
 
-          {/* Value Highlights / Trust Markers (No numbers) */}
+          {/* Value Highlights / Trust Markers */}
           <motion.div
             variants={itemVariants}
-            className="mt-14 pt-8 border-t border-white/10 flex items-center gap-6 sm:gap-10 flex-wrap"
+            className="mt-10 sm:mt-14 pt-6 sm:pt-8 border-t border-white/15 flex items-center gap-6 sm:gap-10 flex-wrap"
           >
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
-                <ShieldCheck size={16} className="text-white" />
+              <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center flex-shrink-0">
+                <ShieldCheck size={16} className="text-emerald-400" />
               </div>
               <div className="flex flex-col">
                 <span className="text-xs font-bold text-white tracking-tight">Technical Inspection</span>
-                <span className="text-[11px] text-white/40 font-medium">Multi-Point Check</span>
+                <span className="text-[11px] text-zinc-300 font-medium">Multi-Point Check</span>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
-                <FileText size={15} className="text-white" />
+              <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center flex-shrink-0">
+                <FileText size={15} className="text-zinc-200" />
               </div>
               <div className="flex flex-col">
                 <span className="text-xs font-bold text-white tracking-tight">Verified Records</span>
-                <span className="text-[11px] text-white/40 font-medium">Clear Ownership</span>
+                <span className="text-[11px] text-zinc-300 font-medium">Clear Ownership</span>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
-                <Sparkles size={15} className="text-white" />
+              <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center flex-shrink-0">
+                <Sparkles size={15} className="text-emerald-400" />
               </div>
               <div className="flex flex-col">
                 <span className="text-xs font-bold text-white tracking-tight">Direct Transfer</span>
-                <span className="text-[11px] text-white/40 font-medium">Hassle-Free Process</span>
+                <span className="text-[11px] text-zinc-300 font-medium">Hassle-Free Process</span>
               </div>
             </div>
           </motion.div>
@@ -183,14 +183,14 @@ export function Hero() {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 2, duration: 0.6 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5"
       >
-        <span className="text-[10px] text-white/30 uppercase tracking-[0.15em] font-medium">Scroll</span>
+        <span className="text-[10px] text-zinc-400 uppercase tracking-[0.15em] font-bold">Scroll</span>
         <motion.div
           animate={{ y: [0, 5, 0] }}
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
         >
-          <ChevronDown size={14} className="text-white/30" />
+          <ChevronDown size={14} className="text-zinc-400" />
         </motion.div>
       </motion.div>
     </section>

@@ -315,7 +315,7 @@ export default function SellYourCarPage() {
                     <h2 className="text-lg font-bold text-white">Step 1: Vehicle Information</h2>
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Make / Brand *
                         </label>
                         <input
@@ -323,12 +323,12 @@ export default function SellYourCarPage() {
                           value={form.make}
                           onChange={(e) => setForm((s) => ({ ...s, make: e.target.value }))}
                           placeholder="e.g. Maruti Suzuki, Hyundai, Toyota"
-                          className="w-full bg-white/4 border border-white/8 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25"
+                          className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40"
                         />
                         {errors.make && <p className="text-red-400 text-xs mt-1">{errors.make}</p>}
                       </div>
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Model Name *
                         </label>
                         <input
@@ -336,7 +336,7 @@ export default function SellYourCarPage() {
                           value={form.model}
                           onChange={(e) => setForm((s) => ({ ...s, model: e.target.value }))}
                           placeholder="e.g. Swift, Creta, Fortuner, Thar"
-                          className="w-full bg-white/4 border border-white/8 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25"
+                          className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40"
                         />
                         {errors.model && <p className="text-red-400 text-xs mt-1">{errors.model}</p>}
                       </div>
@@ -344,7 +344,7 @@ export default function SellYourCarPage() {
 
                     <div className="grid sm:grid-cols-3 gap-4">
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Variant
                         </label>
                         <input
@@ -352,11 +352,11 @@ export default function SellYourCarPage() {
                           value={form.variant}
                           onChange={(e) => setForm((s) => ({ ...s, variant: e.target.value }))}
                           placeholder="e.g. VXI, SX Opt, 4x4 AT"
-                          className="w-full bg-white/4 border border-white/8 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25"
+                          className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40"
                         />
                       </div>
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Manufacturing Year *
                         </label>
                         <input
@@ -368,7 +368,7 @@ export default function SellYourCarPage() {
                         {errors.year && <p className="text-red-400 text-xs mt-1">{errors.year}</p>}
                       </div>
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Color
                         </label>
                         <input
@@ -376,14 +376,14 @@ export default function SellYourCarPage() {
                           value={form.color}
                           onChange={(e) => setForm((s) => ({ ...s, color: e.target.value }))}
                           placeholder="e.g. Polar White, Silver"
-                          className="w-full bg-white/4 border border-white/8 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25"
+                          className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40"
                         />
                       </div>
                     </div>
 
                     <div className="grid sm:grid-cols-3 gap-4">
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Fuel Type
                         </label>
                         <select
@@ -397,7 +397,7 @@ export default function SellYourCarPage() {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Transmission
                         </label>
                         <select
@@ -411,7 +411,7 @@ export default function SellYourCarPage() {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Body Type
                         </label>
                         <select
@@ -434,7 +434,7 @@ export default function SellYourCarPage() {
                     <h2 className="text-lg font-bold text-white">Step 2: Usage &amp; Registration</h2>
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Kilometres Driven *
                         </label>
                         <input
@@ -442,12 +442,12 @@ export default function SellYourCarPage() {
                           value={form.kmDriven}
                           onChange={(e) => setForm((s) => ({ ...s, kmDriven: e.target.value }))}
                           placeholder="e.g. 45,000 km"
-                          className="w-full bg-white/4 border border-white/8 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25"
+                          className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40"
                         />
                         {errors.kmDriven && <p className="text-red-400 text-xs mt-1">{errors.kmDriven}</p>}
                       </div>
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Number of Owners *
                         </label>
                         <select
@@ -465,7 +465,7 @@ export default function SellYourCarPage() {
 
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Registration RTO / State
                         </label>
                         <select
@@ -481,7 +481,7 @@ export default function SellYourCarPage() {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Registered City *
                         </label>
                         <input
@@ -489,7 +489,7 @@ export default function SellYourCarPage() {
                           value={form.regCity}
                           onChange={(e) => setForm((s) => ({ ...s, regCity: e.target.value }))}
                           placeholder="e.g. Chandigarh, Mohali, Panchkula"
-                          className="w-full bg-white/4 border border-white/8 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25"
+                          className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40"
                         />
                         {errors.regCity && <p className="text-red-400 text-xs mt-1">{errors.regCity}</p>}
                       </div>
@@ -502,7 +502,7 @@ export default function SellYourCarPage() {
                   <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
                     <h2 className="text-lg font-bold text-white">Step 3: Vehicle Condition</h2>
                     <div>
-                      <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                      <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                         Overall Physical &amp; Mechanical Condition
                       </label>
                       <select
@@ -519,7 +519,7 @@ export default function SellYourCarPage() {
 
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Accident History
                         </label>
                         <select
@@ -533,7 +533,7 @@ export default function SellYourCarPage() {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Service History
                         </label>
                         <select
@@ -549,7 +549,7 @@ export default function SellYourCarPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                      <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                         Insurance Status
                       </label>
                       <select
@@ -571,7 +571,7 @@ export default function SellYourCarPage() {
                   <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
                     <h2 className="text-lg font-bold text-white">Step 4: Expected Selling Price</h2>
                     <div>
-                      <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                      <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                         Expected Price in Lakhs (INR) *
                       </label>
                       <div className="relative">
@@ -663,7 +663,7 @@ export default function SellYourCarPage() {
                     <h2 className="text-lg font-bold text-white">Step 6: Seller Contact Details</h2>
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Full Name *
                         </label>
                         <input
@@ -671,12 +671,12 @@ export default function SellYourCarPage() {
                           value={form.sellerName}
                           onChange={(e) => setForm((s) => ({ ...s, sellerName: e.target.value }))}
                           placeholder="e.g. Navjot Singh"
-                          className="w-full bg-white/4 border border-white/8 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25"
+                          className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40"
                         />
                         {errors.sellerName && <p className="text-red-400 text-xs mt-1">{errors.sellerName}</p>}
                       </div>
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Phone Number (WhatsApp) *
                         </label>
                         <input
@@ -684,7 +684,7 @@ export default function SellYourCarPage() {
                           value={form.sellerPhone}
                           onChange={(e) => setForm((s) => ({ ...s, sellerPhone: e.target.value }))}
                           placeholder="+91 80545 35453"
-                          className="w-full bg-white/4 border border-white/8 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25"
+                          className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40"
                         />
                         {errors.sellerPhone && <p className="text-red-400 text-xs mt-1">{errors.sellerPhone}</p>}
                       </div>
@@ -692,7 +692,7 @@ export default function SellYourCarPage() {
 
                     <div className="grid sm:grid-cols-3 gap-4">
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Email Address *
                         </label>
                         <input
@@ -700,12 +700,12 @@ export default function SellYourCarPage() {
                           value={form.sellerEmail}
                           onChange={(e) => setForm((s) => ({ ...s, sellerEmail: e.target.value }))}
                           placeholder="you@domain.com"
-                          className="w-full bg-white/4 border border-white/8 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25"
+                          className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40"
                         />
                         {errors.sellerEmail && <p className="text-red-400 text-xs mt-1">{errors.sellerEmail}</p>}
                       </div>
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           City (Tricity) *
                         </label>
                         <select
@@ -719,7 +719,7 @@ export default function SellYourCarPage() {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-[10px] text-white/40 uppercase tracking-wider font-semibold mb-1.5">
+                        <label className="block text-[11px] text-zinc-300 uppercase tracking-wider font-bold mb-1.5">
                           Locality / Sector
                         </label>
                         <input
@@ -727,7 +727,7 @@ export default function SellYourCarPage() {
                           value={form.sellerLocality}
                           onChange={(e) => setForm((s) => ({ ...s, sellerLocality: e.target.value }))}
                           placeholder="e.g. Sector 35, Phase 7, VIP Road"
-                          className="w-full bg-white/4 border border-white/8 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25"
+                          className="w-full bg-[#181818] border border-white/15 rounded-lg px-3.5 py-2.5 text-sm text-white font-medium placeholder:text-zinc-500 focus:outline-none focus:border-white/40"
                         />
                       </div>
                     </div>

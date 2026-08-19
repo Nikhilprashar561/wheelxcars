@@ -83,6 +83,32 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
   const goNext = () => setActiveIndex((i) => (i + 1) % car.images.length);
   const goPrev = () => setActiveIndex((i) => (i - 1 + car.images.length) % car.images.length);
 
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const minSwipeDistance = 40;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    if (isLeftSwipe) {
+      goNext();
+    } else if (isRightSwipe) {
+      goPrev();
+    }
+  };
+
   const openWhatsAppTestDrive = (date?: string, slot?: string, notes?: string) => {
     const text = `📅 *TEST DRIVE BOOKING — WheelxCars*\n\n` +
       `🚗 *Vehicle:* ${car.year} ${car.brand} ${car.model} (${car.variant})\n` +
@@ -115,7 +141,6 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
     setEnquiryLoading(true);
 
     try {
-      // 1. Asynchronously post to lead API
       fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -140,7 +165,6 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
         }),
       }).catch(console.error);
 
-      // 2. Open WhatsApp directly with full enquiry queries
       const whatsappText = `🚗 *VEHICLE ENQUIRY — WheelxCars*\n\n` +
         `• *Car:* ${car.year} ${car.brand} ${car.model} (${car.variant})\n` +
         `• *Asking Price:* ${formatPrice(car.price)}\n` +
@@ -229,33 +253,36 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-black pt-20 sm:pt-24 pb-28 px-3.5 sm:px-6 w-full max-w-full overflow-x-hidden">
+      <main className="min-h-screen bg-black pt-20 sm:pt-24 pb-28 px-3 sm:px-6 w-full max-w-full overflow-x-hidden">
         <div className="max-w-[1360px] mx-auto w-full min-w-0">
           {/* Back link & breadcrumb */}
           <div className="flex items-center justify-between mb-4 sm:mb-6 flex-wrap gap-2">
             <Link
               href="/cars"
-              className="inline-flex items-center gap-2 text-xs font-semibold text-white/50 hover:text-white transition-colors"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-400 hover:text-white transition-colors"
             >
               <ArrowLeft size={14} />
               Back to Inventory
             </Link>
-            <div className="flex items-center gap-2 text-xs text-white/30 truncate max-w-full">
+            <div className="flex items-center gap-2 text-xs text-zinc-500 truncate max-w-full">
               <span>Inventory</span>
               <span>/</span>
               <span>{car.brand}</span>
               <span>/</span>
-              <span className="text-white/60 truncate">{car.model}</span>
+              <span className="text-zinc-300 truncate">{car.model}</span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6 lg:gap-10 w-full min-w-0">
             {/* Left: Gallery & Vehicle Specs */}
             <div className="w-full min-w-0 overflow-hidden">
-              {/* Main image */}
+              {/* Main image with Touch Swipe Support */}
               <div
-                className="relative aspect-[4/3] sm:aspect-[16/10] rounded-2xl overflow-hidden bg-[#141414] mb-3 cursor-zoom-in group border border-white/8 shadow-2xl w-full"
+                className="relative aspect-[4/3] sm:aspect-[16/10] rounded-2xl overflow-hidden bg-[#141414] mb-3 cursor-zoom-in group border border-white/10 shadow-2xl w-full select-none touch-pan-y"
                 onClick={() => setLightboxOpen(true)}
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
               >
                 <AnimatePresence mode="wait">
                   <motion.div
@@ -263,14 +290,14 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.35 }}
+                    transition={{ duration: 0.3 }}
                     className="absolute inset-0"
                   >
                     <Image
                       src={car.images[activeIndex]}
                       alt={`${car.brand} ${car.model} - Image ${activeIndex + 1}`}
                       fill
-                      className="object-cover object-center"
+                      className="object-cover object-center pointer-events-none"
                       priority
                       quality={95}
                       sizes="(max-width: 1024px) 100vw, 70vw"
@@ -279,17 +306,17 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                 </AnimatePresence>
 
                 {/* Badges */}
-                <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 flex-wrap pointer-events-none">
-                  <div className="bg-black/85 backdrop-blur-md text-white text-[11px] font-bold px-2.5 py-1 rounded-lg border border-white/10 shrink-0">
+                <div className="absolute top-3 left-3 right-3 z-20 flex items-center justify-between gap-2 flex-wrap pointer-events-none">
+                  <div className="bg-black/90 backdrop-blur-md text-white text-[11px] font-bold px-2.5 py-1 rounded-lg border border-white/15 shadow-md shrink-0">
                     {car.year} Model
                   </div>
-                  <div className="bg-black/85 backdrop-blur-md text-white/90 text-[10px] font-medium px-2.5 py-1 rounded-lg border border-white/10 flex items-center gap-1.5 shrink-0">
-                    <ShieldCheck size={12} className="text-white" />
+                  <div className="bg-black/90 backdrop-blur-md text-white text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-white/15 flex items-center gap-1.5 shadow-md shrink-0">
+                    <ShieldCheck size={13} className="text-emerald-400" />
                     Verified Vehicle
                   </div>
                 </div>
 
-                {/* Nav arrows */}
+                {/* Nav arrows with high z-index and tap area */}
                 {car.images.length > 1 && (
                   <>
                     <button
@@ -297,42 +324,61 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                         e.stopPropagation();
                         goPrev();
                       }}
-                      className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-black/70 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-black transition-colors"
+                      className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 bg-black/80 hover:bg-black text-white rounded-full flex items-center justify-center border border-white/20 shadow-xl transition-all active:scale-90 cursor-pointer"
                       aria-label="Previous image"
                     >
-                      <ChevronLeft size={18} />
+                      <ChevronLeft size={20} className="text-white" />
                     </button>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         goNext();
                       }}
-                      className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-black/70 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-black transition-colors"
+                      className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 bg-black/80 hover:bg-black text-white rounded-full flex items-center justify-center border border-white/20 shadow-xl transition-all active:scale-90 cursor-pointer"
                       aria-label="Next image"
                     >
-                      <ChevronRight size={18} />
+                      <ChevronRight size={20} className="text-white" />
                     </button>
                   </>
                 )}
 
-                <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md text-white/90 text-[10px] sm:text-xs px-2.5 py-1 rounded-md border border-white/10">
+                {/* Mobile Pagination Dots */}
+                {car.images.length > 1 && (
+                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 bg-black/75 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/15 pointer-events-none">
+                    {car.images.map((_, i) => (
+                      <span
+                        key={i}
+                        className={cn(
+                          "rounded-full transition-all duration-300",
+                          i === activeIndex
+                            ? "w-4 h-1.5 bg-white"
+                            : "w-1.5 h-1.5 bg-white/40"
+                        )}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {/* Desktop & Tablet Counter pill */}
+                <div className="hidden sm:block absolute bottom-3 right-3 z-20 bg-black/85 backdrop-blur-md text-white font-semibold text-xs px-3 py-1 rounded-md border border-white/15 shadow-lg">
                   {activeIndex + 1} / {car.images.length} · Tap to enlarge
                 </div>
               </div>
 
               {/* Thumbnails */}
               {car.images.length > 1 && (
-                <div className="flex gap-2 sm:gap-3 mb-6 sm:mb-10 overflow-x-auto pb-2 scrollbar-none w-full max-w-full">
+                <div className="flex gap-2.5 sm:gap-3 mb-6 sm:mb-8 overflow-x-auto pb-2 scrollbar-none w-full max-w-full">
                   {car.images.map((img, i) => (
                     <button
                       key={i}
                       onClick={() => setActiveIndex(i)}
                       className={cn(
-                        "relative w-20 sm:w-28 h-14 sm:h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all duration-200",
+                        "relative w-20 sm:w-28 h-16 sm:h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all duration-200 cursor-pointer shadow-md",
                         i === activeIndex
-                          ? "border-white shadow-xl scale-[1.02]"
-                          : "border-transparent opacity-50 hover:opacity-80"
+                          ? "border-white shadow-2xl scale-[1.03] ring-1 ring-white/50 opacity-100"
+                          : "border-white/10 opacity-60 hover:opacity-100"
                       )}
+                      aria-label={`View photo ${i + 1}`}
                     >
                       <Image src={img} alt={`Thumbnail ${i + 1}`} fill className="object-cover" sizes="(max-width: 640px) 80px, 112px" />
                     </button>
@@ -340,28 +386,28 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                 </div>
               )}
 
-              {/* Key Details Table Section */}
-              <div className="mb-6 sm:mb-10 bg-[#111] border border-white/8 rounded-2xl p-4 sm:p-6 md:p-8 w-full min-w-0 overflow-hidden">
-                <h2 className="text-sm sm:text-base font-bold text-white uppercase tracking-wider mb-4 sm:mb-6 flex items-center gap-2">
-                  <FileText size={16} className="text-white/60 shrink-0" />
-                  Key Vehicle Details
+              {/* Key Details Table Section - High Contrast */}
+              <div className="mb-6 sm:mb-8 bg-[#141414] border border-white/10 rounded-2xl p-4 sm:p-6 md:p-8 w-full min-w-0 overflow-hidden shadow-xl">
+                <h2 className="text-sm sm:text-base font-bold text-white uppercase tracking-wider mb-4 sm:mb-6 flex items-center gap-2 border-b border-white/8 pb-3">
+                  <FileText size={16} className="text-zinc-300 shrink-0" />
+                  <span>Key Vehicle Details</span>
                 </h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5 sm:gap-4 w-full min-w-0">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5 sm:gap-3.5 w-full min-w-0">
                   {keySpecs.map((spec) => {
                     const Icon = spec.icon;
                     return (
                       <div
                         key={spec.label}
-                        className="bg-white/3 border border-white/6 rounded-xl p-3 sm:p-4 flex flex-col justify-between gap-1.5 min-w-0 overflow-hidden"
+                        className="bg-[#1c1c1c] border border-white/10 rounded-xl p-3 sm:p-3.5 flex flex-col justify-between gap-2 min-w-0 overflow-hidden shadow-sm hover:border-white/20 transition-colors"
                       >
-                        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
-                          <Icon size={13} className="text-white/40" />
+                        <div className="w-7 h-7 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center shrink-0">
+                          <Icon size={14} className="text-zinc-200" />
                         </div>
                         <div className="min-w-0 w-full overflow-hidden">
-                          <p className="text-[10px] text-white/40 uppercase tracking-wider font-semibold truncate">
+                          <p className="text-[11px] text-zinc-400 uppercase tracking-wider font-bold truncate">
                             {spec.label}
                           </p>
-                          <p className="text-xs sm:text-sm font-bold text-white mt-0.5 break-words line-clamp-2 leading-tight">
+                          <p className="text-xs sm:text-sm font-extrabold text-white mt-0.5 break-words line-clamp-2 leading-snug">
                             {spec.value}
                           </p>
                         </div>
@@ -371,32 +417,33 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                 </div>
               </div>
 
-              {/* Grouped Features UI */}
+              {/* Grouped Features UI - High Contrast */}
               {car.featuresList && (
-                <div className="mb-6 sm:mb-10 space-y-4 sm:space-y-6 w-full min-w-0">
+                <div className="mb-6 sm:mb-8 space-y-4 sm:space-y-6 w-full min-w-0">
                   <h2 className="text-sm sm:text-base font-bold text-white uppercase tracking-wider">
                     Equipment &amp; Features Breakdown
                   </h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 w-full min-w-0">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 w-full min-w-0">
                     {car.featuresList.map((group) => (
                       <div
                         key={group.category}
-                        className="bg-[#111] border border-white/8 rounded-2xl p-4 sm:p-6 space-y-3 sm:space-y-4 w-full min-w-0 overflow-hidden"
+                        className="bg-[#141414] border border-white/10 rounded-2xl p-4 sm:p-5 space-y-3 w-full min-w-0 overflow-hidden shadow-lg"
                       >
-                        <h3 className="text-xs font-bold text-white uppercase tracking-widest text-white/80 border-b border-white/6 pb-2 truncate">
-                          {group.category}
+                        <h3 className="text-xs font-bold text-white uppercase tracking-wider border-b border-white/10 pb-2.5 truncate flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                          <span>{group.category}</span>
                         </h3>
                         <div className="space-y-2 text-xs">
                           {group.items.map((item) => (
                             <div
                               key={item.name}
-                              className="flex items-start justify-between gap-2 py-1 min-w-0"
+                              className="flex items-start justify-between gap-2 py-1 min-w-0 border-b border-white/5 last:border-0"
                             >
-                              <span className="text-white/70 flex items-center gap-2 min-w-0 break-words leading-tight">
-                                <CheckCircle size={13} className="text-white/80 shrink-0 mt-0.5" />
+                              <span className="text-zinc-300 font-medium flex items-center gap-2 min-w-0 break-words leading-snug">
+                                <CheckCircle size={14} className="text-emerald-400 shrink-0 mt-0.5" />
                                 <span className="break-words">{item.name}</span>
                               </span>
-                              <span className="font-semibold text-white shrink-0 text-right">
+                              <span className="font-bold text-white shrink-0 text-right">
                                 {typeof item.value === "string" ? item.value : "Yes"}
                               </span>
                             </div>
@@ -410,11 +457,11 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
 
               {/* Description */}
               {car.description && (
-                <div className="mb-8 bg-[#111] border border-white/8 rounded-2xl p-4 sm:p-6 md:p-8 w-full min-w-0 overflow-hidden">
+                <div className="mb-8 bg-[#141414] border border-white/10 rounded-2xl p-4 sm:p-6 md:p-8 w-full min-w-0 overflow-hidden shadow-lg">
                   <h2 className="text-sm font-bold text-white uppercase tracking-wider mb-3">
                     Listing Overview
                   </h2>
-                  <p className="text-xs sm:text-sm text-white/60 leading-relaxed break-words">
+                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed break-words font-normal">
                     {car.description}
                   </p>
                 </div>
@@ -427,35 +474,35 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="bg-[#111] border border-white/10 rounded-2xl p-5 sm:p-7 space-y-5 sm:space-y-6 shadow-2xl w-full min-w-0 overflow-hidden"
+                className="bg-[#141414] border border-white/12 rounded-2xl p-5 sm:p-7 space-y-5 sm:space-y-6 shadow-2xl w-full min-w-0 overflow-hidden"
               >
                 {/* Vehicle title */}
                 <div className="min-w-0">
-                  <span className="text-xs text-white/40 uppercase tracking-widest font-semibold">
+                  <span className="text-xs text-zinc-400 uppercase tracking-widest font-bold">
                     {car.year} • {car.brand}
                   </span>
-                  <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight leading-tight mt-1 break-words">
+                  <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight mt-1 break-words">
                     {car.brand} {car.model}
                   </h1>
-                  <p className="text-xs sm:text-sm text-white/50 mt-1 break-words">{car.variant}</p>
+                  <p className="text-xs sm:text-sm text-zinc-300 font-medium mt-1 break-words">{car.variant}</p>
                 </div>
 
                 {/* Price Section */}
-                <div className="border-t border-b border-white/6 py-4 sm:py-5 min-w-0">
-                  <p className="text-[10px] text-white/40 uppercase tracking-widest font-semibold">
+                <div className="border-t border-b border-white/10 py-4 sm:py-5 min-w-0">
+                  <p className="text-[11px] text-zinc-400 uppercase tracking-widest font-bold">
                     Fixed Transparent Price
                   </p>
-                  <div className="flex flex-wrap items-baseline gap-2 sm:gap-3 mt-1">
-                    <p className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                  <div className="flex flex-wrap items-baseline gap-2 sm:gap-3 mt-1.5">
+                    <p className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                       {car.price ? formatPrice(car.price) : (car.priceText || "Price on Request")}
                     </p>
                     {car.emi && (
-                      <span className="text-[11px] sm:text-xs font-semibold text-white/80 bg-white/10 px-2.5 py-0.5 sm:py-1 rounded-full border border-white/10">
+                      <span className="text-xs font-bold text-emerald-300 bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-1 rounded-full">
                         EMI from {formatEMI(car.emi)}
                       </span>
                     )}
                   </div>
-                  <p className="text-[11px] sm:text-xs text-white/40 mt-1.5 leading-relaxed">
+                  <p className="text-xs text-zinc-400 mt-2 leading-relaxed">
                     Includes verified RC transfer, comprehensive inspection &amp; zero hidden commissions.
                   </p>
                 </div>
@@ -464,7 +511,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                 <div className="space-y-3">
                   <button
                     onClick={() => setEnquiryModalOpen(true)}
-                    className="w-full flex items-center justify-center gap-2.5 bg-white text-black font-bold text-xs sm:text-sm py-3.5 sm:py-4 rounded-xl hover:bg-white/90 transition-all hover:scale-[1.01] active:scale-[0.99] shadow-xl cursor-pointer"
+                    className="w-full flex items-center justify-center gap-2.5 bg-white text-black font-extrabold text-xs sm:text-sm py-3.5 sm:py-4 rounded-xl hover:bg-zinc-100 transition-all hover:scale-[1.01] active:scale-[0.99] shadow-xl cursor-pointer"
                   >
                     <MessageSquare size={16} />
                     Enquire About This Vehicle
@@ -478,7 +525,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                   </button>
                   <a
                     href="tel:+918054535453"
-                    className="w-full flex items-center justify-center gap-2.5 bg-white/5 hover:bg-white/10 border border-white/20 text-white font-semibold text-xs sm:text-sm py-3.5 rounded-xl hover:border-white/40 transition-all hover:scale-[1.01] active:scale-[0.99]"
+                    className="w-full flex items-center justify-center gap-2.5 bg-[#1c1c1c] hover:bg-[#252525] border border-white/20 text-white font-bold text-xs sm:text-sm py-3.5 rounded-xl hover:border-white/40 transition-all hover:scale-[1.01] active:scale-[0.99]"
                   >
                     <PhoneCall size={15} className="text-emerald-400" />
                     Call Directly: +91 80545 35453
@@ -486,21 +533,21 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                 </div>
 
                 {/* Verified Checklist */}
-                <div className="space-y-2.5 pt-4 border-t border-white/6 text-xs text-white/50">
+                <div className="space-y-2.5 pt-4 border-t border-white/10 text-xs text-zinc-300 font-medium">
                   <div className="flex items-center gap-2">
-                    <CheckCircle size={14} className="text-white/80 flex-shrink-0" />
+                    <CheckCircle size={15} className="text-emerald-400 flex-shrink-0" />
                     <span>1st Hand Single-Owner Vehicle</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle size={14} className="text-white/80 flex-shrink-0" />
+                    <CheckCircle size={15} className="text-emerald-400 flex-shrink-0" />
                     <span>Comprehensive Insurance Active</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle size={14} className="text-white/80 flex-shrink-0" />
+                    <CheckCircle size={15} className="text-emerald-400 flex-shrink-0" />
                     <span>Complete Verification &amp; Inspection</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle size={14} className="text-white/80 flex-shrink-0" />
+                    <CheckCircle size={15} className="text-emerald-400 flex-shrink-0" />
                     <span>Hassle-free Documentation &amp; Transfer</span>
                   </div>
                 </div>
@@ -510,28 +557,34 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
         </div>
       </main>
 
-      {/* MOBILE STICKY BOTTOM BAR */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0c0c0c]/95 backdrop-blur-lg border-t border-white/10 p-2.5 sm:p-3 flex items-center gap-2 shadow-2xl">
-        <a
-          href="tel:+918054535453"
-          className="flex-1 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-xs py-3 rounded-lg flex items-center justify-center gap-1.5 active:scale-95 transition-all text-center"
-        >
-          <PhoneCall size={14} className="text-emerald-400 shrink-0" />
-          <span>Call</span>
-        </a>
-        <button
-          onClick={() => openWhatsAppTestDrive()}
-          className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-3 rounded-lg flex items-center justify-center gap-1.5 active:scale-95 transition-all"
-        >
-          <MessageCircle size={14} className="shrink-0" />
-          <span>Test Drive</span>
-        </button>
-        <button
-          onClick={() => setEnquiryModalOpen(true)}
-          className="flex-1 bg-white text-black font-bold text-xs py-3 rounded-lg text-center active:scale-95 transition-all"
-        >
-          <span>Enquire</span>
-        </button>
+      {/* MOBILE STICKY BOTTOM BAR - Redesigned 3 Action Buttons */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0e0e0e]/95 backdrop-blur-xl border-t border-white/12 px-3 py-2.5 shadow-2xl">
+        <div className="max-w-md mx-auto flex items-center gap-2">
+          <a
+            href="tel:+918054535453"
+            className="flex-1 bg-[#1c1c1c] hover:bg-[#252525] border border-white/15 text-white font-bold text-xs py-3 rounded-xl flex items-center justify-center gap-1.5 active:scale-95 transition-all text-center shadow-md"
+            aria-label="Call Directly"
+          >
+            <PhoneCall size={14} className="text-emerald-400 shrink-0" />
+            <span>Call</span>
+          </a>
+          <button
+            onClick={() => openWhatsAppTestDrive()}
+            className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-3 rounded-xl flex items-center justify-center gap-1.5 active:scale-95 transition-all shadow-md cursor-pointer"
+            aria-label="Book a Test Drive on WhatsApp"
+          >
+            <MessageCircle size={15} className="shrink-0" />
+            <span>Test Drive</span>
+          </button>
+          <button
+            onClick={() => setEnquiryModalOpen(true)}
+            className="flex-1 bg-white hover:bg-zinc-100 text-black font-bold text-xs py-3 rounded-xl text-center active:scale-95 transition-all shadow-md cursor-pointer flex items-center justify-center gap-1.5"
+            aria-label="Enquire on WhatsApp"
+          >
+            <MessageSquare size={14} className="shrink-0" />
+            <span>Enquire</span>
+          </button>
+        </div>
       </div>
 
       {/* ENQUIRY MODAL */}

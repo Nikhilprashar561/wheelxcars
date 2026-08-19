@@ -74,48 +74,48 @@ export function CarCard({ car, index = 0, className }: CarCardProps) {
         </div>
 
         {/* Card content */}
-        <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between gap-4">
+        <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between gap-3.5 bg-[#101010]">
           <div>
             <div className="flex items-start justify-between gap-2 mb-1">
-              <h3 className="text-base sm:text-lg font-bold text-white leading-snug group-hover:text-white/90 transition-colors">
+              <h3 className="text-base sm:text-lg font-extrabold text-white leading-snug group-hover:text-white transition-colors">
                 {car.brand} {car.model}
               </h3>
             </div>
-            <p className="text-xs text-white/50">{car.year} • {car.variant}</p>
+            <p className="text-xs text-zinc-400 font-medium">{car.year} • {car.variant}</p>
           </div>
 
-          {/* Specifications Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 py-3 border-y border-white/5 text-[11px] text-white/60">
-            <div className="flex items-center gap-1.5">
-              <Gauge size={12} className="text-white/40 flex-shrink-0" />
-              <span>{car.mileage}</span>
+          {/* Specifications Grid - High Contrast */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 py-3 border-y border-white/10 text-[11px] text-zinc-300 font-medium">
+            <div className="flex items-center gap-1.5 min-w-0">
+              <Gauge size={13} className="text-zinc-400 flex-shrink-0" />
+              <span className="truncate">{car.mileage}</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <Fuel size={12} className="text-white/40 flex-shrink-0" />
-              <span>{car.fuel}</span>
+            <div className="flex items-center gap-1.5 min-w-0">
+              <Fuel size={13} className="text-zinc-400 flex-shrink-0" />
+              <span className="truncate">{car.fuel}</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <Settings2 size={12} className="text-white/40 flex-shrink-0" />
-              <span>{car.transmission}</span>
+            <div className="flex items-center gap-1.5 min-w-0">
+              <Settings2 size={13} className="text-zinc-400 flex-shrink-0" />
+              <span className="truncate">{car.transmission}</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <UserCheck size={12} className="text-white/40 flex-shrink-0" />
-              <span>{car.owners || "1st Owner"}</span>
+            <div className="flex items-center gap-1.5 min-w-0">
+              <UserCheck size={13} className="text-zinc-400 flex-shrink-0" />
+              <span className="truncate">{car.owners || "1st Owner"}</span>
             </div>
           </div>
 
           {/* Price & Action Row */}
           <div className="flex items-center justify-between pt-1">
             <div>
-              <p className="text-sm font-semibold text-white/40 uppercase tracking-wider text-[10px]">
+              <p className="text-zinc-400 font-bold uppercase tracking-wider text-[10px]">
                 Asking Price
               </p>
-              <p className="text-sm sm:text-base font-bold text-white tracking-tight mt-0.5">
+              <p className="text-base sm:text-lg font-black text-white tracking-tight mt-0.5">
                 {car.price ? formatPrice(car.price) : (car.priceText || "Price on Request")}
               </p>
             </div>
-            <span className="text-xs font-semibold text-white/70 group-hover:text-white flex items-center gap-1 transition-colors">
-              Details <ArrowRight size={13} />
+            <span className="text-xs font-bold text-white bg-white/10 group-hover:bg-white group-hover:text-black px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5 transition-all shadow-sm">
+              Details <ArrowRight size={12} />
             </span>
           </div>
         </div>
