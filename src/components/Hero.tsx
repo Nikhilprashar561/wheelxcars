@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, ShieldCheck, FileText, Sparkles } from "lucide-react";
 
 const containerVariants = {
   hidden: {},
@@ -140,21 +140,40 @@ export function Hero() {
             </Link>
           </motion.div>
 
-          {/* Stats row */}
+          {/* Value Highlights / Trust Markers (No numbers) */}
           <motion.div
             variants={itemVariants}
-            className="mt-14 pt-8 border-t border-white/10 flex items-center gap-8 sm:gap-12 flex-wrap"
+            className="mt-14 pt-8 border-t border-white/10 flex items-center gap-6 sm:gap-10 flex-wrap"
           >
-            {[
-              { number: "500+", label: "Cars Evaluated" },
-              { number: "100%", label: "Verified History" },
-              { number: "Under ₹10L", label: "Fair Pricing" },
-            ].map((stat) => (
-              <div key={stat.label} className="flex flex-col gap-1">
-                <span className="text-2xl font-bold text-white tracking-tight">{stat.number}</span>
-                <span className="text-xs text-white/40 font-medium uppercase tracking-wide">{stat.label}</span>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
+                <ShieldCheck size={16} className="text-white" />
               </div>
-            ))}
+              <div className="flex flex-col">
+                <span className="text-xs font-bold text-white tracking-tight">Technical Inspection</span>
+                <span className="text-[11px] text-white/40 font-medium">Multi-Point Check</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
+                <FileText size={15} className="text-white" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xs font-bold text-white tracking-tight">Verified Records</span>
+                <span className="text-[11px] text-white/40 font-medium">Clear Ownership</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
+                <Sparkles size={15} className="text-white" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xs font-bold text-white tracking-tight">Direct Transfer</span>
+                <span className="text-[11px] text-white/40 font-medium">Hassle-Free Process</span>
+              </div>
+            </div>
           </motion.div>
         </motion.div>
       </div>

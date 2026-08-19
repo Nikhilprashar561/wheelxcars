@@ -57,12 +57,13 @@ export function NewArrivals() {
           >
             <Link href={`/cars/${car.slug}`} className="group block">
               {/* Image */}
-              <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-zinc-900 mb-4 border border-white/8">
+              <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-[#141414] mb-4 border border-white/8">
                 <Image
                   src={car.images[0]}
                   alt={`${car.year} ${car.brand} ${car.model}`}
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  quality={95}
+                  className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
                   sizes="320px"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

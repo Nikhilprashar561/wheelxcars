@@ -26,18 +26,19 @@ export function CarCard({ car, index = 0, className }: CarCardProps) {
       )}
     >
       <Link href={`/cars/${car.slug}`} className="block flex flex-col h-full">
-        {/* Image container */}
-        <div className="relative aspect-[16/10] overflow-hidden bg-zinc-900">
+        {/* Responsive Image container - 4/3 on mobile to preserve full car height/wheels/roof, 16/10 on tablet/desktop */}
+        <div className="relative aspect-[4/3] sm:aspect-[16/10] overflow-hidden bg-[#141414]">
           <Image
             src={car.images[0]}
             alt={`${car.year} ${car.brand} ${car.model}`}
             fill
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            quality={95}
+            className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             priority={index === 0}
           />
           {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/20 opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/20 opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
           
           {/* Top badges */}
           <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
@@ -64,8 +65,8 @@ export function CarCard({ car, index = 0, className }: CarCardProps) {
             )}
           </div>
 
-          {/* Hover CTA */}
-          <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0">
+          {/* Hover CTA on desktop */}
+          <div className="hidden sm:flex absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0">
             <div className="bg-white text-black text-xs font-bold px-3 py-1.5 rounded-md flex items-center gap-1.5 shadow-xl">
               View Listing <ArrowRight size={11} />
             </div>
@@ -73,10 +74,10 @@ export function CarCard({ car, index = 0, className }: CarCardProps) {
         </div>
 
         {/* Card content */}
-        <div className="p-5 flex flex-col flex-1 justify-between gap-4">
+        <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between gap-4">
           <div>
             <div className="flex items-start justify-between gap-2 mb-1">
-              <h3 className="text-lg font-bold text-white leading-snug group-hover:text-white/90 transition-colors">
+              <h3 className="text-base sm:text-lg font-bold text-white leading-snug group-hover:text-white/90 transition-colors">
                 {car.brand} {car.model}
               </h3>
             </div>
@@ -109,7 +110,7 @@ export function CarCard({ car, index = 0, className }: CarCardProps) {
               <p className="text-sm font-semibold text-white/40 uppercase tracking-wider text-[10px]">
                 Asking Price
               </p>
-              <p className="text-base font-bold text-white tracking-tight mt-0.5">
+              <p className="text-sm sm:text-base font-bold text-white tracking-tight mt-0.5">
                 {car.price ? formatPrice(car.price) : (car.priceText || "Price on Request")}
               </p>
             </div>

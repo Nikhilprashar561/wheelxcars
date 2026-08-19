@@ -201,7 +201,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
             <div>
               {/* Main image */}
               <div
-                className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-zinc-900 mb-3 cursor-zoom-in group border border-white/8 shadow-2xl"
+                className="relative aspect-[4/3] sm:aspect-[16/10] rounded-2xl overflow-hidden bg-[#141414] mb-3 cursor-zoom-in group border border-white/8 shadow-2xl"
                 onClick={() => setLightboxOpen(true)}
               >
                 <AnimatePresence mode="wait">
@@ -217,8 +217,9 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                       src={car.images[activeIndex]}
                       alt={`${car.brand} ${car.model} - Image ${activeIndex + 1}`}
                       fill
-                      className="object-cover"
+                      className="object-cover object-center"
                       priority
+                      quality={95}
                       sizes="(max-width: 1024px) 100vw, 70vw"
                     />
                   </motion.div>
