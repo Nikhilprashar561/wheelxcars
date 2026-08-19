@@ -1,9 +1,8 @@
 "use client";
 
-import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 const containerVariants = {
@@ -35,102 +34,98 @@ const imageVariants = {
 };
 
 export function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollY } = useScroll();
-  const imageY = useTransform(scrollY, [0, 400], [0, 30]);
-
   return (
     <section
-      ref={containerRef}
-      className="relative min-h-[460px] sm:min-h-[520px] lg:min-h-[580px] flex flex-col justify-center overflow-hidden bg-black"
+      className="relative pt-24 sm:pt-28 lg:pt-32 pb-8 sm:pb-12 lg:pb-16 overflow-hidden bg-black"
       aria-label="Hero section"
     >
-      {/* Background image with clean positioning */}
-      <motion.div
-        variants={imageVariants}
-        initial="hidden"
-        animate="visible"
-        style={{ y: imageY }}
-        className="absolute inset-0 z-0"
-      >
-        <Image
-          src="/hero.jpg"
-          alt="Premium pre-owned vehicles at WheelxCars"
-          fill
-          priority
-          loading="eager"
-          quality={90}
-          className="object-cover object-[center_bottom] sm:object-[center_40%]"
-          sizes="100vw"
-        />
-        {/* Soft, balanced gradient overlays to highlight the cars while keeping text crisp */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-transparent sm:from-black/80 sm:via-black/35 sm:to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-      </motion.div>
+      {/* Ambient background glow */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-white/5 to-transparent rounded-full blur-3xl pointer-events-none -z-0" />
 
-      {/* Subtle top-left glow */}
-      <div
-        className="absolute top-0 left-0 w-[500px] h-[500px] z-[1] pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at 0% 0%, rgba(255,255,255,0.06) 0%, transparent 65%)",
-        }}
-      />
-
-      {/* Content Container - Compact, uncluttered & sleek */}
-      <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 pt-20 sm:pt-24 lg:pt-28 pb-10 sm:pb-16 w-full flex flex-col justify-center">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="max-w-xl lg:max-w-2xl"
-        >
-          {/* Eyebrow */}
-          <motion.div variants={itemVariants} className="mb-2 sm:mb-3">
-            <span className="inline-flex items-center gap-2 text-zinc-300 text-[11px] sm:text-xs font-bold tracking-[0.18em] uppercase drop-shadow-sm">
-              <span className="w-4 sm:w-6 h-px bg-white/40" />
-              Pre-Owned · Inspected · Trusted
-            </span>
-          </motion.div>
-
-          {/* Headline */}
-          <motion.h1
-            variants={itemVariants}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-white mb-2.5 sm:mb-3.5 drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)]"
-          >
-            Find a Car
-            <br />
-            <span className="text-zinc-400">Worth</span> Driving.
-          </motion.h1>
-
-          {/* Supporting text - Clean and punchy */}
-          <motion.p
-            variants={itemVariants}
-            className="text-xs sm:text-sm md:text-base text-zinc-200 leading-relaxed max-w-md mb-5 sm:mb-6 font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]"
-          >
-            Verified pre-owned vehicles with documented inspection and transparent pricing across Tricity.
-          </motion.p>
-
-          {/* Linear CTAs on mobile and desktop */}
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_1.25fr] gap-8 lg:gap-12 items-center">
+          {/* Left Column: Text & Linear Action Buttons */}
           <motion.div
-            variants={itemVariants}
-            className="flex flex-row items-center gap-2.5 sm:gap-3.5 w-full sm:w-auto max-w-md sm:max-w-none"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="flex flex-col justify-center"
           >
-            <Link
-              href="/cars"
-              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-white text-black font-extrabold text-xs sm:text-sm px-5 sm:px-7 py-3.5 rounded-xl hover:bg-zinc-100 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-xl text-center cursor-pointer"
+            {/* Eyebrow */}
+            <motion.div variants={itemVariants} className="mb-2.5 sm:mb-3.5">
+              <span className="inline-flex items-center gap-2 text-zinc-300 text-[11px] sm:text-xs font-bold tracking-[0.18em] uppercase">
+                <span className="w-4 sm:w-6 h-px bg-white/40" />
+                Pre-Owned · Inspected · Trusted
+              </span>
+            </motion.div>
+
+            {/* Headline */}
+            <motion.h1
+              variants={itemVariants}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] xl:text-[62px] font-black leading-[1.05] tracking-tight text-white mb-3 sm:mb-4"
             >
-              <span>Explore Cars</span>
-              <ArrowRight size={14} className="shrink-0" />
-            </Link>
-            <Link
-              href="/sell-your-car"
-              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 border border-white/25 bg-black/40 backdrop-blur-md text-white font-bold text-xs sm:text-sm px-5 sm:px-7 py-3.5 rounded-xl hover:border-white/60 hover:bg-white/10 transition-all duration-200 shadow-md text-center cursor-pointer"
+              Find a Car
+              <br />
+              <span className="text-zinc-400">Worth</span> Driving.
+            </motion.h1>
+
+            {/* Subtitle */}
+            <motion.p
+              variants={itemVariants}
+              className="text-xs sm:text-sm md:text-base text-zinc-300 leading-relaxed max-w-lg mb-5 sm:mb-7 font-normal"
             >
-              <span>Sell Your Car</span>
-            </Link>
+              Handpicked, verified pre-owned vehicles with documented inspection and transparent pricing across Tricity.
+            </motion.p>
+
+            {/* Linear CTAs */}
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-row items-center gap-2.5 sm:gap-3.5 w-full sm:w-auto"
+            >
+              <Link
+                href="/cars"
+                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-white text-black font-extrabold text-xs sm:text-sm px-6 sm:px-8 py-3.5 rounded-xl hover:bg-zinc-100 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-xl text-center cursor-pointer"
+              >
+                <span>Explore Cars</span>
+                <ArrowRight size={14} className="shrink-0" />
+              </Link>
+              <Link
+                href="/sell-your-car"
+                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 border border-white/20 bg-white/5 hover:bg-white/10 text-white font-bold text-xs sm:text-sm px-6 sm:px-8 py-3.5 rounded-xl hover:border-white/40 transition-all shadow-md text-center cursor-pointer"
+              >
+                <span>Sell Your Car</span>
+              </Link>
+            </motion.div>
           </motion.div>
-        </motion.div>
+
+          {/* Right Column: Unobstructed Vehicle Showcase */}
+          <motion.div
+            variants={imageVariants}
+            initial="hidden"
+            animate="visible"
+            className="relative w-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-[16/10] rounded-2xl overflow-hidden border border-white/12 shadow-2xl bg-[#0e0e0e] group"
+          >
+            <Image
+              src="/hero.jpg"
+              alt="Premium verified pre-owned cars at WheelxCars"
+              fill
+              priority
+              loading="eager"
+              quality={95}
+              className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+              sizes="(max-width: 1024px) 100vw, 55vw"
+            />
+            {/* Subtle vignette */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
+            <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl pointer-events-none" />
+
+            {/* Verified badge tag */}
+            <div className="absolute bottom-3 left-3 bg-black/85 backdrop-blur-md border border-white/15 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg shadow-lg flex items-center gap-1.5 pointer-events-none">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Verified Fleet Ready in Tricity</span>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
