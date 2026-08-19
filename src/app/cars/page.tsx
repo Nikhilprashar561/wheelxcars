@@ -12,6 +12,8 @@ import { cn } from "@/lib/utils";
 
 const SORT_OPTIONS = [
   { label: "Newest Model Year", value: "year-desc" },
+  { label: "Price: Low to High", value: "price-asc" },
+  { label: "Price: High to Low", value: "price-desc" },
   { label: "Lowest Mileage", value: "mileage-asc" },
   { label: "Featured Listings", value: "featured" },
 ];
@@ -126,8 +128,14 @@ function CarsPageContent() {
     // Sorting
     if (sort === "year-desc") {
       result.sort((a, b) => b.year - a.year);
+    } else if (sort === "price-asc") {
+      result.sort((a, b) => (a.price || 0) - (b.price || 0));
+    } else if (sort === "price-desc") {
+      result.sort((a, b) => (b.price || 0) - (a.price || 0));
     } else if (sort === "mileage-asc") {
       result.sort((a, b) => (a.kmDriven || 0) - (b.kmDriven || 0));
+    } else if (sort === "featured") {
+      result.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
     }
 
     return result;
@@ -139,8 +147,8 @@ function CarsPageContent() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-black pt-28 pb-24 px-4 sm:px-6">
-        <div className="max-w-[1360px] mx-auto">
+      <main className="min-h-screen bg-black pt-20 sm:pt-28 pb-24 px-3.5 sm:px-6 w-full max-w-full overflow-x-hidden">
+        <div className="max-w-[1360px] mx-auto w-full min-w-0">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
             <motion.div

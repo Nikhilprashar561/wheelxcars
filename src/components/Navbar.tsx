@@ -52,7 +52,7 @@ export function Navbar() {
             : "bg-transparent py-5"
         )}
       >
-        <div className="max-w-[1360px] mx-auto px-6 flex items-center justify-between">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-6 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group" aria-label="WheelxCars Home">
             <span className="text-xl font-bold tracking-[-0.02em] text-white select-none">

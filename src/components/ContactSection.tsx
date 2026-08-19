@@ -8,9 +8,9 @@ import { cn } from "@/lib/utils";
 const contactInfo = [
   {
     icon: Phone,
-    label: "Phone / WhatsApp",
-    value: "+91 98765 43210",
-    href: "tel:+919876543210",
+    label: "Direct Phone / Dialpad",
+    value: "+91 80545 35453",
+    href: "tel:+918054535453",
   },
   {
     icon: Mail,
@@ -213,7 +213,7 @@ export function ContactSection() {
                       type="tel"
                       value={form.phone}
                       onChange={(e) => setForm((s) => ({ ...s, phone: e.target.value }))}
-                      placeholder="+91 98765 43210"
+                      placeholder="+91 80545 35453"
                       className="w-full bg-white/4 border border-white/8 rounded-md px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25 transition-colors"
                     />
                   </div>

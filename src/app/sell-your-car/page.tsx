@@ -191,29 +191,29 @@ export default function SellYourCarPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-black pt-28 pb-24 px-4 sm:px-6">
-        <div className="max-w-[1080px] mx-auto">
+      <main className="min-h-screen bg-black pt-20 sm:pt-28 pb-24 px-3.5 sm:px-6 w-full max-w-full overflow-x-hidden">
+        <div className="max-w-[1080px] mx-auto w-full min-w-0">
           {/* Hero Heading */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-12"
+            className="mb-8 sm:mb-12"
           >
             <div className="flex items-center gap-2 text-[11px] text-white/40 uppercase tracking-[0.18em] font-semibold mb-3">
-              <MapPin size={12} className="text-white/60" />
-              <span>Chandigarh · Mohali · Panchkula · Zirakpur · Kharar</span>
+              <MapPin size={12} className="text-white/60 shrink-0" />
+              <span className="truncate">Chandigarh · Mohali · Panchkula · Zirakpur · Kharar</span>
             </div>
-            <h1 className="text-3xl sm:text-5xl font-bold tracking-[-0.025em] text-white mb-3">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-[-0.025em] text-white mb-3">
               Sell Your Car in Tricity.
             </h1>
-            <p className="text-sm text-white/45 max-w-xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-white/45 max-w-xl leading-relaxed">
               Get an honest market valuation and sell your car directly to serious buyers across Chandigarh &amp; Tricity. Transparent, fast, and free of dealer commission.
             </p>
           </motion.div>
 
           {/* Benefits Grid */}
-          <div className="grid sm:grid-cols-3 gap-4 mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-8 sm:mb-12">
             {[
               {
                 icon: BadgeDollarSign,
@@ -233,12 +233,12 @@ export default function SellYourCarPage() {
             ].map((b) => {
               const Icon = b.icon;
               return (
-                <div key={b.title} className="bg-[#111] border border-white/6 rounded-xl p-5 flex items-start gap-4">
-                  <div className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
-                    <Icon size={16} className="text-white/50" />
+                <div key={b.title} className="bg-[#111] border border-white/6 rounded-xl p-4 sm:p-5 flex items-start gap-3 sm:gap-4">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
+                    <Icon size={15} className="text-white/50" />
                   </div>
                   <div>
-                    <h3 className="text-xs font-bold text-white mb-1">{b.title}</h3>
+                    <h3 className="text-xs font-bold text-white mb-0.5 sm:mb-1">{b.title}</h3>
                     <p className="text-[11px] text-white/35 leading-relaxed">{b.desc}</p>
                   </div>
                 </div>
@@ -247,7 +247,7 @@ export default function SellYourCarPage() {
           </div>
 
           {/* Wizard Card */}
-          <div className="bg-[#111] border border-white/8 rounded-2xl p-6 sm:p-10 shadow-2xl">
+          <div className="bg-[#111] border border-white/8 rounded-2xl p-4 sm:p-6 md:p-10 shadow-2xl w-full min-w-0 overflow-hidden">
             {submitted ? (
               <div className="py-16 text-center space-y-5 max-w-md mx-auto">
                 <CheckCircle size={52} className="text-white/80 mx-auto" />
@@ -683,7 +683,7 @@ export default function SellYourCarPage() {
                           type="tel"
                           value={form.sellerPhone}
                           onChange={(e) => setForm((s) => ({ ...s, sellerPhone: e.target.value }))}
-                          placeholder="+91 98765 43210"
+                          placeholder="+91 80545 35453"
                           className="w-full bg-white/4 border border-white/8 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25"
                         />
                         {errors.sellerPhone && <p className="text-red-400 text-xs mt-1">{errors.sellerPhone}</p>}

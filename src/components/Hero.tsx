@@ -84,7 +84,7 @@ export function Hero() {
       />
 
       {/* Content */}
-      <div className="relative z-10 max-w-[1360px] mx-auto px-6 pt-28 pb-24 flex flex-col justify-center min-h-screen">
+      <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-20 sm:pb-24 flex flex-col justify-center min-h-screen">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -92,9 +92,9 @@ export function Hero() {
           className="max-w-2xl"
         >
           {/* Eyebrow */}
-          <motion.div variants={itemVariants} className="mb-6">
-            <span className="inline-flex items-center gap-2 text-white/50 text-xs font-semibold tracking-[0.2em] uppercase">
-              <span className="w-6 h-px bg-white/30" />
+          <motion.div variants={itemVariants} className="mb-4 sm:mb-6">
+            <span className="inline-flex items-center gap-2 text-white/50 text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase">
+              <span className="w-4 sm:w-6 h-px bg-white/30" />
               Pre-Owned · Inspected · Trusted
             </span>
           </motion.div>
@@ -102,7 +102,7 @@ export function Hero() {
           {/* Headline */}
           <motion.h1
             variants={itemVariants}
-            className="text-5xl sm:text-6xl lg:text-[76px] xl:text-[84px] font-bold leading-[0.95] tracking-[-0.03em] text-white mb-6"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-[76px] xl:text-[84px] font-bold leading-[0.95] tracking-[-0.03em] text-white mb-4 sm:mb-6"
           >
             Find a Car
             <br />

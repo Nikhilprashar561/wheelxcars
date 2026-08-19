@@ -27,8 +27,8 @@ const faqs = [
     a: "Click 'Sell Your Car' in the navigation, enter your vehicle details, condition, photos, and expected price in our 6-step form. We review the submission and connect you with verified buyers or offer a direct valuation within 24 to 48 hours.",
   },
   {
-    q: "Are all vehicles priced under ₹10 Lakh?",
-    a: "Yes. WheelxCars specializes in the high-demand, high-value pre-owned segment where vehicles are priced fairly below ₹10 Lakh with transparent pricing and no hidden dealer commissions.",
+    q: "Are the vehicle prices fixed and transparent?",
+    a: "Yes. WheelxCars operates on 100% transparent, fair-market pricing across our entire inventory. Every vehicle listing includes verified paperwork, inspection reports, and zero hidden dealer commissions.",
   },
   {
     q: "Do you offer loan and EMI financing options?",

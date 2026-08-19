@@ -29,8 +29,8 @@ function SelectField({
   placeholder: string;
 }) {
   return (
-    <div className="flex-1 min-w-[140px]">
-      <label className="block text-[10px] text-white/40 uppercase tracking-[0.12em] font-semibold mb-1.5">
+    <div className="flex-1 min-w-0 w-full">
+      <label className="block text-[10px] text-white/40 uppercase tracking-[0.12em] font-semibold mb-1.5 truncate">
         {label}
       </label>
       <div className="relative">

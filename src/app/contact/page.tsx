@@ -12,8 +12,8 @@ export default function ContactPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-black pt-28">
-        <div className="max-w-[1360px] mx-auto px-4 mb-4">
+      <main className="min-h-screen bg-black pt-20 sm:pt-28 w-full max-w-full overflow-x-hidden">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-6 mb-4">
           <p className="text-[11px] text-white/30 uppercase tracking-[0.18em] font-semibold mb-3">
             — Contact
           </p>

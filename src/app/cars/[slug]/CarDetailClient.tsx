@@ -17,6 +17,8 @@ import {
   ChevronRight,
   X,
   Phone,
+  PhoneCall,
+  MessageCircle,
   MessageSquare,
   ShieldCheck,
   CheckCircle,
@@ -33,6 +35,10 @@ import { CARS, formatPrice, formatEMI, Car } from "@/lib/data";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { cn } from "@/lib/utils";
+
+const WHATSAPP_NUMBER = "918054535453";
+const PHONE_DISPLAY = "+91 80545 35453";
+const PHONE_TEL = "tel:+918054535453";
 
 interface CarDetailClientProps {
   slug: string;
@@ -55,7 +61,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
     phone: "",
     email: "",
     preferredContact: "Phone & WhatsApp",
-    message: `Hi, I am interested in the ${car.year} ${car.brand} ${car.model} (${car.variant}). Please share the asking price, inspection report, and availability.`,
+    message: `Hi, I am interested in the ${car.year} ${car.brand} ${car.model} (${car.variant}). Please share the inspection report, price details, and availability.`,
   });
   const [enquiryLoading, setEnquiryLoading] = useState(false);
   const [enquirySuccess, setEnquirySuccess] = useState(false);
@@ -77,6 +83,28 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
   const goNext = () => setActiveIndex((i) => (i + 1) % car.images.length);
   const goPrev = () => setActiveIndex((i) => (i - 1 + car.images.length) % car.images.length);
 
+  const openWhatsAppTestDrive = (date?: string, slot?: string, notes?: string) => {
+    const text = `📅 *TEST DRIVE BOOKING — WheelxCars*\n\n` +
+      `🚗 *Vehicle:* ${car.year} ${car.brand} ${car.model} (${car.variant})\n` +
+      `💰 *Price:* ${formatPrice(car.price)}\n` +
+      `📍 *Registration:* ${car.registration}\n` +
+      `${date ? `📅 *Preferred Date:* ${date}\n` : ""}` +
+      `${slot ? `⏰ *Time Slot:* ${slot}\n` : ""}` +
+      `${notes ? `📝 *Note:* ${notes}\n` : ""}\n` +
+      `Hi WheelxCars, I would like to book a Test Drive for this car in Tricity. Please let me know available slots.`;
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank");
+  };
+
+  const openWhatsAppEnquiry = (customMsg?: string) => {
+    const text = `🚗 *VEHICLE ENQUIRY — WheelxCars*\n\n` +
+      `• *Vehicle:* ${car.year} ${car.brand} ${car.model} (${car.variant})\n` +
+      `• *Asking Price:* ${formatPrice(car.price)}\n` +
+      `• *Registration:* ${car.registration} (${car.registrationPlace || "Tricity"})\n\n` +
+      `${customMsg ? `💬 *Message:* ${customMsg}\n\n` : ""}` +
+      `Hi WheelxCars, I am interested in this car. Please share complete inspection details, price breakdown & availability.`;
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank");
+  };
+
   const handleEnquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!enquiryForm.name || !enquiryForm.phone) {
@@ -87,7 +115,8 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
     setEnquiryLoading(true);
 
     try {
-      const res = await fetch("/api/send-email", {
+      // 1. Asynchronously post to lead API
+      fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -109,9 +138,20 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
             },
           },
         }),
-      });
+      }).catch(console.error);
 
-      if (!res.ok) throw new Error("Failed to send enquiry");
+      // 2. Open WhatsApp directly with full enquiry queries
+      const whatsappText = `🚗 *VEHICLE ENQUIRY — WheelxCars*\n\n` +
+        `• *Car:* ${car.year} ${car.brand} ${car.model} (${car.variant})\n` +
+        `• *Asking Price:* ${formatPrice(car.price)}\n` +
+        `• *Reg / Loc:* ${car.registration} (${car.registrationPlace || "Tricity"})\n\n` +
+        `👤 *Client Details:*\n` +
+        `• *Name:* ${enquiryForm.name}\n` +
+        `• *Phone:* ${enquiryForm.phone}\n` +
+        `${enquiryForm.email ? `• *Email:* ${enquiryForm.email}\n` : ""}` +
+        `• *Query / Message:* ${enquiryForm.message || "Please share inspection report, availability & pricing."}`;
+
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappText)}`, "_blank");
       setEnquirySuccess(true);
     } catch (err) {
       console.error(err);
@@ -131,7 +171,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
     setTestDriveLoading(true);
 
     try {
-      const res = await fetch("/api/send-email", {
+      fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -148,9 +188,20 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
             },
           },
         }),
-      });
+      }).catch(console.error);
 
-      if (!res.ok) throw new Error("Failed to submit test drive request");
+      const whatsappText = `📅 *TEST DRIVE BOOKING — WheelxCars*\n\n` +
+        `• *Car:* ${car.year} ${car.brand} ${car.model} (${car.variant})\n` +
+        `• *Reg:* ${car.registration}\n\n` +
+        `👤 *Appointment Details:*\n` +
+        `• *Name:* ${testDriveForm.name}\n` +
+        `• *Phone:* ${testDriveForm.phone}\n` +
+        `• *Preferred Date:* ${testDriveForm.preferredDate}\n` +
+        `• *Time Slot:* ${testDriveForm.preferredTime}\n` +
+        `${testDriveForm.message ? `• *Location / Notes:* ${testDriveForm.message}\n` : ""}\n` +
+        `Please confirm test drive schedule.`;
+
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappText)}`, "_blank");
       setTestDriveSuccess(true);
     } catch (err) {
       console.error(err);
@@ -178,10 +229,10 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-black pt-24 pb-28 px-4 sm:px-6">
-        <div className="max-w-[1360px] mx-auto">
+      <main className="min-h-screen bg-black pt-20 sm:pt-24 pb-28 px-3.5 sm:px-6 w-full max-w-full overflow-x-hidden">
+        <div className="max-w-[1360px] mx-auto w-full min-w-0">
           {/* Back link & breadcrumb */}
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-4 sm:mb-6 flex-wrap gap-2">
             <Link
               href="/cars"
               className="inline-flex items-center gap-2 text-xs font-semibold text-white/50 hover:text-white transition-colors"
@@ -189,21 +240,21 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
               <ArrowLeft size={14} />
               Back to Inventory
             </Link>
-            <div className="flex items-center gap-2 text-xs text-white/30">
+            <div className="flex items-center gap-2 text-xs text-white/30 truncate max-w-full">
               <span>Inventory</span>
               <span>/</span>
               <span>{car.brand}</span>
               <span>/</span>
-              <span className="text-white/60">{car.model}</span>
+              <span className="text-white/60 truncate">{car.model}</span>
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-[1fr_420px] gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6 lg:gap-10 w-full min-w-0">
             {/* Left: Gallery & Vehicle Specs */}
-            <div>
+            <div className="w-full min-w-0 overflow-hidden">
               {/* Main image */}
               <div
-                className="relative aspect-[4/3] sm:aspect-[16/10] rounded-2xl overflow-hidden bg-[#141414] mb-3 cursor-zoom-in group border border-white/8 shadow-2xl"
+                className="relative aspect-[4/3] sm:aspect-[16/10] rounded-2xl overflow-hidden bg-[#141414] mb-3 cursor-zoom-in group border border-white/8 shadow-2xl w-full"
                 onClick={() => setLightboxOpen(true)}
               >
                 <AnimatePresence mode="wait">
@@ -228,12 +279,12 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                 </AnimatePresence>
 
                 {/* Badges */}
-                <div className="absolute top-4 left-4 flex items-center gap-2">
-                  <div className="bg-black/85 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-lg border border-white/10">
+                <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 flex-wrap pointer-events-none">
+                  <div className="bg-black/85 backdrop-blur-md text-white text-[11px] font-bold px-2.5 py-1 rounded-lg border border-white/10 shrink-0">
                     {car.year} Model
                   </div>
-                  <div className="bg-black/85 backdrop-blur-md text-white/90 text-xs font-medium px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-1.5">
-                    <ShieldCheck size={13} className="text-white" />
+                  <div className="bg-black/85 backdrop-blur-md text-white/90 text-[10px] font-medium px-2.5 py-1 rounded-lg border border-white/10 flex items-center gap-1.5 shrink-0">
+                    <ShieldCheck size={12} className="text-white" />
                     Verified Vehicle
                   </div>
                 </div>
@@ -246,71 +297,73 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                         e.stopPropagation();
                         goPrev();
                       }}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/70 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-black transition-colors"
+                      className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-black/70 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-black transition-colors"
                       aria-label="Previous image"
                     >
-                      <ChevronLeft size={20} />
+                      <ChevronLeft size={18} />
                     </button>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         goNext();
                       }}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/70 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-black transition-colors"
+                      className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-black/70 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-black transition-colors"
                       aria-label="Next image"
                     >
-                      <ChevronRight size={20} />
+                      <ChevronRight size={18} />
                     </button>
                   </>
                 )}
 
-                <div className="absolute bottom-4 right-4 bg-black/80 backdrop-blur-md text-white/90 text-xs px-3 py-1 rounded-md border border-white/10">
-                  {activeIndex + 1} / {car.images.length} · Click to enlarge
+                <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md text-white/90 text-[10px] sm:text-xs px-2.5 py-1 rounded-md border border-white/10">
+                  {activeIndex + 1} / {car.images.length} · Tap to enlarge
                 </div>
               </div>
 
               {/* Thumbnails */}
               {car.images.length > 1 && (
-                <div className="flex gap-3 mb-10 overflow-x-auto pb-1">
+                <div className="flex gap-2 sm:gap-3 mb-6 sm:mb-10 overflow-x-auto pb-2 scrollbar-none w-full max-w-full">
                   {car.images.map((img, i) => (
                     <button
                       key={i}
                       onClick={() => setActiveIndex(i)}
                       className={cn(
-                        "relative w-28 h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all duration-200",
+                        "relative w-20 sm:w-28 h-14 sm:h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all duration-200",
                         i === activeIndex
-                          ? "border-white shadow-xl scale-[1.03]"
+                          ? "border-white shadow-xl scale-[1.02]"
                           : "border-transparent opacity-50 hover:opacity-80"
                       )}
                     >
-                      <Image src={img} alt={`Thumbnail ${i + 1}`} fill className="object-cover" sizes="112px" />
+                      <Image src={img} alt={`Thumbnail ${i + 1}`} fill className="object-cover" sizes="(max-width: 640px) 80px, 112px" />
                     </button>
                   ))}
                 </div>
               )}
 
               {/* Key Details Table Section */}
-              <div className="mb-10 bg-[#111] border border-white/8 rounded-2xl p-6 sm:p-8">
-                <h2 className="text-base font-bold text-white uppercase tracking-wider mb-6 flex items-center gap-2">
-                  <FileText size={16} className="text-white/60" />
+              <div className="mb-6 sm:mb-10 bg-[#111] border border-white/8 rounded-2xl p-4 sm:p-6 md:p-8 w-full min-w-0 overflow-hidden">
+                <h2 className="text-sm sm:text-base font-bold text-white uppercase tracking-wider mb-4 sm:mb-6 flex items-center gap-2">
+                  <FileText size={16} className="text-white/60 shrink-0" />
                   Key Vehicle Details
                 </h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5 sm:gap-4 w-full min-w-0">
                   {keySpecs.map((spec) => {
                     const Icon = spec.icon;
                     return (
                       <div
                         key={spec.label}
-                        className="bg-white/3 border border-white/6 rounded-xl p-4 flex flex-col justify-between gap-1.5"
+                        className="bg-white/3 border border-white/6 rounded-xl p-3 sm:p-4 flex flex-col justify-between gap-1.5 min-w-0 overflow-hidden"
                       >
-                        <div className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center">
-                          <Icon size={14} className="text-white/40" />
+                        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
+                          <Icon size={13} className="text-white/40" />
                         </div>
-                        <div>
-                          <p className="text-[10px] text-white/40 uppercase tracking-wider font-semibold">
+                        <div className="min-w-0 w-full overflow-hidden">
+                          <p className="text-[10px] text-white/40 uppercase tracking-wider font-semibold truncate">
                             {spec.label}
                           </p>
-                          <p className="text-sm font-bold text-white mt-0.5">{spec.value}</p>
+                          <p className="text-xs sm:text-sm font-bold text-white mt-0.5 break-words line-clamp-2 leading-tight">
+                            {spec.value}
+                          </p>
                         </div>
                       </div>
                     );
@@ -320,30 +373,30 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
 
               {/* Grouped Features UI */}
               {car.featuresList && (
-                <div className="mb-10 space-y-6">
-                  <h2 className="text-base font-bold text-white uppercase tracking-wider">
+                <div className="mb-6 sm:mb-10 space-y-4 sm:space-y-6 w-full min-w-0">
+                  <h2 className="text-sm sm:text-base font-bold text-white uppercase tracking-wider">
                     Equipment &amp; Features Breakdown
                   </h2>
-                  <div className="grid sm:grid-cols-2 gap-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 w-full min-w-0">
                     {car.featuresList.map((group) => (
                       <div
                         key={group.category}
-                        className="bg-[#111] border border-white/8 rounded-2xl p-6 space-y-4"
+                        className="bg-[#111] border border-white/8 rounded-2xl p-4 sm:p-6 space-y-3 sm:space-y-4 w-full min-w-0 overflow-hidden"
                       >
-                        <h3 className="text-xs font-bold text-white uppercase tracking-widest text-white/80 border-b border-white/6 pb-2">
+                        <h3 className="text-xs font-bold text-white uppercase tracking-widest text-white/80 border-b border-white/6 pb-2 truncate">
                           {group.category}
                         </h3>
-                        <div className="space-y-2.5">
+                        <div className="space-y-2 text-xs">
                           {group.items.map((item) => (
                             <div
                               key={item.name}
-                              className="flex items-center justify-between text-xs py-1"
+                              className="flex items-start justify-between gap-2 py-1 min-w-0"
                             >
-                              <span className="text-white/70 flex items-center gap-2">
-                                <CheckCircle size={13} className="text-white/80" />
-                                {item.name}
+                              <span className="text-white/70 flex items-center gap-2 min-w-0 break-words leading-tight">
+                                <CheckCircle size={13} className="text-white/80 shrink-0 mt-0.5" />
+                                <span className="break-words">{item.name}</span>
                               </span>
-                              <span className="font-semibold text-white">
+                              <span className="font-semibold text-white shrink-0 text-right">
                                 {typeof item.value === "string" ? item.value : "Yes"}
                               </span>
                             </div>
@@ -357,11 +410,11 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
 
               {/* Description */}
               {car.description && (
-                <div className="mb-8 bg-[#111] border border-white/8 rounded-2xl p-6 sm:p-8">
+                <div className="mb-8 bg-[#111] border border-white/8 rounded-2xl p-4 sm:p-6 md:p-8 w-full min-w-0 overflow-hidden">
                   <h2 className="text-sm font-bold text-white uppercase tracking-wider mb-3">
                     Listing Overview
                   </h2>
-                  <p className="text-sm text-white/60 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-white/60 leading-relaxed break-words">
                     {car.description}
                   </p>
                 </div>
@@ -369,34 +422,41 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
             </div>
 
             {/* Right: Sticky Action & Pricing Panel */}
-            <div className="lg:sticky lg:top-28 self-start">
+            <div className="w-full min-w-0 lg:sticky lg:top-28 self-start">
               <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="bg-[#111] border border-white/10 rounded-2xl p-7 space-y-6 shadow-2xl"
+                className="bg-[#111] border border-white/10 rounded-2xl p-5 sm:p-7 space-y-5 sm:space-y-6 shadow-2xl w-full min-w-0 overflow-hidden"
               >
                 {/* Vehicle title */}
-                <div>
+                <div className="min-w-0">
                   <span className="text-xs text-white/40 uppercase tracking-widest font-semibold">
                     {car.year} • {car.brand}
                   </span>
-                  <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight mt-1">
+                  <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight leading-tight mt-1 break-words">
                     {car.brand} {car.model}
                   </h1>
-                  <p className="text-sm text-white/50 mt-1">{car.variant}</p>
+                  <p className="text-xs sm:text-sm text-white/50 mt-1 break-words">{car.variant}</p>
                 </div>
 
                 {/* Price Section */}
-                <div className="border-t border-b border-white/6 py-5">
+                <div className="border-t border-b border-white/6 py-4 sm:py-5 min-w-0">
                   <p className="text-[10px] text-white/40 uppercase tracking-widest font-semibold">
-                    Price
+                    Fixed Transparent Price
                   </p>
-                  <p className="text-2xl sm:text-3xl font-bold text-white tracking-tight mt-1">
-                    {car.price ? formatPrice(car.price) : (car.priceText || "Price on Request")}
-                  </p>
-                  <p className="text-xs text-white/40 mt-1">
-                    Contact us for competitive pricing &amp; direct seller evaluation.
+                  <div className="flex flex-wrap items-baseline gap-2 sm:gap-3 mt-1">
+                    <p className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                      {car.price ? formatPrice(car.price) : (car.priceText || "Price on Request")}
+                    </p>
+                    {car.emi && (
+                      <span className="text-[11px] sm:text-xs font-semibold text-white/80 bg-white/10 px-2.5 py-0.5 sm:py-1 rounded-full border border-white/10">
+                        EMI from {formatEMI(car.emi)}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[11px] sm:text-xs text-white/40 mt-1.5 leading-relaxed">
+                    Includes verified RC transfer, comprehensive inspection &amp; zero hidden commissions.
                   </p>
                 </div>
 
@@ -404,24 +464,24 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                 <div className="space-y-3">
                   <button
                     onClick={() => setEnquiryModalOpen(true)}
-                    className="w-full flex items-center justify-center gap-2.5 bg-white text-black font-bold text-sm py-4 rounded-xl hover:bg-white/90 transition-all hover:scale-[1.01] active:scale-[0.99] shadow-xl"
+                    className="w-full flex items-center justify-center gap-2.5 bg-white text-black font-bold text-xs sm:text-sm py-3.5 sm:py-4 rounded-xl hover:bg-white/90 transition-all hover:scale-[1.01] active:scale-[0.99] shadow-xl cursor-pointer"
                   >
                     <MessageSquare size={16} />
                     Enquire About This Vehicle
                   </button>
                   <button
-                    onClick={() => setTestDriveModalOpen(true)}
-                    className="w-full flex items-center justify-center gap-2.5 border border-white/20 text-white font-semibold text-sm py-3.5 rounded-xl hover:border-white/40 hover:bg-white/5 transition-all"
+                    onClick={() => openWhatsAppTestDrive()}
+                    className="w-full flex items-center justify-center gap-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm py-3.5 sm:py-4 rounded-xl transition-all hover:scale-[1.01] active:scale-[0.99] shadow-xl cursor-pointer"
                   >
-                    <CalendarCheck size={16} />
-                    Book a Test Drive
+                    <MessageCircle size={17} />
+                    Book a Test Drive (WhatsApp)
                   </button>
                   <a
-                    href="tel:+919876543210"
-                    className="w-full flex items-center justify-center gap-2 border border-white/10 text-white/60 text-xs py-3 rounded-xl hover:text-white hover:border-white/25 transition-all"
+                    href="tel:+918054535453"
+                    className="w-full flex items-center justify-center gap-2.5 bg-white/5 hover:bg-white/10 border border-white/20 text-white font-semibold text-xs sm:text-sm py-3.5 rounded-xl hover:border-white/40 transition-all hover:scale-[1.01] active:scale-[0.99]"
                   >
-                    <Phone size={13} />
-                    Direct Phone: +91 98765 43210
+                    <PhoneCall size={15} className="text-emerald-400" />
+                    Call Directly: +91 80545 35453
                   </a>
                 </div>
 
@@ -451,22 +511,26 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
       </main>
 
       {/* MOBILE STICKY BOTTOM BAR */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0c0c0c]/95 backdrop-blur-lg border-t border-white/10 p-3 flex items-center gap-3 shadow-2xl">
-        <div className="flex-1">
-          <p className="text-sm font-bold text-white">{car.brand} {car.model}</p>
-          <p className="text-[10px] text-white/40">{car.price ? formatPrice(car.price) : "Price on Request"}</p>
-        </div>
-        <button
-          onClick={() => setEnquiryModalOpen(true)}
-          className="flex-1 bg-white text-black font-bold text-xs py-3 rounded-lg hover:bg-white/90 text-center"
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0c0c0c]/95 backdrop-blur-lg border-t border-white/10 p-2.5 sm:p-3 flex items-center gap-2 shadow-2xl">
+        <a
+          href="tel:+918054535453"
+          className="flex-1 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-xs py-3 rounded-lg flex items-center justify-center gap-1.5 active:scale-95 transition-all text-center"
         >
-          Enquire
+          <PhoneCall size={14} className="text-emerald-400 shrink-0" />
+          <span>Call</span>
+        </a>
+        <button
+          onClick={() => openWhatsAppTestDrive()}
+          className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-3 rounded-lg flex items-center justify-center gap-1.5 active:scale-95 transition-all"
+        >
+          <MessageCircle size={14} className="shrink-0" />
+          <span>Test Drive</span>
         </button>
         <button
-          onClick={() => setTestDriveModalOpen(true)}
-          className="flex-1 border border-white/20 text-white font-medium text-xs py-3 rounded-lg text-center"
+          onClick={() => setEnquiryModalOpen(true)}
+          className="flex-1 bg-white text-black font-bold text-xs py-3 rounded-lg text-center active:scale-95 transition-all"
         >
-          Test Drive
+          <span>Enquire</span>
         </button>
       </div>
 
@@ -490,10 +554,10 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
 
               {enquirySuccess ? (
                 <div className="py-8 text-center space-y-4">
-                  <CheckCircle size={48} className="text-white/90 mx-auto" />
-                  <h3 className="text-xl font-bold text-white">Enquiry Submitted</h3>
+                  <CheckCircle size={48} className="text-emerald-400 mx-auto" />
+                  <h3 className="text-xl font-bold text-white">Enquiry Sent to WhatsApp</h3>
                   <p className="text-xs text-white/50 max-w-xs mx-auto">
-                    We have received your enquiry for the {car.year} {car.brand} {car.model}. Our team will contact you shortly with price details.
+                    We have received your enquiry for the {car.year} {car.brand} {car.model} and opened WhatsApp to connect you directly.
                   </p>
                   <button
                     onClick={() => {
@@ -507,7 +571,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                 </div>
               ) : (
                 <>
-                  <div className="mb-6">
+                  <div className="mb-5">
                     <p className="text-[10px] text-white/40 uppercase tracking-widest font-semibold">
                       Vehicle Enquiry
                     </p>
@@ -515,6 +579,21 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                       {car.year} {car.brand} {car.model}
                     </h2>
                     <p className="text-xs text-white/50">{car.variant} • {car.mileage} • {car.color}</p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => openWhatsAppEnquiry()}
+                    className="w-full mb-4 flex items-center justify-center gap-2 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 text-xs font-bold py-3 rounded-xl transition-all"
+                  >
+                    <MessageCircle size={16} />
+                    Instant Query on WhatsApp: +91 80545 35453
+                  </button>
+
+                  <div className="relative flex items-center justify-center mb-4">
+                    <span className="h-px bg-white/10 w-full" />
+                    <span className="px-3 text-[10px] text-white/30 uppercase bg-[#121212] shrink-0">or fill details</span>
+                    <span className="h-px bg-white/10 w-full" />
                   </div>
 
                   {enquiryError && (
@@ -548,7 +627,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                           required
                           value={enquiryForm.phone}
                           onChange={(e) => setEnquiryForm((s) => ({ ...s, phone: e.target.value }))}
-                          placeholder="+91 98765 43210"
+                          placeholder="+91 80545 35453"
                           className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
                         />
                       </div>
@@ -579,9 +658,10 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                     <button
                       type="submit"
                       disabled={enquiryLoading}
-                      className="w-full bg-white text-black font-bold text-xs py-3.5 rounded-xl hover:bg-white/90 transition-all flex items-center justify-center gap-2"
+                      className="w-full bg-white text-black font-bold text-xs py-3.5 rounded-xl hover:bg-white/90 transition-all flex items-center justify-center gap-2 cursor-pointer"
                     >
-                      {enquiryLoading ? "Submitting..." : "Send Vehicle Enquiry"}
+                      <MessageCircle size={15} />
+                      {enquiryLoading ? "Submitting..." : "Send Vehicle Enquiry via WhatsApp"}
                     </button>
                   </form>
                 </>
@@ -611,10 +691,10 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
 
               {testDriveSuccess ? (
                 <div className="py-8 text-center space-y-4">
-                  <CheckCircle size={48} className="text-white/90 mx-auto" />
-                  <h3 className="text-xl font-bold text-white">Test Drive Scheduled</h3>
+                  <CheckCircle size={48} className="text-emerald-400 mx-auto" />
+                  <h3 className="text-xl font-bold text-white">Test Drive Requested</h3>
                   <p className="text-xs text-white/50 max-w-xs mx-auto">
-                    Your test drive request for the {car.year} {car.brand} {car.model} has been recorded. Our advisor will confirm appointment time &amp; venue.
+                    Your test drive appointment for the {car.year} {car.brand} {car.model} has been sent to WhatsApp. Our advisor will confirm your slot.
                   </p>
                   <button
                     onClick={() => {
@@ -628,7 +708,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                 </div>
               ) : (
                 <>
-                  <div className="mb-6">
+                  <div className="mb-5">
                     <p className="text-[10px] text-white/40 uppercase tracking-widest font-semibold">
                       Schedule Appointment
                     </p>
@@ -636,6 +716,21 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                       {car.year} {car.brand} {car.model}
                     </h2>
                     <p className="text-xs text-white/50">{car.variant} • Reg: {car.registration}</p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => openWhatsAppTestDrive()}
+                    className="w-full mb-4 flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold py-3 rounded-xl transition-all shadow-lg"
+                  >
+                    <MessageCircle size={16} />
+                    Quick WhatsApp Booking: +91 80545 35453
+                  </button>
+
+                  <div className="relative flex items-center justify-center mb-4">
+                    <span className="h-px bg-white/10 w-full" />
+                    <span className="px-3 text-[10px] text-white/30 uppercase bg-[#121212] shrink-0">or select slot details</span>
+                    <span className="h-px bg-white/10 w-full" />
                   </div>
 
                   {testDriveError && (
@@ -669,7 +764,7 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                           required
                           value={testDriveForm.phone}
                           onChange={(e) => setTestDriveForm((s) => ({ ...s, phone: e.target.value }))}
-                          placeholder="+91 98765 43210"
+                          placeholder="+91 80545 35453"
                           className="w-full bg-white/4 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30"
                         />
                       </div>
@@ -729,9 +824,10 @@ export function CarDetailClient({ slug }: CarDetailClientProps) {
                     <button
                       type="submit"
                       disabled={testDriveLoading}
-                      className="w-full bg-white text-black font-bold text-xs py-3.5 rounded-xl hover:bg-white/90 transition-all flex items-center justify-center gap-2"
+                      className="w-full bg-white text-black font-bold text-xs py-3.5 rounded-xl hover:bg-white/90 transition-all flex items-center justify-center gap-2 cursor-pointer"
                     >
-                      {testDriveLoading ? "Scheduling..." : "Confirm Test Drive Request"}
+                      <MessageCircle size={15} />
+                      {testDriveLoading ? "Scheduling..." : "Confirm Test Drive on WhatsApp"}
                     </button>
                   </form>
                 </>

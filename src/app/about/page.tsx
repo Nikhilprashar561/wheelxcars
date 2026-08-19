@@ -35,8 +35,8 @@ export default function AboutPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-black pt-28 pb-24 px-4 sm:px-6">
-        <div className="max-w-[1100px] mx-auto">
+      <main className="min-h-screen bg-black pt-20 sm:pt-28 pb-24 px-3.5 sm:px-6 w-full max-w-full overflow-x-hidden">
+        <div className="max-w-[1100px] mx-auto w-full min-w-0">
           {/* Hero */}
           <div className="mb-20">
             <div className="flex items-center gap-2 text-[11px] text-white/40 uppercase tracking-[0.18em] font-semibold mb-4">
