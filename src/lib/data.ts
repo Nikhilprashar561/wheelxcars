@@ -100,6 +100,8 @@ export const CARS: Car[] = [
     description: "Well-maintained Hyundai i20 Sportz from 2019. Diesel fuel type, manual transmission with 85,000 km driven. Third owner vehicle in great condition for its age. Located at Pahlwan, Uchana.",
     images: [
       "/cars/hyundai-i20/i20-1.jpg",
+      "/cars/hyundai-i20/i20-2.jpg",
+      "/cars/hyundai-i20/i20-3.jpg",
     ],
     featuresList: [
       {
