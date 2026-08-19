@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -21,7 +22,9 @@ export function Navbar() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -30,34 +33,43 @@ export function Navbar() {
     setMenuOpen(false);
   }, [pathname]);
 
+  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "";
+      document.body.style.overflow = "unset";
     }
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, [menuOpen]);
 
   return (
     <>
       <motion.header
-        initial={{ y: -100, opacity: 0 }}
+        initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           scrolled
-            ? "bg-black/95 backdrop-blur-md border-b border-white/5 py-3"
-            : "bg-transparent py-5"
+            ? "bg-black/95 backdrop-blur-md border-b border-white/5 py-2.5"
+            : "bg-transparent py-4"
         )}
       >
         <div className="max-w-[1360px] mx-auto px-4 sm:px-6 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group" aria-label="WheelxCars Home">
-            <span className="text-xl font-bold tracking-[-0.02em] text-white select-none">
-              Wheel<span className="text-white/60">x</span>Cars
-            </span>
+            <div className="relative h-8 sm:h-10 w-32 sm:w-40">
+              <Image
+                src="/logo.png"
+                alt="WheelxCars Logo"
+                fill
+                priority
+                className="object-contain object-left transition-transform duration-200 group-hover:scale-105"
+              />
+            </div>
           </Link>
 
           {/* Desktop Nav */}
@@ -74,28 +86,28 @@ export function Navbar() {
                 )}
               >
                 {link.label}
-                <span
-                  className={cn(
-                    "absolute -bottom-0.5 left-0 h-px bg-white transition-all duration-300",
-                    pathname === link.href ? "w-full" : "w-0 group-hover:w-full"
-                  )}
-                />
+                {pathname === link.href && (
+                  <motion.div
+                    layoutId="activeNav"
+                    className="absolute -bottom-1 left-0 right-0 h-px bg-white"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
               </Link>
             ))}
           </nav>
 
-          {/* CTA */}
+          {/* Direct CTA */}
           <div className="hidden lg:flex items-center gap-3">
             <Link
               href="/cars"
-              className="inline-flex items-center gap-2 bg-white text-black text-sm font-semibold px-5 py-2.5 rounded-md hover:bg-white/90 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+              className="text-xs font-semibold px-4 py-2 rounded-lg bg-white text-black hover:bg-zinc-100 transition-colors"
             >
-              Explore Cars
-              <span className="group-hover:translate-x-0.5 transition-transform">→</span>
+              Explore Cars →
             </Link>
           </div>
 
-          {/* Mobile Hamburger */}
+          {/* Mobile Menu Button */}
           <button
             className="lg:hidden p-2 text-white/70 hover:text-white transition-colors"
             onClick={() => setMenuOpen(true)}
@@ -117,10 +129,15 @@ export function Navbar() {
             className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex flex-col"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-white/5">
-              <span className="text-xl font-bold tracking-[-0.02em]">
-                Wheel<span className="text-white/60">x</span>Cars
-              </span>
+            <div className="flex items-center justify-between px-6 py-4 border-b border-white/8">
+              <div className="relative h-8 w-32">
+                <Image
+                  src="/logo.png"
+                  alt="WheelxCars Logo"
+                  fill
+                  className="object-contain object-left"
+                />
+              </div>
               <button
                 onClick={() => setMenuOpen(false)}
                 className="p-2 text-white/60 hover:text-white transition-colors"

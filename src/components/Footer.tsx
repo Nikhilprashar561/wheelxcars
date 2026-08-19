@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Share2, MessageCircle, Briefcase, Play, MapPin } from "lucide-react";
 
@@ -38,10 +39,15 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-12 pb-12 border-b border-white/5">
           {/* Brand */}
           <div className="max-w-sm">
-            <Link href="/" className="inline-block mb-4">
-              <span className="text-xl font-bold tracking-[-0.02em] text-white">
-                Wheel<span className="text-white/50">x</span>Cars
-              </span>
+            <Link href="/" className="inline-block mb-4 group" aria-label="WheelxCars Home">
+              <div className="relative h-9 sm:h-10 w-36 sm:w-44">
+                <Image
+                  src="/logo.png"
+                  alt="WheelxCars Logo"
+                  fill
+                  className="object-contain object-left transition-transform duration-200 group-hover:scale-105"
+                />
+              </div>
             </Link>
             <p className="text-sm text-white/40 leading-relaxed mb-4">
               Chandigarh &amp; Tricity&apos;s premier used-car marketplace. Inspected pre-owned vehicles, transparent pricing, and zero hassle documentation.
